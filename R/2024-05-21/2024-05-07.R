@@ -23,24 +23,27 @@ data_1 <- emissions |>
   summarise(total_CO2 = sum(total_emissions_MtCO2e))
 
 # Keep the top 10 rows based on total_CO2
-top_10_data <- data_1 %>%
+top_5_data <- data_1 %>%
   arrange(desc(total_CO2)) %>%
-  slice_head(n = 10)
+  slice_head(n = 4)
 
 # specific colors
 specific_colors <- c("#6F99AD", "#CCA852", "#BC3C29", "#6A6599", "#7E6148", "#E18727", "#E69F00", "#0072B5", "#008280", "#E7969C")
 
+colors <- c("#6A6599", "#BC3C29", "#DF8F44", "#79AF97", "#0072B5")
+
+
 # Plot
-ggplot(top_10_data, aes(x = reorder(parent_entity, total_CO2), y = total_CO2, fill = parent_entity)) +
+p1 <- ggplot(top_5_data, aes(x = reorder(parent_entity, total_CO2), y = total_CO2, fill = parent_entity)) +
   
   geom_bar(stat = "identity", alpha = 0.8, width = 0.7) +
   
   coord_flip() +
   
-  scale_fill_manual(values = specific_colors) +
+  scale_fill_manual(values = colors) +
   
   labs(
-    title = "Top 10 Parent Entities by Total CO2 Emissions",
+    title = "Top 5 Parent Entities by Total CO2 Emissions",
     x = "Parent Entity",
     y = "Total MtCO2"
   ) +
@@ -69,7 +72,8 @@ ggplot(top_10_data, aes(x = reorder(parent_entity, total_CO2), y = total_CO2, fi
 data_2 <- emissions |>
   filter(parent_entity %in% c(
                             "China (Coal)", "Former Soviet Union", "Saudi Aramco",
-                            "Chevron", "ExxonMobil"
+                            "Chevron"
+                            #"ExxonMobil"
                             #"Gazprom", "BP", "Shell",
                             # "Coal India", "National Iranian Oil Co."
                             )) |>
@@ -77,27 +81,24 @@ data_2 <- emissions |>
   summarise(MtCO2_per_year = sum(total_emissions_MtCO2e))
   
 
-
-ggplot(data_2) +
+ p2 <- ggplot(data_2) +
   
   geom_area(aes(x = year, y = MtCO2_per_year, fill = parent_entity, color = parent_entity, linetype = parent_entity), 
-            linewidth = .6, alpha = .6, position = "identity") +
+            linewidth = .8, alpha = .5, position = "identity") +
   
   
   scale_y_continuous(labels = scales::comma) +
-  scale_x_continuous(expand = c(0, 0), breaks = seq(1923, 2023, by = 20), limits = c(1923, 2023)) +
+  scale_x_continuous(expand = c(0, 0), breaks = seq(1923, 2023, by = 50), limits = c(1923, 2023)) +
 
-  #scale_color_manual(values = c("#6F99AD", "#CCA852", "#BC3C29", "#6A6599", "#7E6148", "#656566", "#E69F00","#008280", "#E7969C", "#0072B5")) +
-  #scale_fill_manual(values = c("#6F99AD", "#CCA852", "#BC3C29", "#6A6599", "#7E6148", "#656566", "#E69F00","#008280", "#E7969C", "#0072B5")) +
-  scale_color_manual(values = c("#7E6148", "#e3c6c3", "#6A6599", "#7AA6DC", "#BC3C29")) +
-  scale_fill_manual(values = c("#7E6148", "#e3c6c3", "#6A6599", "#7AA6DC", "#BC3C29")) +
-  
+  scale_color_manual(values = c("#6A6599", "#BC3C29", "#DF8F44", "#79AF97", "#0072B5")) +
+  scale_fill_manual(values = c("#6A6599", "#BC3C29", "#DF8F44", "#79AF97", "#0072B5")) +  
+      
   theme_minimal() +
   
   theme(
     plot.background = element_rect(fill = "#e4e4e3"),
     
-    legend.position = "bottom",
+    legend.position = "left",
     
     panel.grid.major = element_line(linewidth = .35, color = "grey85"),
     panel.grid.minor = element_line(linewidth = .25, color = "grey85", linetype = "dashed"),
@@ -106,9 +107,23 @@ ggplot(data_2) +
     axis.title.x = element_text(margin = margin(t = 10)),
     
     plot.margin = margin(20, 20, 20, 20)
+    
   ) +
   
   labs(
     y = "MtCO2",
-    x = "Years"
-  ) 
+    x = "Years",
+    title = "Total Emission Over Time by Parent Entity",
+  )
+  
+  #facet_wrap(~parent_entity, ncol = 1)
+
+
+combined_plot <- (p1 | p2) +  
+  patchwork::plot_layout(
+    guides = "collect",
+    widths = c(1, 2)
+  )
+
+combined_plot
+
