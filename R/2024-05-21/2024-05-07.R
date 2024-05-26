@@ -6,29 +6,23 @@ tuesdata <- tidytuesdayR::tt_load('2024-05-21')
 
 emissions <- tuesdata$emissions
 
-library(dplyr)
 library(ggplot2)
 library(tidyverse)
 
-library(ggstream)
-library(colorspace)
-library(scales)
-library(cowplot)
+library(patchwork)
+library(ggtext)
 
 
 # Plot 1---------------
-# Group by parent_entity and sum CO2
+# Data 1
 data_1 <- emissions |>
   group_by(parent_entity) |>
   summarise(total_CO2 = sum(total_emissions_MtCO2e))
 
-# Keep the top 10 rows based on total_CO2
-top_5_data <- data_1 %>%
-  arrange(desc(total_CO2)) %>%
-  slice_head(n = 4)
 
-# specific colors
-specific_colors <- c("#6F99AD", "#CCA852", "#BC3C29", "#6A6599", "#7E6148", "#E18727", "#E69F00", "#0072B5", "#008280", "#E7969C")
+top_5_data <- data_1 |>
+  arrange(desc(total_CO2)) |>
+  slice_head(n = 5)
 
 colors <- c("#6A6599", "#BC3C29", "#DF8F44", "#79AF97", "#0072B5")
 
@@ -68,27 +62,23 @@ p1 <- ggplot(top_5_data, aes(x = reorder(parent_entity, total_CO2), y = total_CO
 
 # Plot 2-----------------
 
-# Group by parent_entity and sum CO2
+# Data 2
 data_2 <- emissions |>
   filter(parent_entity %in% c(
                             "China (Coal)", "Former Soviet Union", "Saudi Aramco",
-                            "Chevron"
-                            #"ExxonMobil"
-                            #"Gazprom", "BP", "Shell",
-                            # "Coal India", "National Iranian Oil Co."
-                            )) |>
+                            "Chevron", "ExxonMobil")) |>
   group_by(parent_entity, year) |>
   summarise(MtCO2_per_year = sum(total_emissions_MtCO2e))
   
 
- p2 <- ggplot(data_2) +
+p2 <- ggplot(data_2) +
   
   geom_area(aes(x = year, y = MtCO2_per_year, fill = parent_entity, color = parent_entity, linetype = parent_entity), 
             linewidth = .8, alpha = .5, position = "identity") +
   
   
   scale_y_continuous(labels = scales::comma) +
-  scale_x_continuous(expand = c(0, 0), breaks = seq(1923, 2023, by = 50), limits = c(1923, 2023)) +
+  scale_x_continuous(expand = c(0, 0), breaks = seq(1923, 2023, by = 25), limits = c(1923, 2023)) +
 
   scale_color_manual(values = c("#6A6599", "#BC3C29", "#DF8F44", "#79AF97", "#0072B5")) +
   scale_fill_manual(values = c("#6A6599", "#BC3C29", "#DF8F44", "#79AF97", "#0072B5")) +  
@@ -96,13 +86,10 @@ data_2 <- emissions |>
   theme_minimal() +
   
   theme(
-    plot.background = element_rect(fill = "#e4e4e3"),
+    plot.background = element_rect(fill = "#e4e4e3", color = NA),
     
-    legend.position = "left",
-    
-    panel.grid.major = element_line(linewidth = .35, color = "grey85"),
-    panel.grid.minor = element_line(linewidth = .25, color = "grey85", linetype = "dashed"),
-    
+    legend.position = "right",
+   
     axis.title.y = element_text(margin = margin(r = 10)),
     axis.title.x = element_text(margin = margin(t = 10)),
     
@@ -111,19 +98,48 @@ data_2 <- emissions |>
   ) +
   
   labs(
-    y = "MtCO2",
+    y = "Total Emissions MtCO2",
     x = "Years",
-    title = "Total Emission Over Time by Parent Entity",
-  )
-  
-  #facet_wrap(~parent_entity, ncol = 1)
+    title = "Total Emissions Over Time by Parent Entity",
+  ) 
 
 
-combined_plot <- (p1 | p2) +  
-  patchwork::plot_layout(
+
+gr <- (p1 | p2) +  
+  plot_layout(
     guides = "collect",
     widths = c(1, 2)
+  ) +
+
+  plot_annotation(
+    title = 'Carbon Majors Emissions Data',
+    
+    theme = theme(
+      plot.background = element_rect(fill = "#e4e4e3", color = NA), 
+      
+      plot.title = element_text(size = 20), 
+      
+      plot.caption = element_markdown(size = 8)
+      ),
+    
+    caption = paste0(
+      "Source: <b>Carbon Majors</b> | ",
+      "Graphic: <b>Natasa Anastasiadou</b>"
+    )
+    
   )
 
-combined_plot
+
+
+ggsave(
+  plot = gr, filename = "Rplot.png", 
+  width = 15, height = 9, units = "in", dpi = 600
+)
+
+
+
+
+
+
+
 
