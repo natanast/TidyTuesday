@@ -17,12 +17,12 @@ df <- df[order(IMDB_rating)]
 
 # Create a new column for categorizing top 5 and bottom 5
 df[, category := "Other"]
-df[1:5, category := "Top 5"]
-df[(.N-4):.N, category := "Bottom 5"]
+# df[1:5, category := "Bottom 5"]
+# df[(.N-4):.N, category := "Top 5"]
+df[1:3, category := "Bottom 3"]
+df[(.N-2):.N, category := "Top 3"]
 
 
-
-# df$x <- paste0(df$season_title, " (Season ", df$season_num, ")")
 
 # Create a combined column that adds season number only if not already in the title
 df$x <- ifelse(grepl("\\(Season \\d+\\)", df$season_title),
@@ -49,19 +49,25 @@ ggplot(df, aes(x = x, y = IMDB_rating, fill = category)) +
   
   geom_bar(stat = "identity", alpha = 0.65, width = 0.7) +
   
-  geom_text(aes(label = IMDB_rating), 
-            hjust = -0.1,  # Positioning the text just outside the bar
+  geom_text(aes(label = ifelse(category == "Top 3" | category == "Bottom 3",
+                               IMDB_rating,
+                               "")),
+            hjust = - 0.1,
+            vjust = 0.2,
+            
             color = "black", 
-            size = 3.5) +
+            size = 3.2) +
   
   coord_flip() +
   
-  scale_fill_manual(values = c("Top 5" = "#0072B5", "Bottom 5" = "#BC3C29", "Other" = "gray50")) +
+  scale_fill_manual(values = c("Top 3" = "#0072B5", "Bottom 3" = "#BC3C29", "Other" = "gray50")) +
   
   labs(
     title = "IMDB rating of the Power Rangers seasons",
-    subtitle = "IMDB rating of the Power Rangers seasons",
-    
+    subtitle = paste0(
+                  "<b style='color:#0072B5'>Top 3 </b> and <b style='color:#BC3C29'>Bottom 3</b> ",
+                  "season of Power Rangers according to IMDB rating"),
+
     x = "Season",
     y = "IMDB rating",
     
@@ -76,8 +82,14 @@ ggplot(df, aes(x = x, y = IMDB_rating, fill = category)) +
   theme(
     legend.position = "none",
     
+    axis.title.x = element_text(size = 14, hjust = 0.5, vjust = -1, family = "Candara"),
+    axis.title.y = element_text(size = 14, hjust = 0.5, family = "Candara"),
+    
+    axis.text.x =  element_text(size = 10, family = "Candara"),
+    axis.text.y =  element_text(size = 10, family = "Candara"),
+    
     plot.title = element_text(size = 20, face = "bold", hjust = 0.5, family = "Candara"),
-    plot.subtitle = element_text(size = 14, hjust = 0.5, family = "Candara", color = "grey30"),
+    plot.subtitle = element_markdown(size = 14, hjust = 0.5, family = "Candara", color = "grey30"),
     plot.caption  = element_markdown(margin = margin(t = 25), size = 8, family = "Candara", hjust = 1),
     
     plot.margin = margin(20, 20, 20, 20),
