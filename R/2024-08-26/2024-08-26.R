@@ -45,7 +45,7 @@ library(extrafont)
 library(ggtext)
 
 # Plot
-ggplot(df, aes(x = x, y = IMDB_rating, fill = category)) +
+p <- ggplot(df, aes(x = x, y = IMDB_rating, fill = category)) +
   
   geom_bar(stat = "identity", alpha = 0.65, width = 0.7) +
   
@@ -56,7 +56,7 @@ ggplot(df, aes(x = x, y = IMDB_rating, fill = category)) +
             vjust = 0.2,
             
             color = "black", 
-            size = 3.2) +
+            size = 3.5) +
   
   coord_flip() +
   
@@ -82,15 +82,15 @@ ggplot(df, aes(x = x, y = IMDB_rating, fill = category)) +
   theme(
     legend.position = "none",
     
-    axis.title.x = element_text(size = 14, hjust = 0.5, vjust = -1, family = "Candara"),
-    axis.title.y = element_text(size = 14, hjust = 0.5, family = "Candara"),
+    axis.title.x = element_text(size = 16, hjust = 0.5, vjust = -1, family = "Candara"),
+    axis.title.y = element_text(size = 16, hjust = 0.5, family = "Candara"),
     
-    axis.text.x =  element_text(size = 10, family = "Candara"),
-    axis.text.y =  element_text(size = 10, family = "Candara"),
+    axis.text.x =  element_text(size = 12, family = "Candara"),
+    axis.text.y =  element_text(size = 12, family = "Candara"),
     
-    plot.title = element_text(size = 20, face = "bold", hjust = 0.5, family = "Candara"),
-    plot.subtitle = element_markdown(size = 14, hjust = 0.5, family = "Candara", color = "grey30"),
-    plot.caption  = element_markdown(margin = margin(t = 25), size = 8, family = "Candara", hjust = 1),
+    plot.title = element_text(size = 22, face = "bold", hjust = 0.5, family = "Candara"),
+    plot.subtitle = element_markdown(size = 16, hjust = 0.5, family = "Candara", color = "grey30"),
+    plot.caption  = element_markdown(margin = margin(t = 25), size = 10, family = "Candara", hjust = 1),
     
     plot.margin = margin(20, 20, 20, 20),
     
