@@ -13,17 +13,6 @@ library(rvest)
 # url to scrape:
 root <- "https://www.ianvisits.co.uk/articles/a-list-of-monarchs-by-marriage-6857/"
 
-# # get table
-# tables <- read_html(root) |> html_nodes("table")
-# df1 <- tables[1] |> html_table() |> as.data.frame()
-# 
-# df1 <- df[, -6]      # remove spoiler 
-# df1 <- df[-c(1,2), ] # remove double-header effect
-# 
-# cols <- c("king_name", "king_age", "consort_name", "consort_age", "year_of_marriage")
-# colnames(df1) <- cols
-# 
-# english_monarchs_marriages_df <- df
 
 df <-  english_monarchs_marriages_df
 df <- df |> as.data.table()
@@ -53,9 +42,6 @@ df$year_of_marriage <- as.numeric(df$year_of_marriage)
 
 df$difference <- abs(df$king_age - df$consort_age)
 
-
-#df_names <- df[df$difference > 22 | df$difference < -22,]
-#df_plot$difference <- abs(df_plot$king_age - df_plot$consort_age)
 
 # Reorder kings by the absolute age difference, from largest to smallest
 df_plot$king_name <- reorder(df_plot$king_name, df_plot$difference)

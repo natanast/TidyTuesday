@@ -10,8 +10,6 @@ worlds_fairs <- fread('https://raw.githubusercontent.com/rfordatascience/tidytue
 library(ggplot2)
 library(tidyverse)
 
-#library(patchwork)
-#library(ggtext)
 library(data.table)
 
 
