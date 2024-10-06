@@ -24,6 +24,7 @@ library(data.table)
 # Create the dumbbell plot
 p <- ggplot(df_plot, aes(y = reorder(king_name, difference))) + 
   
+  
   geom_point(aes(x = king_age, color = "King/Queen"), size = 3, shape = 19) +
   
   geom_point(aes(x = consort_age, color = "Consort"), size = 3, shape = 19) + 
