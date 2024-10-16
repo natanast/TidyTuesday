@@ -1,21 +1,11 @@
-# National Park Species
+# Southern Resident Killer Whale Encounters
 
-This week we're exploring species at the most visited National Parks in the USA! NPSpecies contains species listed by National Parks maintained by National Parks Service (NPS). Given the size of the dataset, we're focusing on the 15 most visited parks. The data comes from https://irma.nps.gov/NPSpecies/Search/SpeciesList. 
+The data this week comes from the Center for Whale Research (CWR), the leading organization monitoring and studying Southern Resident killer whales in their critical habitat: the Pacific Northwest’s Salish Sea. Each encounter is hosted on its own webpage at [whaleresearch.com](https://www.whaleresearch.com/encounters). Jadey Ryan scraped the encounter data from CWR's website as a personal project to learn web scraping and [presented the process](https://jadeynryan.github.io/orcas/) at a Seattle R-Ladies meetup in 2023. The scraping functions and cleaning code for 2017 - 2024 encounters can be found in the [{orcas} R package](https://github.com/jadeynryan/orcas).
 
-> The information in NPSpecies is available to the public. The exceptions to this are records for some sensitive, threatened, or endangered species, where widespread distribution of information could potentially put a species at risk.   
->
-> An essential component of NPSpecies is evidence; that is, observations, vouchers, or reports that document the presence of a species in a park. Ideally, every species in a park that is designated as “present in park” will have at least one form of credible evidence substantiating the designation
+The dataset is mostly tidy but not completely clean. There are still missing values and typos, as evident from some encounters having a negative duration.
 
-If you are looking for more detailed information on the dataset, here is the glossary for column names, field options, and tag meanings: 
-https://irma.nps.gov/content/npspecies/Help/docs/NPSpecies_User_Guide.pdf
+> An Encounter refers to any time we observe killer whales (orcas), from one of CWR's research boats or land, where at least one individual is identified and photographed. Typically, 2-4 staff are involved in an encounter. Once we come into contact with whales (ie. within distance of identifying individuals by sight) we have begun our encounter. During an encounter, our main goal is to photograph every individual present from both the left and right side.
 
+Which pods or ecotypes have the longest duration encounters with CWR researchers? Are there trends in where orca encounters occur over time?
 
-To properly cite NPSpecies use the following: 
-**NPSpecies - The National Park Service biodiversity database.**
-**https://irma.nps.gov/npspecies/. Accessed date/time. **
-
-*This data was accessed on September 2nd, 2024.*
-
-If you are interested in additional data, the curated dataset for all national parks is available at [https://github.com/frankiethull/NPSpecies](https://github.com/frankiethull/NPSpecies).
-
-Thank you to [f. hull](https://github.com/frankiethull) for curating this week's dataset.
+Thank you to [Jadey Ryan](https://github.com/jadeynryan) for curating this week's dataset.
