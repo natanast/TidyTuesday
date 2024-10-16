@@ -95,6 +95,7 @@ ggplot() +
 
 
 # # leaflet() ---------------
+#
 # df_map |>
 #   leaflet() |>
 #   addProviderTiles("CartoDB.Positron") |>
