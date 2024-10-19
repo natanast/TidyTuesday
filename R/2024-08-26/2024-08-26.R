@@ -98,8 +98,6 @@ p <- ggplot(df, aes(x = x, y = IMDB_rating, fill = category)) +
   )
 
 
-p
-  
 ggsave(
   plot = p, filename = "Rplot.png",
   width = 12, height = 10, units = "in", dpi = 600
