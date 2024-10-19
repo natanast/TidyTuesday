@@ -70,7 +70,7 @@ p <- ggplot() +
   theme_minimal() +
   
   theme(
-    legend.position = "none",
+    # legend.position = "none",
     
     axis.title.x = element_text(size = 10, hjust = 0.5, vjust = -1, family = "Candara"),
     axis.title.y = element_text(size = 10, hjust = 0.5, family = "Candara"),
