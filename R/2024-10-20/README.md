@@ -1,11 +1,11 @@
-# Southern Resident Killer Whale Encounters
+# The CIA World Factbook
 
-The data this week comes from the Center for Whale Research (CWR), the leading organization monitoring and studying Southern Resident killer whales in their critical habitat: the Pacific Northwest’s Salish Sea. Each encounter is hosted on its own webpage at [whaleresearch.com](https://www.whaleresearch.com/encounters). Jadey Ryan scraped the encounter data from CWR's website as a personal project to learn web scraping and [presented the process](https://jadeynryan.github.io/orcas/) at a Seattle R-Ladies meetup in 2023. The scraping functions and cleaning code for 2017 - 2024 encounters can be found in the [{orcas} R package](https://github.com/jadeynryan/orcas).
+This week we're exploring the [CIA World Factbook](https://www.cia.gov/the-world-factbook/)! 
+The dataset this week comes from the [CIA Factbook, Country Comparisons, 2014](https://www.cia.gov/the-world-factbook/references/guide-to-country-comparisons),
+via the [{openintro}](https://openintrostat.github.io/openintro/) R package,
+via the [{usdatasets}](https://cran.r-project.org/package=usdatasets) R package, 
+via [this post on LinkedIn](https://www.linkedin.com/posts/andrescaceresrossi_rstats-rstudio-opensource-activity-7249513444830318592-r395).
 
-The dataset is mostly tidy but not completely clean. There are still missing values and typos, as evident from some encounters having a negative duration.
-
-> An Encounter refers to any time we observe killer whales (orcas), from one of CWR's research boats or land, where at least one individual is identified and photographed. Typically, 2-4 staff are involved in an encounter. Once we come into contact with whales (ie. within distance of identifying individuals by sight) we have begun our encounter. During an encounter, our main goal is to photograph every individual present from both the left and right side.
-
-Which pods or ecotypes have the longest duration encounters with CWR researchers? Are there trends in where orca encounters occur over time?
-
-Thank you to [Jadey Ryan](https://github.com/jadeynryan) for curating this week's dataset.
+> The *World Factbook* provides basic intelligence on the history, people, government, 
+> economy, energy, geography, environment, communications, transportation, military, 
+> terrorism, and transnational issues for 265 world entities.
