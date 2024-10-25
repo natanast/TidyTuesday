@@ -56,6 +56,7 @@ df_plot <- x[, {
 }]
 
 
+df_plot <- as.data.frame(df_plot)
 
 df_plot_l <- df_plot[, .(x = (min(x) + max(x)) / 2, 
                          y = (min(y) + max(y)) / 2, 
@@ -132,7 +133,7 @@ p = df_plot |>
     
     plot.margin = margin(20, 20, 20, 20),
     
-    plot.background = element_rect(fill = "#e4e4e3", color = NA)
+    plot.background = element_rect(fill = "grey95", color = NA)
     
   )
 
