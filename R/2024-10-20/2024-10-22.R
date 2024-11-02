@@ -17,7 +17,7 @@ tuesdata <- tidytuesdayR::tt_load('2024-10-22')
 
 cia_factbook <- tuesdata$cia_factbook
 
-colnames(cia_factbook)
+
 
 x <- as.data.table(cia_factbook)
 
@@ -56,7 +56,7 @@ df_plot <- x[, {
 }]
 
 
-df_plot <- as.data.frame(df_plot)
+setDT(df_plot)
 
 df_plot_l <- df_plot[, .(x = (min(x) + max(x)) / 2, 
                          y = (min(y) + max(y)) / 2, 
