@@ -87,7 +87,7 @@ p <- ggplot(x, aes(x = year, y = N, fill = genres)) +
   scale_y_continuous(expand = c(0, 0)) +
   
   labs(
-    title = "Trends in Monster Movie Genres Over Time",
+    title = "Trends in Monster Movies Genres Over Time",
     subtitle = "Popularity of different genres from 1990 to 2024",
     caption = paste0(
       "Source: <b>Internet Movie Database</b> | ",
