@@ -34,7 +34,7 @@ x <- x[1:10]
 
 
 
-# Plot 1---------
+# Plot ---------
 
 
 library(packcircles)
@@ -63,14 +63,9 @@ df_plot_l <- df_plot[, .(x = (min(x) + max(x)) / 2,
                          population = first(population)),
                      by = .(country, id)]
 
-
-
 df_plot_l$lbl <- round(df_plot_l$population / 1e7, 1)
 
-
 col = c('#BC3C29','#b9b8e7','#E18727', '#B09C85','#FFDC91','#5E4FA2','#0072B5','#20854E','#9dced6','#91D1C2')
-
-
 
 
 p = df_plot |>
