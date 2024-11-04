@@ -10,9 +10,7 @@ gc()
 library(data.table)
 library(stringr)
 library(ggplot2)
-
 library(ggstream)
-
 library(colorspace)
 library(ggtext)
 
@@ -115,8 +113,6 @@ p <- ggplot(x, aes(x = year, y = N, fill = genres)) +
             
     plot.background = element_rect(fill = "grey95", color = NA)
   )
-
-p
 
 ggsave(
   plot = p, filename = "Rplot.png",
