@@ -2,13 +2,16 @@
 rm(list = ls())
 gc()
 
-library(data.table)
 
-# Option 2: Read directly from GitHub
+library(data.table)
+library(rvest)
+library(stringr)
+
+
+# load data -----
 
 english_monarchs_marriages_df <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-08-20/english_monarchs_marriages_df.csv')
 
-library(rvest)
 
 # url to scrape:
 root <- "https://www.ianvisits.co.uk/articles/a-list-of-monarchs-by-marriage-6857/"
@@ -18,7 +21,7 @@ df <-  english_monarchs_marriages_df
 df <- df |> as.data.table()
 
 # Plot 1---------------
-library(stringr)
+
 
 df$king_age <- str_replace_all(df$king_age, "\\?", NA_character_)
 df$king_age <- ifelse(df$king_age == "", NA, df$king_age)
