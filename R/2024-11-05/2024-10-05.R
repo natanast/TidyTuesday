@@ -14,6 +14,8 @@ library(ggplot2)
 library(ggrepel)
 library(ggtext)
 library(extrafont)
+library(colorspace)
+
 
 
 
@@ -30,28 +32,6 @@ df <- democracy_data[, .(
     monarch_accession_year,  is_democracy, is_presidential, president_name,
     president_accesion_year, is_colony, is_female_monarch, is_female_president
 )]
-
-
-
-# # Monarchs duration calculation
-# monarch_duration <- df[!is.na(monarch_name) & !is.na(monarch_accession_year), .(
-#     leader_name = monarch_name,
-#     country = country_name,
-#     start_year = monarch_accession_year,
-#     end_year = max(year, na.rm = TRUE),
-#     duration = max(year, na.rm = TRUE) - monarch_accession_year
-# ), by = .(country_name, monarch_name)]
-# 
-# 
-# # Presidents duration calculation
-# president_duration <- df[!is.na(president_name) & !is.na(president_accesion_year), .(
-#     leader_name = president_name,
-#     country = country_name,
-#     start_year = president_accesion_year,
-#     end_year = max(year, na.rm = TRUE),
-#     duration = max(year, na.rm = TRUE) - president_accesion_year
-# ), by = .(country_name, president_name)]
-
 
 
 monarch_duration <- df[!is.na(monarch_name) & !is.na(monarch_accession_year) &
@@ -73,7 +53,7 @@ president_duration <- df[!is.na(president_name) & !is.na(president_accesion_year
     end_year = max(year, na.rm = TRUE),                       
     duration = max(year, na.rm = TRUE) - min(president_accesion_year, na.rm = TRUE),
     female = unique(is_female_president)
-), by = .(country_name, president_name)] 
+), by = .(country_name, president_name)]
 
 
 
@@ -82,6 +62,9 @@ df2 <- rbindlist(list(
     president_duration[, .(leader_name, country, start_year, end_year, duration, female, type = "President")]
 ))
 
+
+df2$country_female <- ifelse(df2$female == TRUE, df2$country, "")
+    
 
 
 df2 <- df2[order(-duration)]
@@ -95,88 +78,77 @@ top_rulers <- df2[1:20]
 top_rulers$leader_name <- factor(top_rulers$leader_name, 
                                  levels = top_rulers$leader_name[order(top_rulers$duration, decreasing = FALSE)])
 
+name_colors <- setNames(ifelse(top_rulers$female, "grey20", "grey60"), top_rulers$leader_name)
+
+
+# Callout text for female leaders
+callout <- paste0(
+    "<b>Female leaders</b> stand out<br>
+     with <b>darker names</b> and <b>lines.</b>"
+)
+
 
 # plot -----
-library(colorspace)
 
-
-ggplot(top_rulers, aes(x = duration,  y = leader_name)) + 
+p <- ggplot(top_rulers, aes(x = duration, y = leader_name)) + 
     
     geom_segment(aes(x = start_year, xend = end_year, 
-                     y = leader_name, yend = leader_name), 
-                 color = "grey75", size = 0.75, linetype = "solid", alpha = 0.6) +
+                     y = leader_name, yend = leader_name, 
+                     color = ifelse(female, "Female", "Male")),
+                 size = 1, linetype = "solid", alpha = 0.6) +
     
+    geom_point(aes(x = start_year, fill = "Start", color = "Start"), size = 5, shape = 21, stroke = 0.25) +
     
-    geom_point(aes(x = start_year, fill = "start_year", color = "start_year"), size = 3, shape = 21, stroke = 0.25) +
+    geom_point(aes(x = end_year, fill = "End", color = "End"), size = 5, shape = 21, stroke = 0.25) +
     
-    geom_point(aes(x = end_year, fill = "end_year", color = "end_year"), size = 3, shape = 21, stroke = 0.25) +
-    
-    # Custom colors for start and end year points
-    scale_fill_manual(values = c("start_year" = "#0072B5", "end_year" = "#b24745")) +
-    scale_color_manual(values = c("start_year" = "#0072B5", "end_year" = "#b24745") |> darken(0.25), guide = "none") +
-    
-    # geom_point(aes(x = start_year, color = "start_year"), size = 3, shape = 19, alpha = 0.8) +
-    
-    # geom_point(aes(x = end_year, color = "end_year"), size = 3, shape = 19, alpha = 0.8) + 
+    scale_fill_manual(values = c("Start" = "#0072B5", "End" = "#b24745")) +
+    scale_color_manual(values = c("Female" = "grey15", "Male" = "grey75")) +
     
     geom_label_repel(
-        aes(x = end_year, y = leader_name, label = country),
-        nudge_x = 0.25,
-        nudge_y = 0.25,
-        max.overlaps = Inf,
-        label.size = NA,
-        fill = alpha("#e4e4e3", .65),
-        size = 3.75,
-        family = "Candara"
+        aes(x = start_year, y = leader_name, label = country_female),
+        nudge_x = -6, nudge_y = 0, max.overlaps = Inf,
+        label.size = NA, fill = alpha("#e4e4e3", .65),
+        size = 5, family = "Candara", color = "grey20"
+    ) +
+    
+    geom_richtext(
+        aes(x = 1850, y = 14, label = callout), stat = "unique",
+        family = "Candara", size = 6, lineheight = 1.2,
+        color = "grey20", hjust = 0, vjust = 1.03, fill = NA, label.color = NA
     ) +
     
     labs(title = "Top 20 Longest-Serving Rulers (Monarchs & Presidents)",
-         x = "",
-         y = "",
-         
-         subtitle = paste0(
-             "Rulers with the longest durations"
-         ),
-         
-         caption = paste0(
-             "Source: <b>Democracy and Dictatorship Dataset</b> | ",
-             "Graphic: <b>Natasa Anastasiadou</b>"
-         )
-    ) +  
+         subtitle = "<b>Female</b> leaders are a rare sight among the longest-serving monarchs and presidents, with only <b>3</b> appearing in the top 20.",
+         caption = "Source: <b>Democracy and Dictatorship Dataset</b> | Graphic: <b>Natasa Anastasiadou</b>",
+         x = "", y = "") +
     
+    
+    scale_y_discrete(labels = function(x) {
+        sapply(x, function(name) {
+            paste0("<span style='color:", name_colors[name], "'>", name, "</span>")
+        })
+    }) +
     
     theme_minimal() +
-    
     theme(
-        
         legend.position = "bottom",
         legend.title = element_blank(),
-        legend.text = element_text(size = 10),
-        
-        axis.text.x = element_text(size = 12, face = "bold", family = "Candara"), 
-        axis.text.y = element_text(size = 12, face = "bold", family = "Candara"),
-        
+        legend.text = element_text(size = 14),
+        axis.text.x = element_text(size = 18, face = "bold", family = "Candara"), 
+        axis.text.y = element_markdown(size = 18, family = "Candara", face = "bold"), # Enable markdown for color
         panel.grid.major = element_line(linewidth = .35, color = "grey85"),
         panel.grid.minor = element_line(linewidth = .35, color = "grey85", linetype = "dashed"),
-        
-        plot.title = element_text(size = 20, face = "bold", hjust = 0.5, family = "Candara"),
-        plot.subtitle = element_text(size = 14, hjust = 0.5, family = "Candara", color = "grey30"),
-        plot.caption  = element_markdown(margin = margin(t = 25), size = 10, family = "Candara", hjust = 1),
-        
+        plot.title = element_text(size = 26, face = "bold", hjust = 0.5, family = "Candara"),
+        plot.subtitle = element_markdown(size = 18, hjust = 0.5, family = "Candara", color = "grey30"),
+        plot.caption = element_markdown(margin = margin(t = 25), size = 14, family = "Candara", hjust = 1),
         plot.margin = margin(20, 20, 20, 20),
-        
         plot.background = element_rect(fill = "#e4e4e3", color = NA)
-        
     )
 
 
-p
 
 ggsave(
     plot = p, filename = "Rplot.png",
-    width = 12, height = 10, units = "in", dpi = 600
+    width = 16, height = 12, units = "in", dpi = 600
 )    
-
-
-
 
