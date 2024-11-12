@@ -1,10 +1,5 @@
 
 
-
-rm(list = ls())
-gc()
-
-
 # load libraries -----------
 
 library(data.table)
@@ -78,12 +73,19 @@ top_rulers <- df2[1:20]
 top_rulers$leader_name <- factor(top_rulers$leader_name, 
                                  levels = top_rulers$leader_name[order(top_rulers$duration, decreasing = FALSE)])
 
+name_colors <- setNames(ifelse(top_rulers$female, "grey20", "grey60"), top_rulers$leader_name)
 
+
+# Callout text for female leaders
+callout <- paste0(
+    "<b>Female leaders</b> stand out<br>
+     with <b>darker names</b> and <b>lines.</b>"
+)
 
 
 # plot -----
 
-p = ggplot(top_rulers, aes(x = duration, y = leader_name)) + 
+p <- ggplot(top_rulers, aes(x = duration, y = leader_name)) + 
     
     geom_segment(aes(x = start_year, xend = end_year, 
                      y = leader_name, yend = leader_name, 
@@ -91,10 +93,11 @@ p = ggplot(top_rulers, aes(x = duration, y = leader_name)) +
                  size = 1, linetype = "solid", alpha = 0.6) +
     
     geom_point(aes(x = start_year, fill = "Start", color = "Start"), size = 5, shape = 21, stroke = 0.25) +
+    
     geom_point(aes(x = end_year, fill = "End", color = "End"), size = 5, shape = 21, stroke = 0.25) +
     
     scale_fill_manual(values = c("Start" = "#0072B5", "End" = "#b24745")) +
-    scale_color_manual(values = c("Female" = "grey20", "Male" = "grey75")) +
+    scale_color_manual(values = c("Female" = "grey15", "Male" = "grey75")) +
     
     geom_label_repel(
         aes(x = start_year, y = leader_name, label = country_female),
@@ -102,47 +105,40 @@ p = ggplot(top_rulers, aes(x = duration, y = leader_name)) +
         label.size = NA, fill = alpha("#e4e4e3", .65),
         size = 5, family = "Candara", color = "grey20"
     ) +
-
-    # # # Call-out annotation
-    # geom_richtext(
-    #     aes(x = 1850, y = 17, label = callout), stat = "unique",
-    #     family = "Candara", size = 4, lineheight = 1.2,
-    #     color = "grey20", hjust = 0, vjust = 1.03, fill = NA, label.color = NA
-    # ) +
-    # annotate(
-    #     geom = "curve", x = 1855, xend = 1830, y = 17, yend = 27, curvature = .35,
-    #     angle = 60, color = "grey20", linewidth = .4,
-    #     arrow = arrow(type = "closed", length = unit(.08, "inches"))
-    # ) +
-    # annotate(
-    #     geom = "segment", x = 1855, xend = 1830, y = 15, yend = 15,
-    #     color = "grey20", linewidth = 0.4,
-    #     arrow = arrow(type = "closed", length = unit(0.08, "inches"))
-    # ) +
+    
+    geom_richtext(
+        aes(x = 1850, y = 14, label = callout), stat = "unique",
+        family = "Candara", size = 6, lineheight = 1.2,
+        color = "grey20", hjust = 0, vjust = 1.03, fill = NA, label.color = NA
+    ) +
     
     labs(title = "Top 20 Longest-Serving Rulers (Monarchs & Presidents)",
          subtitle = "<b>Female</b> leaders are a rare sight among the longest-serving monarchs and presidents, with only <b>3</b> appearing in the top 20.",
          caption = "Source: <b>Democracy and Dictatorship Dataset</b> | Graphic: <b>Natasa Anastasiadou</b>",
          x = "", y = "") +
     
+    
+    scale_y_discrete(labels = function(x) {
+        sapply(x, function(name) {
+            paste0("<span style='color:", name_colors[name], "'>", name, "</span>")
+        })
+    }) +
+    
     theme_minimal() +
     theme(
         legend.position = "bottom",
         legend.title = element_blank(),
         legend.text = element_text(size = 14),
-        axis.text.x = element_text(size = 16, face = "bold", family = "Candara"), 
-        axis.text.y = element_text(size = 16, face = "bold", family = "Candara"),
+        axis.text.x = element_text(size = 18, face = "bold", family = "Candara"), 
+        axis.text.y = element_markdown(size = 18, family = "Candara", face = "bold"), # Enable markdown for color
         panel.grid.major = element_line(linewidth = .35, color = "grey85"),
         panel.grid.minor = element_line(linewidth = .35, color = "grey85", linetype = "dashed"),
-        plot.title = element_text(size = 24, face = "bold", hjust = 0.5, family = "Candara"),
-        plot.subtitle = element_markdown(size = 17, hjust = 0.5, family = "Candara", color = "grey30"),
+        plot.title = element_text(size = 26, face = "bold", hjust = 0.5, family = "Candara"),
+        plot.subtitle = element_markdown(size = 18, hjust = 0.5, family = "Candara", color = "grey30"),
         plot.caption = element_markdown(margin = margin(t = 25), size = 14, family = "Candara", hjust = 1),
         plot.margin = margin(20, 20, 20, 20),
         plot.background = element_rect(fill = "#e4e4e3", color = NA)
     )
-
-p
-
 
 
 
