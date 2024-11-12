@@ -1,17 +1,19 @@
-# Democracy and Dictatorship
+# ISO Country Codes
 
-It's Election Day in the United States. If you are able to do so, vote!
+We've referenced countries and country codes in many past datasets, but we've never looked closely at the ISO 3166 standard that defines these codes.
 
-To celebrate, we're looking at a dataset about Democracy and Dictatorship.
+Wikipedia says:
 
-> This dataset updates [pacl](https://xmarquez.github.io/democracyData/reference/pacl.html) 
-> with more countries and coverage from 1950 to 2020, as described in C. 
-> Bjørnskov and M. Rode. "Regime types and regime change: A new dataset on 
-< democracy, coups, and political institutions". In: *The Review of International Organizations*
-> 15.2 (2020), pp. 531-551. [DOI: 10.1007/s11558-019-09345-1](https://link.springer.com/article/10.1007/s11558-019-09345-1).
-> The full data and codebook can be downloaded [here](http://www.christianbjoernskov.com/bjoernskovrodedata/).
+> ISO 3166 is a standard published by the International Organization for 
+> Standardization (ISO) that defines codes for the names of countries, dependent 
+> territories, special areas of geographical interest, and their principal 
+> subdivisions (e.g., provinces or states). The official name of the standard 
+> is Codes for the representation of names of countries and their subdivisions.
 
-- How many countries switched from democracies to non-democracies? Did any of them keep their democratically elected leader after the switch?
-- Which of those countries switched back to democracies? How long did it take?
+The dataset this week comes from the {[ISOcodes](https://cran.r-project.org/package=ISOcodes)} R package. It consists of three tables:
+
+- `countries`: Country codes from ISO 3166-1.
+- `country_subdivisions`: Country subdivision code from ISO 3166-2.
+- `former_countries`: Code for formerly used names of countries from ISO 3166-3.
 
 Thank you to [Jon Harmon](https://github.com/jonthegeek) for curating this week's dataset.
