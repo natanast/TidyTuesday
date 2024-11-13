@@ -11,18 +11,13 @@ library(data.table)
 library(stringr)
 library(ggplot2)
 
-library(ggrepel)
-library(ggtext)
-library(extrafont)
-library(colorspace)
-
-
 
 
 # load data ------------
 
-democracy_data <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-11-05/democracy_data.csv')
-
+countries <-  fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-11-12/countries.csv')
+country_subdivisions <-  fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-11-12/country_subdivisions.csv')
+former_countries <-  fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-11-12/former_countries.csv')
 
 
 # data cleaning --------
