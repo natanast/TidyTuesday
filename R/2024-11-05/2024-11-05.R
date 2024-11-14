@@ -83,9 +83,15 @@ callout <- paste0(
 )
 
 
+
+
+
+
+
+
 # plot -----
 
-p <- ggplot(top_rulers, aes(x = duration, y = leader_name)) + 
+ggplot(top_rulers, aes(x = duration, y = leader_name)) + 
     
     geom_segment(aes(x = start_year, xend = end_year, 
                      y = leader_name, yend = leader_name, 
@@ -139,11 +145,31 @@ p <- ggplot(top_rulers, aes(x = duration, y = leader_name)) +
         plot.margin = margin(20, 20, 20, 20),
         plot.background = element_rect(fill = "#e4e4e3", color = NA)
     )
+record_polaroid()
 
 
+# ggsave(
+#     plot = p, filename = "Rplot.png",
+#     width = 16, height = 12, units = "in", dpi = 600
+# )    
+# 
+
+
+
+
+# Save gif ----------------------------------------------------------------
 
 ggsave(
-    plot = p, filename = "Rplot.png",
-    width = 16, height = 12, units = "in", dpi = 600
-)    
+    file.path(".", paste0("20241105", ".png")),
+    bg = "#e4e4e3",
+    width = 7,
+    height = 6
+)
 
+gg_playback(
+    name = file.path(".", paste0("20241105", ".gif")),
+    first_image_duration = 4,
+    last_image_duration = 20,
+    frame_duration = .25,
+    background = "#e4e4e3"
+)

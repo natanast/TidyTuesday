@@ -10,139 +10,157 @@ gc()
 library(data.table)
 library(stringr)
 library(ggplot2)
-
+library(sf)
+library(rnaturalearth)
+library(paletteer)
+library(dplyr)
+library(patchwork)
 
 
 # load data ------------
 
-countries <-  fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-11-12/countries.csv')
-country_subdivisions <-  fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-11-12/country_subdivisions.csv')
-former_countries <-  fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-11-12/former_countries.csv')
+countries <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-11-12/countries.csv')
+country_subdivisions <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-11-12/country_subdivisions.csv')
 
 
-# data cleaning --------
-
-df <- democracy_data[, .(
-    country_name, year, regime_category, is_monarchy, monarch_name, 
-    monarch_accession_year,  is_democracy, is_presidential, president_name,
-    president_accesion_year, is_colony, is_female_monarch, is_female_president
-)]
-
-
-monarch_duration <- df[!is.na(monarch_name) & !is.na(monarch_accession_year) &
-                           !(monarch_name == "Elizabeth II" & country_name != "United Kingdom"), .(
-                               leader_name = monarch_name,
-                               country = country_name,
-                               start_year = min(monarch_accession_year, na.rm = TRUE),
-                               end_year = max(year, na.rm = TRUE),
-                               duration = max(year, na.rm = TRUE) - min(monarch_accession_year, na.rm = TRUE),
-                               female = unique(is_female_monarch)
-                           ), by = .(country_name, monarch_name)]
-
-
-
-president_duration <- df[!is.na(president_name) & !is.na(president_accesion_year), .(
-    leader_name = president_name[1],       
-    country = country_name[1],             
-    start_year = min(president_accesion_year, na.rm = TRUE),  
-    end_year = max(year, na.rm = TRUE),                       
-    duration = max(year, na.rm = TRUE) - min(president_accesion_year, na.rm = TRUE),
-    female = unique(is_female_president)
-), by = .(country_name, president_name)]
-
-
-
-df2 <- rbindlist(list(
-    monarch_duration[, .(leader_name, country, start_year, end_year, duration, female, type = "Monarch")],
-    president_duration[, .(leader_name, country, start_year, end_year, duration, female, type = "President")]
-))
-
-
-df2$country_female <- ifelse(df2$female == TRUE, df2$country, "")
-    
-
-
-df2 <- df2[order(-duration)]
-
-
-
-# Keeping only the top 20 longest-serving rulers
-top_rulers <- df2[1:20]
-
-# Make sure leader_name is a factor with levels ordered by duration
-top_rulers$leader_name <- factor(top_rulers$leader_name, 
-                                 levels = top_rulers$leader_name[order(top_rulers$duration, decreasing = FALSE)])
+# data cleaning
+world <- ne_countries(scale = "small", returnclass = "sf")
 
 
 
 
-# plot -----
+# Subdivision counts and predominant types per country
+subdiv_count <- country_subdivisions |>
+    group_by(alpha_2) |>
+    summarise(subdivisions_count = n())
 
-p = ggplot(top_rulers, aes(x = duration, y = leader_name)) + 
-    
-    geom_segment(aes(x = start_year, xend = end_year, 
-                     y = leader_name, yend = leader_name, 
-                     color = ifelse(female, "Female", "Male")),
-                 size = 1, linetype = "solid", alpha = 0.6) +
-    
-    geom_point(aes(x = start_year, fill = "Start", color = "Start"), size = 5, shape = 21, stroke = 0.25) +
-    geom_point(aes(x = end_year, fill = "End", color = "End"), size = 5, shape = 21, stroke = 0.25) +
-    
-    scale_fill_manual(values = c("Start" = "#0072B5", "End" = "#b24745")) +
-    scale_color_manual(values = c("Female" = "grey20", "Male" = "grey75")) +
-    
-    geom_label_repel(
-        aes(x = start_year, y = leader_name, label = country_female),
-        nudge_x = -6, nudge_y = 0, max.overlaps = Inf,
-        label.size = NA, fill = alpha("#e4e4e3", .65),
-        size = 5, family = "Candara", color = "grey20"
+predominant_subdiv <- country_subdivisions |>
+    group_by(alpha_2, type) |>
+    summarise(count = n()) |>
+    arrange(alpha_2, desc(count)) |>
+    slice(1) |>
+    select(alpha_2, predominant_type = type)
+
+
+
+# Data preparation for stacked bar plot
+df <- country_subdivisions |>
+    count(alpha_2, type) 
+
+
+world_with_subdiv <- world |>
+    left_join(subdiv_count, by = c("iso_a2" = "alpha_2")) |>
+    left_join(df, by = c("iso_a2" = "alpha_2"))
+
+
+
+world_with_subdiv[, c("type.x", "type.y")]
+
+# Top 10 countries by subdivision count
+
+
+col <- c('#5773cc', '#5e77ce', '#647bcf', '#6b7fd1', '#7083d2', '#7687d3', '#7b8bd4', '#818fd5', '#8594d6', '#8a98d7', '#8e9dd7', '#92a2d8', '#96a6d8', '#99abd8', '#9cb0d7', '#9eb6d6', '#9fbbd4', '#9fc2d1', '#9cc8cc', '#fed38e', '#fccb8b', '#f9c288', '#f6ba85', '#f3b281', '#f0a97e', '#eca17a', '#e89976', '#e49272', '#e08a6e', '#db8269', '#d77b65', '#d27360', '#cd6c5c', '#c86457', '#c25d53', '#bd564e', '#b84e4a', '#b24745')
+col_2 <- c('#3a5cbc','#b9b8e7','#b24745', '#6F99AD', '#FFDC91', '#20854E','#FFDC91','#6F99AD', '#F39B7F','#D0DFE6')
+
+
+# Map plot
+map <- ggplot(world_with_subdiv) +
+    geom_sf(aes(fill = type.y), color = "gray80") +
+    # scale_fill_manual(values = col) +
+    labs(
+        title = "Predominant Subdivision Type by Country",
+        fill = "Subdivision Type"
     ) +
-
-    # # # Call-out annotation
-    # geom_richtext(
-    #     aes(x = 1850, y = 17, label = callout), stat = "unique",
-    #     family = "Candara", size = 4, lineheight = 1.2,
-    #     color = "grey20", hjust = 0, vjust = 1.03, fill = NA, label.color = NA
-    # ) +
-    # annotate(
-    #     geom = "curve", x = 1855, xend = 1830, y = 17, yend = 27, curvature = .35,
-    #     angle = 60, color = "grey20", linewidth = .4,
-    #     arrow = arrow(type = "closed", length = unit(.08, "inches"))
-    # ) +
-    # annotate(
-    #     geom = "segment", x = 1855, xend = 1830, y = 15, yend = 15,
-    #     color = "grey20", linewidth = 0.4,
-    #     arrow = arrow(type = "closed", length = unit(0.08, "inches"))
-    # ) +
-    
-    labs(title = "Top 20 Longest-Serving Rulers (Monarchs & Presidents)",
-         subtitle = "<b>Female</b> leaders are a rare sight among the longest-serving monarchs and presidents, with only <b>3</b> appearing in the top 20.",
-         caption = "Source: <b>Democracy and Dictatorship Dataset</b> | Graphic: <b>Natasa Anastasiadou</b>",
-         x = "", y = "") +
-    
+    coord_sf(xlim = c(-180, 180), ylim = c(-55, 85)) +
     theme_minimal() +
     theme(
-        legend.position = "bottom",
-        legend.title = element_blank(),
-        legend.text = element_text(size = 14),
-        axis.text.x = element_text(size = 16, face = "bold", family = "Candara"), 
-        axis.text.y = element_text(size = 16, face = "bold", family = "Candara"),
-        panel.grid.major = element_line(linewidth = .35, color = "grey85"),
-        panel.grid.minor = element_line(linewidth = .35, color = "grey85", linetype = "dashed"),
-        plot.title = element_text(size = 24, face = "bold", hjust = 0.5, family = "Candara"),
-        plot.subtitle = element_markdown(size = 17, hjust = 0.5, family = "Candara", color = "grey30"),
-        plot.caption = element_markdown(margin = margin(t = 25), size = 14, family = "Candara", hjust = 1),
-        plot.margin = margin(20, 20, 20, 20),
-        plot.background = element_rect(fill = "#e4e4e3", color = NA)
+        legend.position = "none",
+        plot.title = element_text(size = 18, face = "bold", hjust = 0.5),
+        plot.background = element_rect(fill = "white", color = NA),
+        panel.grid.major = element_line(color = "grey90"),
+        panel.grid.minor = element_blank(),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10)
     )
 
-p
+map
+
+
+
+top_countries <- country_subdivisions |>
+    count(alpha_2, sort = TRUE) |>
+    top_n(10, wt = n) |>
+    inner_join(countries, by = "alpha_2")  
+
+
+# Data preparation for stacked bar plot
+top_country_subdivisions <- country_subdivisions |>
+    filter(alpha_2 %in% top_countries$alpha_2) |>
+    count(alpha_2, type) |>
+    inner_join(countries, by = "alpha_2")  
+
+# Create the stacked bar plot
+p_stacked <- ggplot(top_country_subdivisions, aes(x = reorder(name, n), y = n, fill = type)) +
+    geom_bar(stat = "identity") +   
+    scale_fill_manual(values = col) +
+    coord_flip() +
+    labs(
+        title = "Top 10 Countries by Number and Type of Subdivisions",
+        x = "Country",
+        y = "Number of Subdivisions",
+        fill = "Subdivision Type"
+    ) +
+    theme_minimal() +
+    theme(
+        
+        plot.title = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "none"
+    )
 
 
 
 
-ggsave(
-    plot = p, filename = "Rplot.png",
-    width = 16, height = 12, units = "in", dpi = 600
-)    
+
+# Combine map with inset bar plot
+final_plot <- map +
+    inset_element(p_stacked, left = 0, bottom = 0.03, right = 0.4, top = 0.4)
+
+# Display the final plot
+final_plot
+
+
+
+# # Start recording ---------------------------------------------------------
+# 
+# gg_record(
+#     dir = file.path(".", "recording"),
+#     device = "png",
+#     width = 7,
+#     height = 6,
+#     units = "in",
+#     dpi = 300
+# )
+# 
+# 
+# # Save gif ----------------------------------------------------------------
+# 
+# ggsave(
+#     file.path(".", paste0("20241105", ".png")),
+#     bg = "#e4e4e3",
+#     width = 7,
+#     height = 6
+# )
+# 
+# gg_playback(
+#     name = file.path(".", paste0("20241105", ".gif")),
+#     first_image_duration = 4,
+#     last_image_duration = 20,
+#     frame_duration = .25,
+#     background = "#e4e4e3"
+# )
+
 
