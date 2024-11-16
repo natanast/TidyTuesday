@@ -72,17 +72,17 @@ p = ggplot(data) +
     theme(
         # legend.position = c(.8, .7),
         legend.position = "right",
-        legend.title = element_markdown(size = 16, family = "Candara", color = "grey30"),
-        legend.text = element_markdown(size = 16, family = "Candara", color = "grey30"),
+        legend.title = element_markdown(size = 12, family = "Candara", color = "grey30"),
+        legend.text = element_markdown(size = 12, family = "Candara", color = "grey30"),
         axis.title.y = element_blank(),
-        axis.title.x = element_markdown(size = 16, family = "Candara"),
-        axis.text.x = element_markdown(size = 16, family = "Candara"), 
-        axis.text.y = element_markdown(size = 16, family = "Candara"), # Enable markdown for color
+        axis.title.x = element_markdown(size = 12, family = "Candara"),
+        axis.text.x = element_markdown(size = 12, family = "Candara"), 
+        axis.text.y = element_markdown(size = 12, family = "Candara"), # Enable markdown for color
         panel.grid.major = element_line(linewidth = .35, color = "grey85"),
         panel.grid.minor = element_line(linewidth = .35, color = "grey85", linetype = "dashed"),
-        plot.title = element_text(size = 26, face = "bold", hjust = 0.5, family = "Candara"),
-        plot.subtitle = element_markdown(size = 20, hjust = 0.5, family = "Candara", color = "grey30"),
-        plot.caption = element_markdown(margin = margin(t = 15), size = 15, family = "Candara", hjust = 2),
+        plot.title = element_text(size = 20, face = "bold", hjust = 0.5, family = "Candara"),
+        plot.subtitle = element_markdown(size = 16, hjust = 0.5, family = "Candara", color = "grey30"),
+        plot.caption = element_markdown(margin = margin(t = 12), size = 10, family = "Candara", hjust = 2),
         plot.margin = margin(20, 20, 20, 20),
         plot.background = element_rect(fill = "#e4e4e3", color = NA)
     ) 
@@ -90,5 +90,5 @@ p = ggplot(data) +
 
 ggsave(
     plot = p, filename = "Rplot.png",
-    width = 16, height = 16, units = "in", dpi = 600
+    width = 12, height = 12, units = "in", dpi = 600
 )    
