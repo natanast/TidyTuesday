@@ -31,6 +31,7 @@ d$season <- d$season |> as.factor()
 d$season_text <- ifelse(d$episode == min(d$episode), "S" |> paste(d$season), NA)
 
 
+
 # plot --------
 
 gr = ggplot(d, aes(x = episode, y = season, group = season)) +
@@ -72,7 +73,7 @@ gr = ggplot(d, aes(x = episode, y = season, group = season)) +
               vjust = 0.35) +
     
     labs(
-        title = "Radial plot of Unique Words per episode across 14 seasons.",
+        title = "Radial plot of Unique Words per episode across 14 seasons of <span style='color: #b24745;'>Bob's Burgers</span>.",
         subtitle = "Each bubble represents an <b>Episode</b>. Each circle represents a <b>Season</b>. <br> Episodes with unique words ranging from <b><span style='color: #7d7ca9; font-weight: bold;'>1000 to 1200</span></b> appear more often.",
         caption = "Source: <b>  {bobsburgersR} R Package</b> | Graphic: <b>Natasa Anastasiadou</b>"
     ) +
@@ -93,14 +94,17 @@ gr = ggplot(d, aes(x = episode, y = season, group = season)) +
         panel.grid.major = element_line(linewidth = .35, color = "grey85"),
         panel.grid.minor = element_blank(),
         
-        plot.title = element_text(size = 15, face = "bold", hjust = 0.5, vjust = -15, family = "Candara" ),
-        plot.subtitle = element_markdown(size = 11, hjust = 0.5, family = "Candara", color = "grey30", margin = margin(60)),
-        plot.caption = element_markdown(margin = margin(t = 12), size = 6, family = "Candara", hjust = 1.27),
+        plot.title = element_markdown(size = 15, face = "bold", hjust = 0.5, family = "Candara", margin = margin(t = 25, l = 50)),
+        plot.subtitle = element_markdown(size = 11, hjust = 0.5, family = "Candara", color = "grey30", margin = margin(t = 10, l = 50)),
+        plot.caption = element_markdown(margin = margin(t = 12), size = 8, family = "Candara", hjust = 1.3),
         
-        plot.margin = margin(5, 5, 5, 5),
+        plot.margin = margin(10, 10, 10, 10),
         
         plot.background = element_rect(fill = "#e4e4e3", color = NA)
     )
+
+gr
+
 
 ggsave(
     plot = gr, filename = "Rplot.png",
