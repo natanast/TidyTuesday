@@ -31,10 +31,23 @@ d$season <- d$season |> as.factor()
 d$season_text <- ifelse(d$episode == min(d$episode), "S" |> paste(d$season), NA)
 
 
+# Recording --------
+
+library(camcorder)
+
+gg_record(
+    dir = file.path("recording"),
+    device = "png",
+    width = 8,
+    height = 8,
+    units = "in",
+    dpi = 600
+)
+
 
 # plot --------
 
-gr = ggplot(d, aes(x = episode, y = season, group = season)) +
+ggplot(d, aes(x = episode, y = season, group = season)) +
     
     geom_line(color = "grey65", size = 0.6, alpha = 0.7) +
     
@@ -96,19 +109,38 @@ gr = ggplot(d, aes(x = episode, y = season, group = season)) +
         
         plot.title = element_markdown(size = 15, face = "bold", hjust = 0.5, family = "Candara", margin = margin(t = 25, l = 50)),
         plot.subtitle = element_markdown(size = 11, hjust = 0.5, family = "Candara", color = "grey30", margin = margin(t = 10, l = 50)),
-        plot.caption = element_markdown(margin = margin(t = 12), size = 8, family = "Candara", hjust = 1.3),
+        plot.caption = element_markdown(margin = margin(t = 12), size = 8, family = "Candara", hjust = 1.25),
         
-        plot.margin = margin(10, 10, 10, 10),
+        plot.margin = margin(6, 6, 6, 6),
         
         plot.background = element_rect(fill = "#e4e4e3", color = NA)
     )
 
 
-ggsave(
-    plot = gr, filename = "Rplot.png",
-    width = 8, height = 8, units = "in", dpi = 600
-)    
+# ggsave(
+#     plot = gr, filename = "Rplot.png",
+#     width = 8, height = 8, units = "in", dpi = 600
+# )    
+
+
+# 
+# gg_playback(
+#     name = file.path(paste0("20241124", ".gif")),
+#     first_image_duration = 4,
+#     last_image_duration = 20,
+#     frame_duration = .25
+#     # background = bg_col
+# )
 
 
 
+gg_stop_recording()
 
+gg_playback(
+    name = "Rplot_gif.gif",
+    first_image_duration = 4,
+    last_image_duration = 20,
+    frame_duration = 0.25, 
+    width = 4800, # Match or scale up to the recorded dimensions (8 inches * 600 dpi)
+    height = 4800
+)
