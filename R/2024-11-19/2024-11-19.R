@@ -103,8 +103,6 @@ gr = ggplot(d, aes(x = episode, y = season, group = season)) +
         plot.background = element_rect(fill = "#e4e4e3", color = NA)
     )
 
-gr
-
 
 ggsave(
     plot = gr, filename = "Rplot.png",
