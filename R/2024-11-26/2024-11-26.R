@@ -23,9 +23,21 @@ cbp_state <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesda
 
 
 # clean data -------
+library(tidyverse)
 
+library(tidyverse)
 
-
+cbp_resp %>%
+    group_by(month_abbv) %>%
+    summarize(total_encounters = sum(encounter_count, na.rm = TRUE)) %>%
+    ggplot(aes(x = month_abbv, y = total_encounters)) +
+    geom_line(group = 1, color = "green") +
+    geom_point(color = "blue") +
+    labs(title = "Seasonal Trends in Encounters", 
+         x = "Month", 
+         y = "Total Encounters") +
+    theme_minimal() +
+    scale_x_discrete(limits = c("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"))
 
 # plot --------
 # 
