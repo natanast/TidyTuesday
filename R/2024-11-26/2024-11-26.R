@@ -60,14 +60,14 @@ gr = ggplot(map_data) +
         aes(x = centroid_x, y = centroid_y, label = state),
         size = 3.5,                    
         family = "Candara",            
-        color = "gray30",               
-        bg.color = "white",            
+        color = "gray10",               
+        bg.color = "grey93",            
         bg.r = 0.06                     
     ) +
     
     scale_fill_stepsn(
         colors = c("#7d7ca9","#abaad9","#ffffe0","#ff9a92","#b24745"),
-        na.value = "grey95",
+        na.value = "grey55",
         labels = scales::comma,
         guide = guide_colorsteps(
             title = "Encounters",
@@ -79,7 +79,7 @@ gr = ggplot(map_data) +
     
     labs(
         title = "State-by-State Customs and Border Protection (CBP) Encounters",
-        subtitle = "A comprehensive view of encounters reported by U.S. CBP for each state.",
+        subtitle = "A comprehensive view of encounters reported by U.S. CBP for each state. <br> States with missing encounter data are displayed in <b><span style='color: grey35; font-weight: bold;'> grey </span></b>.",
         caption = "Source: <b> U.S. Customs and Border Protection (CBP) Encounter Data</b> | Graphic: <b>Natasa Anastasiadou</b>"
     ) +
     
