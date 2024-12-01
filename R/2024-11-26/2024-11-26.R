@@ -45,11 +45,26 @@ centroids_coords <- st_coordinates(centroids)
 map_data$centroid_x <- centroids_coords[, 1]
 map_data$centroid_y <- centroids_coords[, 2]
 
+# Recording --------
+
+library(camcorder)
+
+gg_record(
+    dir = file.path("recording"),
+    device = "png",
+    width = 10,
+    height = 10,
+    units = "in",
+    dpi = 600
+)
+
+
+
 
 
 # plot -------
 
-gr = ggplot(map_data) +
+ggplot(map_data) +
     
     geom_sf(data = map, fill = "grey95", linewidth = 0.05) +
     
@@ -58,11 +73,11 @@ gr = ggplot(map_data) +
     # Add text with a shadow (stroke effect)
     geom_shadowtext(
         aes(x = centroid_x, y = centroid_y, label = state),
-        size = 3.5,                    
-        family = "Candara",            
-        color = "gray10",               
-        bg.color = "grey93",            
-        bg.r = 0.06                     
+        size = 3.5,
+        family = "Candara",
+        color = "gray10",
+        bg.color = "grey93",
+        bg.r = 0.06
     ) +
     
     scale_fill_stepsn(
@@ -103,9 +118,20 @@ gr = ggplot(map_data) +
         plot.background = element_rect(fill = "grey93", color = NA)
     )
 
+ 
+# ggsave(
+#     plot = gr, filename = "Rplot.png",
+#     width = 10, height = 9, units = "in", dpi = 600
+# )
 
-ggsave(
-    plot = gr, filename = "Rplot.png",
-    width = 10, height = 9, units = "in", dpi = 600
+
+gg_stop_recording()
+
+gg_playback(
+    name = "Rplot_gif.gif",
+    first_image_duration = 10,
+    last_image_duration = 20,
+    frame_duration = 0.45, 
+    width = 4800, # Match or scale up to the recorded dimensions (8 inches * 600 dpi)
+    height = 4800
 )
-
