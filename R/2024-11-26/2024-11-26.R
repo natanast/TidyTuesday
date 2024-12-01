@@ -102,9 +102,6 @@ gr = ggplot(map_data) +
         
         plot.background = element_rect(fill = "grey93", color = NA)
     )
-
-gr
-
 ggsave(
     plot = gr, filename = "Rplot.png",
     width = 10, height = 9, units = "in", dpi = 600
