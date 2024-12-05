@@ -1,7 +1,11 @@
-# U.S. Customs and Border Protection (CBP) Encounter Data
+# National Highways Traffic Flow
 
-This week we're exploring [U.S. Customs and Border Protection (CBP) encounter data](https://www.cbp.gov/document/stats/nationwide-encounters):
+This week we're exploring National Highways Traffic Flow data! National Highways operates and maintains motorways and major A roads in England. They directly monitor the speed and flow of roads using on road sensors, and the data can be accessed via the [National Highways API](https://webtris.nationalhighways.co.uk/api/swagger/ui/index).
 
-> Encounter data includes U.S. Border Patrol Title 8 apprehensions, Office of Field Operations Title 8 inadmissibles, and all Title 42 expulsions for fiscal years 2020 to date. Data is available for the Northern Land Border, Southwest Land Border, and Nationwide (i.e., air, land, and sea modes of transportation) encounters. Data is extracted from live CBP systems and data sources. Statistical information is subject to change due to corrections, systems changes, change in data definition, additional information, or encounters pending final review. Final statistics are available at the conclusion of each fiscal year.
+This week's data has vehicle size and speed information for May 2021 from four different road sensors on the A64 road. 
 
-Thank you to [Tony Galván](https://www.linkedin.com/in/anthony-raul-galvan/) for curating this dataset and providing a [blog post](https://gdatascience.github.io/us_border_patrol_encounters/us_border_patrol_encounters.html) that explores the data in more detail.
+* Do vehicles travel faster on certain days or at certain times?
+* What time of day do large vehicles use this road?
+* Do smaller vehicles travel faster?
+
+Thank you to [Nicola Rennie](https://github.com/nrennie) for curating this week's dataset.
