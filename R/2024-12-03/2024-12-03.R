@@ -69,8 +69,6 @@ gr = ggplot(long_data, aes(x = `Speed Range`, y = `Report Date`, fill = `Avg Tra
         plot.background = element_rect(fill = "grey93", color = NA)
     ) 
 
-gr
-
 
 ggsave(
     plot = gr, filename = "Rplot.png",
