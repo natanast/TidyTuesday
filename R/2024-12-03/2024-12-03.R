@@ -29,12 +29,12 @@ h <- A64_traffic[, c("Report Date", "0 - 10 mph", "11 - 15 mph",
 daily_averages <- h[, lapply(.SD, mean, na.rm = TRUE), by = `Report Date`]
 
 # Convert to long format for ggplot
-long_data <- melt(daily_averages, id.vars = "Report Date", variable.name = "Speed Range", value.name = "Avg Traffic Volume")
+long_data <- melt(daily_averages, id.vars = "Report Date", variable.name = "Speed Range", value.name = "Average N. of Vehicles")
 
 
 
 # Create the heatmap using ggplot2
-gr = ggplot(long_data, aes(x = `Speed Range`, y = `Report Date`, fill = `Avg Traffic Volume`)) +
+gr = ggplot(long_data, aes(x = `Speed Range`, y = `Report Date`, fill = `Average N. of Vehicles`)) +
     
     geom_tile(linewidth = .15, color = "grey20") +
 
@@ -43,9 +43,10 @@ gr = ggplot(long_data, aes(x = `Speed Range`, y = `Report Date`, fill = `Avg Tra
     theme_minimal() +
     
     labs(
-        title = "A64 Traffic Heatmap",
-        subtitle = "Average traffic volume by speed range across different dates.",
-        caption = "Source: <b> A64 Traffic Data</b> | Graphic: <b>Natasa Anastasiadou</b>"
+        title = "Traffic Flow on England’s Major Roads",
+        subtitle = "Daily Average Number of Vehicles by Speed Range Monitored via National Highways Sensors",
+        caption = "Source: <b> National Highways Traffic Flow data</b> | Graphic: <b>Natasa Anastasiadou</b>",
+        y = "Date"
     ) +
     
 
@@ -62,7 +63,7 @@ gr = ggplot(long_data, aes(x = `Speed Range`, y = `Report Date`, fill = `Avg Tra
         
         plot.title = element_markdown(size = 20, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 5, t = 5)),
         plot.subtitle = element_markdown(size = 16, hjust = 0.5, family = "Candara", color = "grey30", margin = margin(b = 15, t = 5)),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1.3),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1.4),
         
         plot.margin = margin(20, 20, 20, 20),
         
