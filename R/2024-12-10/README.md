@@ -1,11 +1,11 @@
-# National Highways Traffic Flow
+# The Scent of Data - Exploring the Parfumo Fragrance Dataset
 
-This week we're exploring National Highways Traffic Flow data! National Highways operates and maintains motorways and major A roads in England. They directly monitor the speed and flow of roads using on road sensors, and the data can be accessed via the [National Highways API](https://webtris.nationalhighways.co.uk/api/swagger/ui/index).
+This week we're diving into the fascinating world of fragrances with a dataset sourced from [Parfumo](https://www.parfumo.com/), a vibrant community of perfume enthusiasts.  [Olga G.](https://www.kaggle.com/olgagmiufana1) webscraped these data from the various fragrance sections on the Parfumo website. Here is a description from the author:
 
-This week's data has vehicle size and speed information for May 2021 from four different road sensors on the A64 road. 
+> This dataset contains detailed information about perfumes sourced from Parfumo, obtained through web scraping. It includes data on perfume ratings, olfactory notes (top, middle, and base notes), perfumers, year of release and other relevant characteristics of the perfumes listed on the Parfumo website.
 
-* Do vehicles travel faster on certain days or at certain times?
-* What time of day do large vehicles use this road?
-* Do smaller vehicles travel faster?
+> The data provides a comprehensive look at how various perfumes are rated, which families of scents they belong to, and detailed breakdowns of the key olfactory components that define their overall profile
 
-Thank you to [Nicola Rennie](https://github.com/nrennie) for curating this week's dataset.
+We’ll explore how perfumes are rated, uncover the scent families they belong to, and delve into the minds of the perfumers behind them. From the year of release to the delicate composition of each scent, this dataset offers a rich olfactory experience for anyone curious about the magic behind their favorite perfumes.
+
+Thank you to [Nicolas Foss, Ed.D., MS | Bureau of Emergency Medical and Trauma Services > Iowa HHS](https://github.com/nicolasfoss) for curating this week's dataset.
