@@ -8,16 +8,10 @@ gc()
 
 library(data.table)
 library(ggplot2)
-# library(ggplotify)
-
 library(extrafont)
 library(ggtext)
-
 library(ggstream)
 library(paletteer)
-
-
-
 
 # load data --------
 
@@ -32,7 +26,6 @@ d = parfumo_data_clean[, c("Name", "Brand", "Release_Year", "Rating_Value", "Rat
 d <- d[!is.na(d$Release_Year) & !is.na(d$Rating_Value) & !is.na(d$Rating_Count), ]
 
 d1 <- d[Rating_Count > 500]
-
 
 
 # Calculate the longevity of each brand
@@ -51,14 +44,11 @@ d2 <- d1[Brand %in% brand_longevity$Brand, ]
 stream_data <- d2[, .(Release_Year, Rating_Value, Brand)]
 
 
-
-
 stream_data$Release_Year <- stream_data$Release_Year |> as.numeric() 
 
 
 # Aggregate the ratings by Release_Year and Brand to get the average rating
 stream_data_avg <- stream_data[, .(Avg_Rating = mean(Rating_Value, na.rm = TRUE)), by = .(Release_Year, Brand)]
-
 
 
 stream_data_avg <- stream_data_avg[Release_Year > 1975,]
