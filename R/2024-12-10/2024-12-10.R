@@ -64,11 +64,9 @@ gr = ggplot(stream_data_avg, aes(x = Release_Year, y = Avg_Rating, fill = Brand)
     geom_stream(
         type = "mirror",
         color = "grey85",
-        linewidth = .02,
-        # bw = .75
+        linewidth = .35,
+        # bw = .75,
         extra_span = .20
-        # true_range = "both"
-        # sorting = "inside_out"
     ) +
     
     labs(
