@@ -13,6 +13,7 @@ library(ggtext)
 library(ggstream)
 library(paletteer)
 
+
 # load data --------
 
 parfumo_data_clean <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-12-10/parfumo_data_clean.csv')
@@ -71,11 +72,13 @@ ggplot(stream_data_avg, aes(x = Release_Year, y = Avg_Rating, fill = Brand)) +
     
     labs(
         title = "Average Perfume Ratings Over Time by Brand",
+        subtitle = "Daily Average Number of Vehicles by Speed Range Monitored via National Highways Sensors",
+        caption = "Source: <b> National Highways Traffic Flow data</b> | Graphic: <b>Natasa Anastasiadou</b>",
         x = "Release Year",
         y = "Average Rating",
         fill = "Brand"
     ) +
-    
+
     theme_minimal() +
     
     scale_fill_manual(values = col) +
