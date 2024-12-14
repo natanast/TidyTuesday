@@ -54,6 +54,9 @@ stream_data_avg <- stream_data[, .(Avg_Rating = mean(Rating_Value, na.rm = TRUE)
 stream_data_avg <- stream_data_avg[Release_Year > 1980,]
 
 
+
+col = c('#60608b', '#6c6c98', '#7978a4', '#8584b1', '#9291be', '#9e9ecb', '#acabd8', '#b9b8e5', '#c6c5f2', '#ffeacf', '#ffd5be', '#fcc1ad', '#f7ad9c', '#f09a8c', '#e7877d', '#dc756e', '#d0645f', '#c15451')
+
 ggplot(stream_data_avg, aes(x = Release_Year, y = Avg_Rating, fill = Brand)) +
     
     geom_stream(
@@ -75,10 +78,32 @@ ggplot(stream_data_avg, aes(x = Release_Year, y = Avg_Rating, fill = Brand)) +
     
     theme_minimal() +
     
-    scale_fill_manual(values = paletteer_c("ggthemes::Sunset-Sunrise Diverging", n = 30)) +
+    scale_fill_manual(values = col) +
+
 
     theme(
-        legend.position = "right"
+        legend.position = "right",
+
+        
+        # legend.title = element_text(size = 10, face = "bold", family = "Candara", color = "grey30", angle = 90, hjust = .5),
+        legend.text = element_text(size = 8, family = "Candara", color = "grey30"),
+        
+        axis.title.x = element_text(size = 12, family = "Candara"),
+        axis.title.y = element_text(size = 12, family = "Candara"),
+        
+        axis.text.x = element_text(size = 12, family = "Candara"),
+        axis.text.y = element_text(size = 12, family = "Candara"),
+        
+        panel.grid.major = element_line(linewidth = .4, color = "grey85"),
+        panel.grid.minor = element_line(linewidth = .3, linetype = "dashed", color = "grey85"),
+        
+        plot.title = element_markdown(size = 20, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 5, t = 5)),
+        plot.subtitle = element_markdown(size = 16, hjust = 0.45, family = "Candara", color = "grey30", margin = margin(b = 15, t = 5)),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1.4),
+        
+        plot.margin = margin(20, 20, 20, 20),
+        
+        plot.background = element_rect(fill = "grey93", color = NA)
     )
 
 
