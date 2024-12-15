@@ -124,10 +124,10 @@ gr = ggplot(stream_data_avg, aes(x = Release_Year, y = Avg_Rating, fill = Brand)
     )
 
 
-ggsave(
-    plot = gr, filename = "Rplot.png",
-    width = 11, height = 9, units = "in", dpi = 600
-)
+# ggsave(
+#     plot = gr, filename = "Rplot.png",
+#     width = 11, height = 9, units = "in", dpi = 600
+# )
 
 
 gg_stop_recording()
