@@ -62,8 +62,8 @@ library(camcorder)
 gg_record(
     dir = file.path("recording"),
     device = "png",
-    width = 10,
-    height = 10,
+    width = 12,
+    height = 12,
     units = "in",
     dpi = 600
 )
@@ -73,13 +73,12 @@ gg_record(
 
 col = c('#60608b', '#6c6c98', '#7978a4', '#8584b1', '#9291be', '#9e9ecb', '#acabd8', '#b9b8e5', '#c6c5f2', '#ffeacf', '#ffd5be', '#fcc1ad', '#f7ad9c', '#f09a8c', '#e7877d', '#dc756e', '#d0645f', '#c15451')
 
-gr = ggplot(stream_data_avg, aes(x = Release_Year, y = Avg_Rating, fill = Brand)) +
+ggplot(stream_data_avg, aes(x = Release_Year, y = Avg_Rating, fill = Brand)) +
     
     geom_stream(
         type = "mirror",
         color = "grey85",
         linewidth = .35,
-        # bw = .75,
         extra_span = .20
     ) +
     
@@ -92,32 +91,29 @@ gr = ggplot(stream_data_avg, aes(x = Release_Year, y = Avg_Rating, fill = Brand)
         fill = "Brand"
     ) +
 
-
     theme_minimal() +
     
     scale_fill_manual(values = col) +
 
-
     theme(
         legend.position = "right",
 
-        
-        # legend.title = element_text(size = 10, face = "bold", family = "Candara", color = "grey30", angle = 90, hjust = .5),
+        legend.title = element_text(size = 10, face = "bold", family = "Candara", color = "grey30"),
         legend.text = element_text(size = 8, family = "Candara", color = "grey30"),
-        
+
         axis.title.x = element_text(size = 12, family = "Candara"),
         axis.title.y = element_text(size = 12, family = "Candara"),
-        
+
         axis.text.x = element_text(size = 12, family = "Candara"),
         axis.text.y = element_text(size = 12, family = "Candara"),
-        
+
         panel.grid.major = element_line(linewidth = .4, color = "grey85"),
         panel.grid.minor = element_line(linewidth = .3, linetype = "dashed", color = "grey85"),
-        
+
         plot.title = element_markdown(size = 18, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 5, t = 5, )),
         plot.subtitle = element_markdown(size = 14, hjust = 0.25, family = "Candara", color = "grey30", margin = margin(b = 15, t = 5)),
         plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1.25),
-        
+
         plot.margin = margin(20, 20, 20, 20),
         
         plot.background = element_rect(fill = "grey93", color = NA)
@@ -135,9 +131,9 @@ gg_stop_recording()
 gg_playback(
     name = "Rplot_gif.gif",
     first_image_duration = 8,
-    last_image_duration = 20,
-    frame_duration = 0.45, 
-    width = 4800, # Match or scale up to the recorded dimensions (8 inches * 600 dpi)
-    height = 4800
+    last_image_duration = 5,
+    frame_duration = 0.5, 
+    width = 2000, # Match or scale up to the recorded dimensions (8 inches * 600 dpi)
+    height = 600
 )
 
