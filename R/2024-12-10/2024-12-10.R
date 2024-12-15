@@ -109,7 +109,6 @@ gr = ggplot(stream_data_avg, aes(x = Release_Year, y = Avg_Rating, fill = Brand)
         plot.background = element_rect(fill = "grey93", color = NA)
     )
 
-gr
 
 ggsave(
     plot = gr, filename = "Rplot.png",
