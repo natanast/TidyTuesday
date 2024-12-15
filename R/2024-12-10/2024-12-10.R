@@ -55,9 +55,9 @@ stream_data_avg <- stream_data[, .(Avg_Rating = mean(Rating_Value, na.rm = TRUE)
 stream_data_avg <- stream_data_avg[Release_Year > 1980,]
 
 
+# plot ---------
 
 col = c('#60608b', '#6c6c98', '#7978a4', '#8584b1', '#9291be', '#9e9ecb', '#acabd8', '#b9b8e5', '#c6c5f2', '#ffeacf', '#ffd5be', '#fcc1ad', '#f7ad9c', '#f09a8c', '#e7877d', '#dc756e', '#d0645f', '#c15451')
-
 
 gr = ggplot(stream_data_avg, aes(x = Release_Year, y = Avg_Rating, fill = Brand)) +
     
