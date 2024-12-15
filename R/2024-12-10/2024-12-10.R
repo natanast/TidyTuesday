@@ -55,6 +55,20 @@ stream_data_avg <- stream_data[, .(Avg_Rating = mean(Rating_Value, na.rm = TRUE)
 stream_data_avg <- stream_data_avg[Release_Year > 1980,]
 
 
+# Recording --------
+
+library(camcorder)
+
+gg_record(
+    dir = file.path("recording"),
+    device = "png",
+    width = 10,
+    height = 10,
+    units = "in",
+    dpi = 600
+)
+
+
 # plot ---------
 
 col = c('#60608b', '#6c6c98', '#7978a4', '#8584b1', '#9291be', '#9e9ecb', '#acabd8', '#b9b8e5', '#c6c5f2', '#ffeacf', '#ffd5be', '#fcc1ad', '#f7ad9c', '#f09a8c', '#e7877d', '#dc756e', '#d0645f', '#c15451')
@@ -114,3 +128,16 @@ ggsave(
     plot = gr, filename = "Rplot.png",
     width = 11, height = 9, units = "in", dpi = 600
 )
+
+
+gg_stop_recording()
+
+gg_playback(
+    name = "Rplot_gif.gif",
+    first_image_duration = 8,
+    last_image_duration = 20,
+    frame_duration = 0.45, 
+    width = 4800, # Match or scale up to the recorded dimensions (8 inches * 600 dpi)
+    height = 4800
+)
+
