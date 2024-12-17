@@ -3,7 +3,6 @@
 rm(list = ls())
 gc()
 
-
 # load libraries -------
 
 library(data.table)
@@ -12,12 +11,12 @@ library(extrafont)
 library(ggtext)
 library(ggstream)
 library(paletteer)
+library(camcorder)
 
 
 # load data --------
 
 parfumo_data_clean <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-12-10/parfumo_data_clean.csv')
-
 
 # data cleaning -----
 
@@ -56,8 +55,6 @@ stream_data_avg <- stream_data_avg[Release_Year > 1980,]
 
 
 # Recording --------
-
-library(camcorder)
 
 gg_record(
     dir = file.path("recording_"),
