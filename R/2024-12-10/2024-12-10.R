@@ -60,10 +60,10 @@ stream_data_avg <- stream_data_avg[Release_Year > 1980,]
 library(camcorder)
 
 gg_record(
-    dir = file.path("recording"),
+    dir = file.path("recording_"),
     device = "png",
-    width = 12,
-    height = 12,
+    width = 11,
+    height = 11,
     units = "in",
     dpi = 600
 )
@@ -112,7 +112,7 @@ ggplot(stream_data_avg, aes(x = Release_Year, y = Avg_Rating, fill = Brand)) +
 
         plot.title = element_markdown(size = 18, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 5, t = 5, )),
         plot.subtitle = element_markdown(size = 14, hjust = 0.25, family = "Candara", color = "grey30", margin = margin(b = 15, t = 5)),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1.25),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1.3),
 
         plot.margin = margin(20, 20, 20, 20),
         
@@ -131,9 +131,7 @@ gg_stop_recording()
 gg_playback(
     name = "Rplot_gif.gif",
     first_image_duration = 8,
-    last_image_duration = 5,
-    frame_duration = 0.5, 
-    width = 2000, # Match or scale up to the recorded dimensions (8 inches * 600 dpi)
-    height = 600
+    last_image_duration = 6,
+    frame_duration = 0.5
 )
 
