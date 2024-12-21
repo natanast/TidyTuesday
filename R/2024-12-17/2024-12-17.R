@@ -80,7 +80,7 @@ gr = ggraph(layout) +
         color = "grey25",
         hjust = 0.5,
         vjust = 0.5,
-        size = 5
+        size = 4
         ) +
 
     # geom_node_point(
@@ -118,9 +118,9 @@ gr = ggraph(layout) +
     ) +
     
     theme(
-        plot.title = element_markdown(size = 22, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 5, t = 5, )),
-        plot.subtitle = element_markdown(size = 18, hjust = 0.5, face = "bold", family = "Candara", color = "grey30", margin = margin(b = 15, t = 5)),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 12, family = "Candara", hjust = 1),
+        plot.title = element_markdown(size = 20, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 5, t = 5, )),
+        plot.subtitle = element_markdown(size = 16, hjust = 0.5, face = "bold", family = "Candara", color = "grey30", margin = margin(b = 15, t = 5)),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1),
         
         plot.margin = margin(20, 20, 20, 20),
         
@@ -131,5 +131,5 @@ gr
 
 ggsave(
     plot = gr, filename = "Rplot.png",
-    width = 12, height = 12, units = "in", dpi = 600
+    width = 10, height = 10, units = "in", dpi = 600
 )
