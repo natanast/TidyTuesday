@@ -39,9 +39,6 @@ edges <- melt(
 )[can_cast == TRUE, .(spell = name, class)]
 
 
-
-
-
 # Prepare node labels
 edges[, spell := str_wrap(spell, width = 15)]
 
@@ -61,6 +58,7 @@ layout <- graph |>
 
 
 # plot --------
+
 gr = ggraph(layout) + 
     
     # geom_edge_link(color = "#97A1A7", edge_width = .05) +
@@ -126,7 +124,6 @@ gr = ggraph(layout) +
         plot.background = element_rect(fill = "grey93", color = NA)
     )
 
-gr
 
 ggsave(
     plot = gr, filename = "Rplot.png",
