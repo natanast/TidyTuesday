@@ -25,7 +25,6 @@ library(ggtext)
 
 spells <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-12-17/spells.csv')
 
-
 # data cleaning ------
 
 df <- spells[range_type %in% c("self", "touch") & level > 6, ]
