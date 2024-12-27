@@ -60,8 +60,7 @@ layout <- graph |>
 # plot --------
 
 gr = ggraph(layout) + 
-    
-    # geom_edge_link(color = "#97A1A7", edge_width = .05) +
+
     geom_edge_bundle_force(
         n_cycle = 2.5,
         threshold = 0.5,
