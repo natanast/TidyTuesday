@@ -79,15 +79,6 @@ gr = ggraph(layout) +
         size = 4
         ) +
 
-
-    # scale_size_continuous(
-    #     range = c(6, 18), 
-    #     # guide = guide_legend(
-    #     #     title = "No. of connections",
-    #     #     override.aes = list(color = "grey10", stroke = .35)
-    #     # )
-    # ) +
-    
     scale_fill_manual(
         values = c(
             "Class" = "#acabd8",
