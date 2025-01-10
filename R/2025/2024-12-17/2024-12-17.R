@@ -10,17 +10,6 @@ library(data.table)
 library(ggplot2)
 library(stringr)
 
-library(tidygraph)
-
-library(ggrepel)
-library(ggraph)
-library(ggnewscale)
-library(shadowtext)
-
-library(extrafont)
-library(ggtext)
-
-
 # load data --------
 
 spells <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-12-17/spells.csv')
@@ -38,10 +27,6 @@ edges <- melt(
     variable.name = "class", 
     value.name = "can_cast"
 )[can_cast == TRUE, .(spell = name, class)]
-
-
-
-
 
 # Prepare node labels
 edges[, spell := str_wrap(spell, width = 15)]
