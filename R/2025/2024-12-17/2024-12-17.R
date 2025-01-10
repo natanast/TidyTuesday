@@ -83,19 +83,7 @@ gr = ggraph(layout) +
         size = 4
         ) +
 
-    # geom_node_point(
-    #     aes(size = Degree, fill = Level), shape = 21,
-    #     stroke = .2, color = "grey96"
-    # ) +
-    
-    # scale_size_continuous(
-    #     range = c(6, 18), 
-    #     # guide = guide_legend(
-    #     #     title = "No. of connections",
-    #     #     override.aes = list(color = "grey10", stroke = .35)
-    #     # )
-    # ) +
-    
+   
     scale_fill_manual(
         values = c(
             "Class" = "#acabd8",
@@ -126,8 +114,6 @@ gr = ggraph(layout) +
         
         plot.background = element_rect(fill = "grey93", color = NA)
     )
-
-gr
 
 ggsave(
     plot = gr, filename = "Rplot.png",
