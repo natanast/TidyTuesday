@@ -1,12 +1,17 @@
-# Dungeons and Dragons Spells (2024)
+# posit::conf talks
 
-This week we're exploring magical spells from the recently released Dungeons and Dragons Free Rules (2024 edition).
+This week we're exploring posit::conf talks! 
+On the day when this dataset is first being shared, the [call for speakers for posit::conf(2025)](https://posit.co/blog/speak-at-posit-conf-2025/) is open. 
+To help inspire you to submit a talk, we've collected data about posit::conf talks from 2023 and 2024. 
+Thank you to [Rachael Dempsey](https://www.linkedin.com/in/rachaeldempsey/) for the Google sheets!
 
-> Many characters have the ability to cast spells, which have a huge variety of effects. Some spells are mostly useful in combat, by dealing damage or imposing conditions. Other spells have utility in exploration. If you’re playing a spellcaster, look for a mix of combat-effective and utilitarian spells to help deal with varied challenges.
+> posit::conf is our annual conference that focuses on the R and Python programming languages and their applications in data science. The conference features a variety of workshops, talks, and networking opportunities for attendees, with a particular emphasis on fostering a sense of community among data science professionals. In addition to providing opportunities for learning and professional development, posit::conf also aims to create a fun and engaging atmosphere that encourages attendees to connect with one another and explore the latest trends and technologies in the field.
 
-- Which class has the most options for spells to cast on themselves, or on targets they can touch?
-- Which classes have the most spells that require concentration? Which classes have spells that last without concentration?
-- Are there any interesting patterns in the text descriptions of the spells?
+- Which speakers gave talks in both 2023 and 2024?
+- Are there keywords that appear in track titles in both 2023 and 2024?
+- What is the average sentiment of the descriptions in each track?
+
+Be careful to de-duplicate talk data when necessary! 
+Talks with multiple speakers might appear more than once.
 
 Thank you to [Jon Harmon](https://github.com/jonthegeek) for curating this week's dataset.
-
