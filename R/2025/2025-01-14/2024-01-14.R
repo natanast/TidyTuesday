@@ -13,6 +13,7 @@ library(stringr)
 library(ggwordcloud)
 library(extrafont)
 library(ggtext)
+library(paletteer)
 
 
 # load data --------
@@ -80,21 +81,25 @@ exclude_words <- c("", "a", "and", "in", "is", "it", "its", "not", "of", "or", "
 # Filter out excluded words
 common_freq_filtered <- common_freq[!word %in% exclude_words]
 
+common_freq_filtered$angle <- sample(c(0, 45, 60, 90, 120, 180), nrow(common_freq_filtered), replace = TRUE)
+
 
 
 # plot --------
 
+col = c('#44456e', '#60608b', '#6c6c98', '#7978a4', '#8584b1', '#9291be', '#9e9ecb', '#acabd8', '#b9b8e5', '#c6c5f2', '#d4d3ff', '#ffeacf', '#ffe3cc','#ffd5be', '#fcc1ad', '#f7ad9c', '#f09a8c', '#e7877d', '#dc756e', '#d0645f', '#c15451', '#a03737')
+
+col = c('#0072b5', '#2b78b9', '#417ebe', '#5284c2', '#618bc6', '#6f91cb', '#7c97cf', '#899ed3', '#95a4d8', '#a1abdc', '#adb1e1', '#f1a494', '#eb9a8b', '#e59183', '#df887b', '#d87f73', '#d2766b', '#cc6c63', '#c6635b', '#bf5a54', '#b9514c', '#b24745')
 
 ggplot(common_freq_filtered, aes(label = word, size = total_freq, color = word)) +
     geom_text_wordcloud(
-        family = "Candara"   # Set font
-        # color = "black",      # Word color
-        # background = "white" # Background color
-        # shape = "cardioid"    # Shape of the word cloud
-        # word_size_range = c(10000, 10000000)  # Word size range based on frequency
+        family = "Candara"  # Set font
+        # shape = "pentagon"    # Shape of the word cloud
     ) +
 
-    scale_size_area(max_size = 20) +
+    scale_size_area(max_size = 25) +
+    
+    scale_color_manual(values = col) +  # Set custom colors
     
     theme_minimal() + 
     
