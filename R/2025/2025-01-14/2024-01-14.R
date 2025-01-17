@@ -9,7 +9,6 @@ gc()
 library(data.table)
 library(ggplot2)
 library(stringr)
-# library(wordcloud2)
 library(ggwordcloud)
 library(extrafont)
 library(ggtext)
@@ -87,14 +86,13 @@ common_freq_filtered$angle <- sample(c(0, 45, 60, 90, 120, 180), nrow(common_fre
 
 # plot --------
 
-col = c('#44456e', '#60608b', '#6c6c98', '#7978a4', '#8584b1', '#9291be', '#9e9ecb', '#acabd8', '#b9b8e5', '#c6c5f2', '#d4d3ff', '#ffeacf', '#ffe3cc','#ffd5be', '#fcc1ad', '#f7ad9c', '#f09a8c', '#e7877d', '#dc756e', '#d0645f', '#c15451', '#a03737')
+# col = c('#44456e', '#60608b', '#6c6c98', '#7978a4', '#8584b1', '#9291be', '#9e9ecb', '#acabd8', '#b9b8e5', '#c6c5f2', '#d4d3ff', '#ffeacf', '#ffe3cc','#ffd5be', '#fcc1ad', '#f7ad9c', '#f09a8c', '#e7877d', '#dc756e', '#d0645f', '#c15451', '#a03737')
 
 col = c('#0072b5', '#2b78b9', '#417ebe', '#5284c2', '#618bc6', '#6f91cb', '#7c97cf', '#899ed3', '#95a4d8', '#a1abdc', '#adb1e1', '#f1a494', '#eb9a8b', '#e59183', '#df887b', '#d87f73', '#d2766b', '#cc6c63', '#c6635b', '#bf5a54', '#b9514c', '#b24745')
 
-ggplot(common_freq_filtered, aes(label = word, size = total_freq, color = word)) +
+gr = ggplot(common_freq_filtered, aes(label = word, size = total_freq, color = word)) +
     geom_text_wordcloud(
-        family = "Candara"  # Set font
-        # shape = "pentagon"    # Shape of the word cloud
+        family = "Candara"
     ) +
 
     scale_size_area(max_size = 25) +
@@ -104,14 +102,14 @@ ggplot(common_freq_filtered, aes(label = word, size = total_freq, color = word))
     theme_minimal() + 
     
     labs(
-        title = "Word Cloud of Common Keywords",
-        subtitle = "Based on Track Titles in 2023 and 2024.",
+        title = "Keyword Trends: Common words from Track Titles in Posit::Conf Talks",
+        subtitle = "A word cloud visualization of shared keywords from track titles in Posit::Conf talks of 2023 and 2024. <br> These trends showcase key topics and evolving themes from the conference.",
         caption = "Source: <b> posit::conf talks from 2023 and 2024</b> | Graphic: <b>Natasa Anastasiadou</b>"
     ) +
     
     theme(
-        plot.title = element_markdown(size = 20, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 5, t = 5, )),
-        plot.subtitle = element_markdown(size = 16, hjust = 0.5, face = "bold", family = "Candara", color = "grey30", margin = margin(b = 15, t = 5)),
+        plot.title = element_markdown(size = 19, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 5, t = 38)),
+        plot.subtitle = element_markdown(size = 13, hjust = 0.5, face = "bold", family = "Candara", color = "grey30", margin = margin(b = 5, t = 5)),
         plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1),
         
         plot.margin = margin(20, 20, 20, 20),
@@ -125,5 +123,6 @@ gr
 
 ggsave(
     plot = gr, filename = "Rplot.png",
-    width = 10, height = 10, units = "in", dpi = 600
+    width = 8.5, height = 8, units = "in", dpi = 600
 )
+
