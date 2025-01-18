@@ -44,7 +44,7 @@ c <- intersect(k1, k2)
 # Calculate frequency of all words in 2023
 freq_2023 <- conf2023$block_track_title |>
     tolower() |>
-    str_remove_all("[^a-z ]") |>  # Remove non-alphabetic characters
+    str_remove_all("[^a-z ]") |>  
     str_split(" ") |> 
     unlist() |>
     table() |>
@@ -55,7 +55,7 @@ setnames(freq_2023, c("word", "freq_2023"))
 # Calculate frequency of all words in 2024
 freq_2024 <- conf2024$track |>
     tolower() |>
-    str_remove_all("[^a-z ]") |>  # Remove non-alphabetic characters
+    str_remove_all("[^a-z ]") |>  
     str_split(" ") |> 
     unlist() |>
     table() |>
@@ -95,7 +95,7 @@ gr = ggplot(common_freq_filtered, aes(label = word, size = total_freq, color = w
 
     scale_size_area(max_size = 25) +
     
-    scale_color_manual(values = col) +  # Set custom colors
+    scale_color_manual(values = col) + 
     
     theme_minimal() + 
     
