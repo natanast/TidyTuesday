@@ -116,9 +116,6 @@ gr = ggplot(common_freq_filtered, aes(label = word, size = total_freq, color = w
     )
 
 
-
-gr
-
 ggsave(
     plot = gr, filename = "Rplot.png",
     width = 8.5, height = 8, units = "in", dpi = 600
