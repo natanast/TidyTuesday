@@ -86,8 +86,6 @@ common_freq_filtered$angle <- sample(c(0, 45, 60, 90, 120, 180), nrow(common_fre
 
 # plot --------
 
-# col = c('#44456e', '#60608b', '#6c6c98', '#7978a4', '#8584b1', '#9291be', '#9e9ecb', '#acabd8', '#b9b8e5', '#c6c5f2', '#d4d3ff', '#ffeacf', '#ffe3cc','#ffd5be', '#fcc1ad', '#f7ad9c', '#f09a8c', '#e7877d', '#dc756e', '#d0645f', '#c15451', '#a03737')
-
 col = c('#0072b5', '#2b78b9', '#417ebe', '#5284c2', '#618bc6', '#6f91cb', '#7c97cf', '#899ed3', '#95a4d8', '#a1abdc', '#adb1e1', '#f1a494', '#eb9a8b', '#e59183', '#df887b', '#d87f73', '#d2766b', '#cc6c63', '#c6635b', '#bf5a54', '#b9514c', '#b24745')
 
 gr = ggplot(common_freq_filtered, aes(label = word, size = total_freq, color = word)) +
