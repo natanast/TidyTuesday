@@ -36,10 +36,7 @@ k2 <- conf2024$track |>
     unlist() |>
     unique()
 
-
-
 c <- intersect(k1, k2)
-
 
 # Calculate frequency of all words in 2023
 freq_2023 <- conf2023$block_track_title |>
@@ -68,11 +65,7 @@ common_freq <- merge(freq_2023, freq_2024, by = "word", all = FALSE)
 
 common_freq[, total_freq := freq_2023 + freq_2024]
 
-
-
 common_freq_1 <- common_freq[, .(word, total_freq)]
-
-
 
 # Words to exclude
 exclude_words <- c("", "a", "and", "in", "is", "it", "its", "not", "of", "or", "the", "to", "up", "with", "your")
@@ -81,7 +74,6 @@ exclude_words <- c("", "a", "and", "in", "is", "it", "its", "not", "of", "or", "
 common_freq_filtered <- common_freq[!word %in% exclude_words]
 
 common_freq_filtered$angle <- sample(c(0, 45, 60, 90, 120, 180), nrow(common_freq_filtered), replace = TRUE)
-
 
 
 # plot --------
