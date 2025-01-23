@@ -12,8 +12,14 @@ library(stringr)
 
 # load data --------
 
-spells <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-12-17/spells.csv')
+exped_tidy <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-01-21/exped_tidy.csv')
+peaks_tidy <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-01-21/peaks_tidy.csv')
 
 
 # data cleaning ------
 
+
+# ggsave(
+#     plot = gr, filename = "Rplot.png",
+#     width = 10, height = 10, units = "in", dpi = 600
+# )
