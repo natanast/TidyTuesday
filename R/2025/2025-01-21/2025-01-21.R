@@ -14,7 +14,6 @@ library(giscoR)
 
 # load data --------
 
-# exped_tidy <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-01-21/exped_tidy.csv')
 peaks_tidy <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-01-21/peaks_tidy.csv')
 
 
@@ -31,8 +30,6 @@ open_peaks <- open_peaks[N > 5,]
 open_peaks[PHOST_FACTOR == "Nepal only", PHOST_FACTOR := "Nepal"]
 open_peaks[PHOST_FACTOR == "Nepal & China", PHOST_FACTOR := "China"]
 open_peaks[PHOST_FACTOR == "Nepal & India", PHOST_FACTOR := "India"]
-
-
 
 
 
@@ -141,17 +138,17 @@ map3 = ggplot() +
 
 
 # # final plot -------
-# library(patchwork)
-# 
-# 
-# # Embed the plots into the maps using inset_element
-# gr1 = map + inset_element(china_plot, .35, .01, .85, .71)
-# gr2 = map2 + inset_element(nepal_plot, .15, .01, .85, .71)
-# gr3 = map3 + inset_element(india_plot, .15, .01, .85, .71)
-# 
-# # Combine the maps and plots
-# multi = gr1 | gr2 | gr3
-# multi
+library(patchwork)
+
+
+# Embed the plots into the maps using inset_element
+gr1 = map + inset_element(china_plot, .35, .01, .85, .71)
+gr2 = map2 + inset_element(nepal_plot, .15, .01, .85, .71)
+gr3 = map3 + inset_element(india_plot, .15, .01, .85, .71)
+
+# Combine the maps and plots
+multi = gr1 | gr2 | gr3
+multi
 
 # ggsave(
 #     plot = gr, filename = "Rplot.png",
