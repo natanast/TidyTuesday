@@ -69,11 +69,7 @@ bar_plot <- ggplot(peaks, aes(x = PHOST_FACTOR, y = Total_Peaks, fill = PHOST_FA
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())+
     
-    scale_fill_manual(values = c("India" = "#6F99AD", "Nepal" = "#B24745", "China" = "#0072B5"))  # Customize colors
-
-
-
-bar_plot
+    scale_fill_manual(values = c("India" = "#6F99AD", "Nepal" = "#B24745", "China" = "#0072B5")) 
 
 
 # map -----------
@@ -86,9 +82,7 @@ map = ggplot() +
     
     theme_minimal()
 
-
-
-
+# space for title
 spacer <- ggplot() + 
     
     labs(
