@@ -100,7 +100,7 @@ spacer <- ggplot() +
     
     labs(
         title = "Mapping the Himalayan Peaks.",
-        subtitle = "Bar plot shows the total number of <b>open peaks</b> across India, Nepal, and China.",
+        subtitle = "Bar plot shows the total number of <b>open</b> peaks for <b>expeditions</b> across India, Nepal, and China.",
         caption = paste0(
             "Source: <b> Himalayan Dataset </b> | ",
             "Graphic: <b>Natasa Anastasiadou</b>"
