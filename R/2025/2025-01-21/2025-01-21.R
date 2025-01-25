@@ -32,14 +32,10 @@ open_peaks <- peaks[OPEN == TRUE, .(N = uniqueN(PKNAME)), by = .(PHOST_FACTOR, H
 # Keep only combinations with more than 5 peaks
 open_peaks <- open_peaks[N > 5]
 
-
-
 # Modify the PHOST_FACTOR column
 open_peaks[PHOST_FACTOR == "Nepal only", PHOST_FACTOR := "Nepal"]
 open_peaks[PHOST_FACTOR == "Nepal & China", PHOST_FACTOR := "China"]
 open_peaks[PHOST_FACTOR == "Nepal & India", PHOST_FACTOR := "India"]
-
-
 
 # geographical boundaries for map
 map_data <- gisco_get_countries(
@@ -48,17 +44,14 @@ map_data <- gisco_get_countries(
 )
 
 
-
 # Plot 1 ---------
 
-# Summarize the total number of peaks for each country
 peaks <- open_peaks[, .(Total_Peaks = sum(N)), by = PHOST_FACTOR]
 
-# Set the order of the levels for PHOST_FACTOR
 peaks$PHOST_FACTOR <- factor(peaks$PHOST_FACTOR, levels = c("India", "Nepal", "China"))
 
 
-# Create a bar plot for the peak counts with wider bars
+# bar plot
 bar_plot <- ggplot(peaks, aes(x = PHOST_FACTOR, y = Total_Peaks, fill = PHOST_FACTOR)) +
     
     geom_bar(stat = "identity", width = 0.4, alpha = 0.9) + 
