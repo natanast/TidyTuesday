@@ -87,8 +87,8 @@ gr = ggplot(p, aes(x = state, y = plumbing_change)) +
         axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         
-        plot.title = element_markdown(size = 20, face = "bold", hjust = 0.5, family = "Candara"),
-        plot.subtitle = element_markdown(size = 16, hjust = 0.5, family = "Candara", color = "grey30"),
+        plot.title = element_markdown(size = 19, face = "bold", hjust = 0.5, family = "Candara"),
+        plot.subtitle = element_markdown(size = 14, hjust = 0.5, family = "Candara", color = "grey30"),
         plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1),
 
         
@@ -102,7 +102,7 @@ gr
 
 ggsave(
     plot = gr, filename = "Rplot.png",
-    width = 12, height = 10, units = "in", dpi = 600
+    width = 10, height = 10, units = "in", dpi = 600
 )
 
 
