@@ -10,6 +10,8 @@ library(data.table)
 library(ggplot2)
 library(stringr)
 library(extrafont)
+library(colorspace)
+library(ggtext)
 
 
 # load data --------
@@ -37,20 +39,72 @@ merged <- df1 |> merge(df2, by = c("name", "state"), suffixes = c("_2022", "_202
 # Calculate the change in plumbing
 p <- merged[, .(plumbing_change = sum(plumbing_2023) - sum(plumbing_2022)), by = state]
 
+p$type <- ifelse(p$plumbing_change > 0, "Positive", "Negative")
+
+
+
 
 # plot -------
 
-ggplot(p, aes(x = state, y = plumbing_change)) +
+gr = ggplot(p, aes(x = state, y = plumbing_change)) +
     
-    geom_bar(stat = "identity", position = "dodge") +
+    geom_segment(
+        aes(x = state, xend = state,
+            y = 0 , yend = plumbing_change),
+        color = "grey35", linewidth = 0.35, lineend = "round"
+    ) +
     
-    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    geom_point( aes(fill = type, color = type), size = 4, shape = 21, stroke = .15) +
+    
+    # Define custom colors for each type
+    scale_fill_manual(values = c("Negative" = "#B24745", "Positive" = "#79AF97")) +
+    scale_color_manual(values = c("Negative" = "#B24745", "Positive" = "#79AF97") |> darken(.25), guide = "none") +
+    
+
+    theme_minimal() +
+    
+    # labs(
+    #     title = "Percent of Households Lacking Plumbing by State: 2022 vs 2023",
+    #     x = "State", 
+    #     y = "Percent of Households Lacking Plumbing"
+    # ) +
     
     labs(
-        title = "Percent of Households Lacking Plumbing by State: 2022 vs 2023",
-        x = "State", 
-        y = "Percent of Households Lacking Plumbing"
-    )         
+        title = "Number of Households Lacking Plumbing by State: 2022 vs 2023",
+        subtitle = "Positive values represent states with an <b>increase</b> in the number of households lacking plumbing in 2023, <br>while negative values indicate a <b>decrease</b>.</br>",
+        caption = "Source: <b></b> | Graphic: <b>Natasa Anastasiadou</b>"
+    ) +
+    
+    theme(
+        legend.position = "none",
+        
+        plot.margin = margin(20, 20, 20, 20),
+        
+        panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
+        panel.grid.minor = element_blank(),
+        
+        axis.text.x = element_markdown(angle = 90, hjust = 1, family = "Candara"),
+        
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        
+        plot.title = element_markdown(size = 18, face = "bold", hjust = 0.5, family = "Candara"),
+        plot.subtitle = element_markdown(size = 14, hjust = 0.5, family = "Candara", color = "grey30"),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 8, family = "Candara", hjust = 1),
+
+        
+        plot.background = element_rect(fill = "grey93", color = NA)
+    )
+
+
+
+gr
+
+
+ggsave(
+    plot = gr, filename = "Rplot.png",
+    width = 10, height = 10, units = "in", dpi = 600
+)
 
 
 
