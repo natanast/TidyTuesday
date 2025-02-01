@@ -42,7 +42,6 @@ p$type <- ifelse(p$plumbing_change > 0, "Positive", "Negative")
 
 
 
-
 # plot -------
 
 gr = ggplot(p, aes(x = state, y = plumbing_change)) +
@@ -61,13 +60,7 @@ gr = ggplot(p, aes(x = state, y = plumbing_change)) +
     
 
     theme_minimal() +
-    
-    # labs(
-    #     title = "Percent of Households Lacking Plumbing by State: 2022 vs 2023",
-    #     x = "State", 
-    #     y = "Percent of Households Lacking Plumbing"
-    # ) +
-    
+
     labs(
         title = "Number of Households Lacking Plumbing by State: 2022 vs 2023",
         subtitle = "<b><span style='color: #79AF97; font-weight: bold;'>Positive</span></b> 
@@ -97,9 +90,6 @@ gr = ggplot(p, aes(x = state, y = plumbing_change)) +
         plot.background = element_rect(fill = "grey93", color = NA)
     )
 
-
-
-gr
 
 
 ggsave(
