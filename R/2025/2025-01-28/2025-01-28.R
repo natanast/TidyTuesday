@@ -2,7 +2,6 @@
 rm(list = ls())
 gc()
 
-
 # load libraries -------
 
 library(data.table)
@@ -11,7 +10,6 @@ library(stringr)
 library(extrafont)
 library(colorspace)
 library(ggtext)
-
 
 # load data --------
 
