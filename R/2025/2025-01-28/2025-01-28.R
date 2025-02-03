@@ -33,11 +33,9 @@ df2 <- df2[which(!is.na(plumbing))]
 
 merged <- df1 |> merge(df2, by = c("name", "state"), suffixes = c("_2022", "_2023"), all = FALSE)
 
-# Calculate the change in plumbing
 p <- merged[, .(plumbing_change = sum(plumbing_2023) - sum(plumbing_2022)), by = state]
 
 p$type <- ifelse(p$plumbing_change > 0, "Positive", "Negative")
-
 
 
 # plot -------
