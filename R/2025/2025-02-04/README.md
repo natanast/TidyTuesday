@@ -1,12 +1,14 @@
-# Water Insecurity
+# Donuts, Data, and D'oh - A Deep Dive into The Simpsons
 
-This week we're exploring water insecurity data featured in the article [Mapping water insecurity in R with tidycensus](https://waterdata.usgs.gov/blog/acs-maps/)!
+This week, we are going to explore a [Simpsons Dataset from Kaggle](https://www.kaggle.com/datasets/prashant111/the-simpsons-dataset).  Many thanks to [Prashant Banerjee](https://www.kaggle.com/prashant111) for making this dataset available to the public.  The Simpsons Dataset is composed of four files that contain the characters, locations, episode details, and script lines for approximately 600 Simpsons episodes.  Please note that episodes and script lines have been filtered to only include episodes from 2010 to 2016 in the episodes data to keep file size within GitHub limits!
 
-> Water insecurity can be influenced by number of social vulnerability indicators—from demographic characteristics to living conditions and socioeconomic status —that vary spatially across the U.S. This blog shows how the tidycensus package for R can be used to access U.S. Census Bureau data, including the American Community Surveys, as featured in the “Unequal Access to Water ” data visualization from the USGS Vizlab. It offers reproducible code examples demonstrating use of tidycensus for easy exploration and visualization of social vulnerability indicators in the Western U.S.
+Here is some history on the Simpsons Dataset from the author:
 
-- How does the lack of complete indoor plumbing compare between the 2023 and 2022 Census data? 
-- What counties have the greatest percent of households lacking plumbing?
-- Are there differences in indoor plumbing availability between Western U.S and Eastern U.S counties? 
+> Originally, this dataset was scraped by [Todd W. Schneider] for his post [The Simpsons by the Data](https://toddwschneider.com/posts/the-simpsons-by-the-data/), for which he made the scraper available on GitHub. Kaggle user William Cukierski used the scraper to upload the data set, which has been rehosted here.
 
-Thank you to [Niha Pereira](https://github.com/nnpereira) for curating this week's dataset.
+* Which character has the most spoken lines across all episodes, and how has their dialogue volume changed over the seasons?
+* What are the most frequently used locations in the series, and do specific locations correspond to higher IMDb ratings for episodes?
+* Is there a relationship between the number of U.S. viewers (in millions) and the IMDb ratings or votes for episodes?
+* What are the most commonly used words or phrases in the dialogue across the series, and do they differ by character or location?
 
+Thank you to [Nicolas Foss, Ed.D., MS with Iowa HHS](https://github.com/nicolasfoss) for curating this week's dataset.
