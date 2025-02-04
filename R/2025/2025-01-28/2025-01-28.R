@@ -1,8 +1,6 @@
 
-
 rm(list = ls())
 gc()
-
 
 # load libraries -------
 
@@ -12,7 +10,6 @@ library(stringr)
 library(extrafont)
 library(colorspace)
 library(ggtext)
-
 
 # load data --------
 
@@ -36,12 +33,9 @@ df2 <- df2[which(!is.na(plumbing))]
 
 merged <- df1 |> merge(df2, by = c("name", "state"), suffixes = c("_2022", "_2023"), all = FALSE)
 
-# Calculate the change in plumbing
 p <- merged[, .(plumbing_change = sum(plumbing_2023) - sum(plumbing_2022)), by = state]
 
 p$type <- ifelse(p$plumbing_change > 0, "Positive", "Negative")
-
-
 
 
 # plot -------
@@ -51,10 +45,10 @@ gr = ggplot(p, aes(x = state, y = plumbing_change)) +
     geom_segment(
         aes(x = state, xend = state,
             y = 0 , yend = plumbing_change),
-        color = "grey35", linewidth = 0.35, lineend = "round"
+        color = "grey35", linewidth = 0.45, lineend = "round"
     ) +
     
-    geom_point( aes(fill = type, color = type), size = 4, shape = 21, stroke = .15) +
+    geom_point( aes(fill = type, color = type), size = 4.5, shape = 21, stroke = .15) +
     
     # Define custom colors for each type
     scale_fill_manual(values = c("Negative" = "#B24745", "Positive" = "#79AF97")) +
@@ -62,17 +56,13 @@ gr = ggplot(p, aes(x = state, y = plumbing_change)) +
     
 
     theme_minimal() +
-    
-    # labs(
-    #     title = "Percent of Households Lacking Plumbing by State: 2022 vs 2023",
-    #     x = "State", 
-    #     y = "Percent of Households Lacking Plumbing"
-    # ) +
-    
+
     labs(
         title = "Number of Households Lacking Plumbing by State: 2022 vs 2023",
-        subtitle = "Positive values represent states with an <b>increase</b> in the number of households lacking plumbing in 2023, <br>while negative values indicate a <b>decrease</b>.</br>",
-        caption = "Source: <b></b> | Graphic: <b>Natasa Anastasiadou</b>"
+        subtitle = "<b><span style='color: #79AF97; font-weight: bold;'>Positive</span></b> 
+                    values represent states with an <b>increase</b> in the number of households lacking plumbing from 2022 to 2023, 
+                    <br>while <b><span style='color: #B24745;'>negative</span></b> values indicate a <b>decrease</b>.</br>",
+        caption = "Source: <b>Water insecurity data</b> | Graphic: <b>Natasa Anastasiadou</b>"
     ) +
     
     theme(
@@ -83,22 +73,19 @@ gr = ggplot(p, aes(x = state, y = plumbing_change)) +
         panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
         panel.grid.minor = element_blank(),
         
-        axis.text.x = element_markdown(angle = 90, hjust = 1, family = "Candara"),
+        axis.text.x = element_markdown(angle = 90, hjust = 1, vjust = 0.5, family = "Candara", size = 12),
         
         axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         
-        plot.title = element_markdown(size = 18, face = "bold", hjust = 0.5, family = "Candara"),
+        plot.title = element_markdown(size = 19, face = "bold", hjust = 0.5, family = "Candara"),
         plot.subtitle = element_markdown(size = 14, hjust = 0.5, family = "Candara", color = "grey30"),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 8, family = "Candara", hjust = 1),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1),
 
         
         plot.background = element_rect(fill = "grey93", color = NA)
     )
 
-
-
-gr
 
 
 ggsave(
