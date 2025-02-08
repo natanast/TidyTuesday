@@ -37,9 +37,9 @@ d <- d[season != "28"]  # or d <- d[!season %in% "28"]
 
 # plot -------
 
-# col = c('#60608b', '#6c6c98', '#7978a4', '#8584b1', '#9291be', '#9e9ecb', '#acabd8', '#b9b8e5', '#c6c5f2', '#ffeacf', '#ffd5be', '#fcc1ad', '#f7ad9c', '#f09a8c', '#e7877d', '#dc756e', '#d0645f', '#c15451')
+col = c('#60608b', '#6c6c98', '#7978a4', '#8584b1', '#9291be', '#9e9ecb', '#acabd8', '#b9b8e5', '#c6c5f2', '#ffeacf', '#ffd5be', '#fcc1ad', '#f7ad9c', '#f09a8c', '#e7877d', '#dc756e', '#d0645f', '#c15451')
 
-col = c('#60608b', '#9291be', '#b9b8e5', '#ffd5be','#f09a8c', '#dc756e', '#c15451')
+col = c('#60608b', '#9291be', '#b9b8e5', '#ffeacf','#fcc1ad', '#e7877d', '#c15451')
 
 
 gr = ggplot(d, aes(x = season, y = imdb_rating)) +
@@ -49,7 +49,7 @@ gr = ggplot(d, aes(x = season, y = imdb_rating)) +
     geom_jitter(aes(fill = season), size = 3, width = 0.05, shape = 21, stroke = 0.5, alpha = 0.9, color = "black") +
     
     # Violin plot with transparency
-    geom_violin(aes(fill = season), trim = FALSE, show.legend = TRUE, alpha = 0.7, adjust = 1,
+    geom_violin(aes(fill = season), trim = FALSE, show.legend = TRUE, alpha = 0.6, adjust = 0.7,
                 color = "black") +
     
     scale_fill_manual(values = col) +
@@ -57,10 +57,11 @@ gr = ggplot(d, aes(x = season, y = imdb_rating)) +
     theme_minimal() +
     
     labs(
-        title = "The Simpsons IMDb Ratings Across Seasons",
+        title = "<b><span style='color: #EEA236; font-weight: bold;'>The Simpsons</span></b> 
+                     IMDb Ratings Across Seasons",
         subtitle = "<b>Each point</b> represents an episode's IMDb rating, while the 
                     <b>violin plots</b> show the rating distribution per season.",
-        caption = "Source: <b>TidyTuesday 2025-02-04</b> | Graphic: <b>Natasa Anastasiadou</b>"
+        caption = "Source: <b> Simpsons Dataset</b> | Graphic: <b>Natasa Anastasiadou</b>"
     ) +
     
     theme(
@@ -71,15 +72,15 @@ gr = ggplot(d, aes(x = season, y = imdb_rating)) +
         panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
         panel.grid.minor = element_blank(),
         
-        axis.text.x = element_markdown(hjust = 1, vjust = 0.5, family = "Candara", size = 12),
-        axis.text.y = element_markdown(hjust = 1, vjust = 0.5, family = "Candara", size = 12),
+        axis.text.x = element_markdown(hjust = 1, vjust = 0.5, family = "Candara", size = 13),
+        axis.text.y = element_markdown(hjust = 1, vjust = 0.5, family = "Candara", size = 13),
         
         axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         
-        plot.title = element_markdown(size = 19, face = "bold", hjust = 0.5, family = "Candara"),
-        plot.subtitle = element_markdown(size = 14, hjust = 0.5, family = "Candara", color = "grey30"),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1),
+        plot.title = element_markdown(size = 22, face = "bold", hjust = 0.5, family = "Candara"),
+        plot.subtitle = element_markdown(size = 15, hjust = 0.5, family = "Candara", color = "grey30"),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 11, family = "Candara", hjust = 1),
         
         
         plot.background = element_rect(fill = "grey93", color = NA)
