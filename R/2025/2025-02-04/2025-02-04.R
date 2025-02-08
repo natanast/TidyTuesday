@@ -61,7 +61,10 @@ gr = ggplot(d, aes(x = season, y = imdb_rating)) +
                      IMDb Ratings Across Seasons",
         subtitle = "<b>Each point</b> represents an episode's IMDb rating, while the 
                     <b>violin plots</b> show the rating distribution per season.",
-        caption = "Source: <b> Simpsons Dataset</b> | Graphic: <b>Natasa Anastasiadou</b>"
+        caption = "Source: <b> Simpsons Dataset</b> | Graphic: <b>Natasa Anastasiadou</b>",
+        x = "Season",
+        y = "IMDb Rating"
+        
     ) +
     
     theme(
@@ -75,11 +78,11 @@ gr = ggplot(d, aes(x = season, y = imdb_rating)) +
         axis.text.x = element_markdown(hjust = 1, vjust = 0.5, family = "Candara", size = 13),
         axis.text.y = element_markdown(hjust = 1, vjust = 0.5, family = "Candara", size = 13),
         
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
+        # axis.title.x = element_markdown(family = "Candara", size = 14, margin = margin(t = 14)),
+        axis.title.y = element_markdown(family = "Candara", size = 14, margin = margin(r = 14)),
         
-        plot.title = element_markdown(size = 22, face = "bold", hjust = 0.5, family = "Candara"),
-        plot.subtitle = element_markdown(size = 15, hjust = 0.5, family = "Candara", color = "grey30"),
+        plot.title = element_markdown(size = 21, face = "bold", hjust = 0.5, family = "Candara"),
+        plot.subtitle = element_markdown(size = 14, hjust = 0.5, family = "Candara", color = "grey30"),
         plot.caption = element_markdown(margin = margin(t = 35), size = 11, family = "Candara", hjust = 1),
         
         
