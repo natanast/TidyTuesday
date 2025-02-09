@@ -79,8 +79,6 @@ gr = ggplot(d, aes(x = season, y = imdb_rating)) +
         plot.background = element_rect(fill = "grey93", color = NA)
     )
 
-gr
-
 ggsave(
     plot = gr, filename = "Rplot.png",
     width = 10, height = 10, units = "in", dpi = 600
