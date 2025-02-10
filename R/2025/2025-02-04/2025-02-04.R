@@ -55,7 +55,7 @@ ggplot(d, aes(x = season, y = imdb_rating)) +
     geom_jitter(aes(fill = season), size = 3, width = 0.05, shape = 21, 
                 stroke = 0.5, alpha = 0.9, color = "black") +
     
-    # # Violin plot with transparency
+    # # # Violin plot with transparency
     geom_violin(aes(fill = season), trim = FALSE, show.legend = TRUE, alpha = 0.6, adjust = 0.7,
                 color = "black") +
 
@@ -108,8 +108,8 @@ gg_stop_recording()
 gg_playback(
     name = "Rplot_gif.gif",
     first_image_duration = 8,
-    last_image_duration = 20,
-    frame_duration = 0.45, 
+    last_image_duration = 8,
+    frame_duration = 0.55, 
     width = 4800, # Match or scale up to the recorded dimensions (8 inches * 600 dpi)
     height = 4800
 )
