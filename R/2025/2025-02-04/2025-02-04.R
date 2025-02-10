@@ -107,8 +107,8 @@ gg_stop_recording()
 
 gg_playback(
     name = "Rplot_gif.gif",
-    first_image_duration = 8,
-    last_image_duration = 8,
+    first_image_duration = 5,
+    last_image_duration = 5,
     frame_duration = 0.55, 
     width = 4800, # Match or scale up to the recorded dimensions (8 inches * 600 dpi)
     height = 4800
