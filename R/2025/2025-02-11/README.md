@@ -1,14 +1,17 @@
-# Donuts, Data, and D'oh - A Deep Dive into The Simpsons
+# CDC Datasets
 
-This week, we are going to explore a [Simpsons Dataset from Kaggle](https://www.kaggle.com/datasets/prashant111/the-simpsons-dataset).  Many thanks to [Prashant Banerjee](https://www.kaggle.com/prashant111) for making this dataset available to the public.  The Simpsons Dataset is composed of four files that contain the characters, locations, episode details, and script lines for approximately 600 Simpsons episodes.  Please note that episodes and script lines have been filtered to only include episodes from 2010 to 2016 in the episodes data to keep file size within GitHub limits!
+This week we're exploring datasets that the Trump administration has purged. 
 
-Here is some history on the Simpsons Dataset from the author:
+The [Trump administration has ordered agencies to purge their websites of any references to topics such as LGBTQ+ rights](https://www.npr.org/sections/shots-health-news/2025/01/31/nx-s1-5282274/trump-administration-purges-health-websites). 
 
-> Originally, this dataset was scraped by [Todd W. Schneider] for his post [The Simpsons by the Data](https://toddwschneider.com/posts/the-simpsons-by-the-data/), for which he made the scraper available on GitHub. Kaggle user William Cukierski used the scraper to upload the data set, which has been rehosted here.
 
-* Which character has the most spoken lines across all episodes, and how has their dialogue volume changed over the seasons?
-* What are the most frequently used locations in the series, and do specific locations correspond to higher IMDb ratings for episodes?
-* Is there a relationship between the number of U.S. viewers (in millions) and the IMDb ratings or votes for episodes?
-* What are the most commonly used words or phrases in the dialogue across the series, and do they differ by character or location?
+An effort is underway to back up this publicly funded data before it is lost. 
+This week's dataset contains metadata about [CDC datasets backed up on archive.org](https://archive.org/download/20250128-cdc-datasets).
 
-Thank you to [Nicolas Foss, Ed.D., MS with Iowa HHS](https://github.com/nicolasfoss) for curating this week's dataset.
+> "The removal of HIV- and LGBTQ-related resources from the websites of the Centers for Disease Control and Prevention and other health agencies is deeply concerning and creates a dangerous gap in scientific information and data to monitor and respond to disease outbreaks," the Infectious Disease Society of America said in a statement. "Access to this information is crucial for infectious diseases and HIV health care professionals who care for people with HIV and members of the LGBTQ community and is critical to efforts to end the HIV epidemic."
+
+- Which Bureaus and Programs have the most datasets archived in this collection?
+- Explore some of the datasets. What keywords do the datasets have in common?
+
+
+Thank you to [Jon Harmon](https://github.com/jonthegeek) for curating this week's dataset.
