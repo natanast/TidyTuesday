@@ -56,7 +56,7 @@ ggplot(d, aes(x = season, y = imdb_rating)) +
                 stroke = 0.5, alpha = 0.9, color = "black"
                 ) +
     
-    # # # Violin plot with transparency
+    # Violin plot with transparency
     geom_violin(aes(fill = season), trim = FALSE, show.legend = TRUE, alpha = 0.6, adjust = 0.7,
                 color = "black") +
 
