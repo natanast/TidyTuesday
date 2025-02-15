@@ -68,7 +68,7 @@ gr = ggplot(data = df) +
         axis.title.y = element_markdown(family = "Candara", size = 14, margin = margin(r = 14)),
         
         plot.title = element_markdown(size = 19, face = "bold", hjust = 1, family = "Candara"),
-        plot.subtitle = element_markdown(size = 15, hjust = -0.1, family = "Candara", color = "grey30"),
+        plot.subtitle = element_markdown(size = 15, hjust = 0.05, family = "Candara", color = "grey30"),
         plot.caption = element_markdown(margin = margin(t = 35), size = 11, family = "Candara", hjust = 1),
         
         plot.background = element_rect(fill = "grey93", color = NA)
@@ -76,7 +76,7 @@ gr = ggplot(data = df) +
 
 gr
 
-# Optionally, save the plot (commented out for now)
+
 ggsave(
     plot = gr, filename = "Rplot.png",
     width = 10, height = 10, units = "in", dpi = 600
