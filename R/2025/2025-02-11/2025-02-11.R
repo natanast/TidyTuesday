@@ -1,3 +1,5 @@
+
+
 rm(list = ls())
 gc()
 
@@ -9,10 +11,14 @@ library(extrafont)
 library(colorspace)
 library(ggtext)
 
+
 # load data --------
+
 cdc_datasets <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-11/cdc_datasets.csv')
 
+
 # data cleaning ------
+
 df <- cdc_datasets[, .N, by = category][N > 15]
 
 # Order categories by count
@@ -27,20 +33,15 @@ col = c('#60608b', '#6c6c98', '#9291be', '#9e9ecb', '#b9b8e5',
         '#dc756e', '#d0645f', '#c15451')
 
 
-
-
-# Adding '*' to the categories that need explanation
+# Adding '*'
 df$category <- ifelse(df$category == "NNDSS", "*NNDSS", 
                       ifelse(df$category == "NCHS", "**NCHS", df$category))
 
 
-# Apply word wrap to category
+
 df$category <- str_wrap(df$category, width = 30)
 
-
-# Sort the categories by N and apply colors according to the sorted order
 df$category <- factor(df$category, levels = df$category)
-
 
 
 # plot -------
@@ -85,8 +86,6 @@ gr = ggplot(data = df) +
         "text", x = min(df$N), y = -Inf, label = "* NNDSS: National Notifiable Diseases Surveillance System\n     ** NCHS: National Center for Health Statistics",
         hjust = -0.4, vjust = -1.8, size = 4, family = "Candara", color = "black"
     )
-
-gr
 
 
 ggsave(
