@@ -46,6 +46,7 @@ df$category <- factor(df$category, levels = df$category)
 
 # plot -------
 gr = ggplot(data = df) +
+
     geom_point(
         aes(x = N, y = reorder(category, N),
             size = N, 
@@ -53,9 +54,13 @@ gr = ggplot(data = df) +
         ),
         shape = 21, stroke = .25, alpha = 0.8
     ) +
+
     scale_size_continuous(range = c(6, 13)) +
-    scale_fill_manual(values = col) +  # Use the reversed ordered color palette
+
+    scale_fill_manual(values = col) +  
+
     theme_minimal() +
+
     labs(
         title = "Tracking CDC Datasets Removed from Public Access and Preserved in Archives",
         subtitle = "Only categories with more than 15 datasets are displayed",
@@ -63,6 +68,7 @@ gr = ggplot(data = df) +
         x = "Number of datasets",
         y = ""
     ) +
+
     theme(
         legend.position = "none",
         plot.margin = margin(20, 20, 20, 20),
