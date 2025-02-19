@@ -15,7 +15,7 @@ library(ggtext)
 
 # load data --------
 
-# cdc_datasets <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-11/cdc_datasets.csv')
+agencies <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-18/agencies.csv')
 
 
 # data cleaning ------
