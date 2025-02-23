@@ -49,10 +49,6 @@ rownames(chord_matrix) <- agency_types
 # Reorder the matrix rows alphabetically based on agency types
 chord_matrix <- chord_matrix[order(rownames(chord_matrix), decreasing = TRUE), ]
 
-
-# my_col = c('#3a5cbc', '#b9b8e7','#BC3C29','#E18727','#0072B5', '#dddaea', '#20854E','#FFDC91','#6F99AD', '#F39B7F','#D0DFE6', '#b24745')
-# 
-
 # Create a named vector where each agency type is assigned a color
 color_map <-  c(
     "City"                  = "#d0645f", 
@@ -65,13 +61,9 @@ color_map <-  c(
 )
 
 
-
-
 # plot ---------
 
 png("Rplot.png", width = 3000, height = 3000, res = 200) 
-
-
 
 par(bg = "grey93")  # Adjust bottom margin (first value)
 
@@ -91,8 +83,6 @@ chordDiagram(chord_matrix,
              grid.col = color_map,
              annotationTrackHeight = c(0.01, 0.001),
              preAllocateTracks = list(track.height = 0.1))
-
-
 
 
 # labs
