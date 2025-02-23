@@ -46,16 +46,19 @@ chord_matrix <- as.matrix(chord_matrix)
 # Reassign the row names after conversion
 rownames(chord_matrix) <- agency_types
 
+# Reorder the matrix rows alphabetically based on agency types
+chord_matrix <- chord_matrix[order(rownames(chord_matrix), decreasing = TRUE), ]
+
 
 # my_col = c('#3a5cbc', '#b9b8e7','#BC3C29','#E18727','#0072B5', '#dddaea', '#20854E','#FFDC91','#6F99AD', '#F39B7F','#D0DFE6', '#b24745')
 # 
 
 # Create a named vector where each agency type is assigned a color
 color_map <-  c(
-    "City"                  = "#b24745", 
-    "County"                = "#b9b8e7", 
+    "City"                  = "#d0645f", 
+    "County"                = "#6F99AD", 
     "University or College" = "#3a5cbc",
-    "Other"                 = "#6F99AD",
+    "Other"                 = "#b9b8e7",
     "Other State Agency"    = "#66C2A5", 
     "Tribal"                = "#F39B7F", 
     "State Police"          = "#5E4FA2"
@@ -77,7 +80,7 @@ circos.clear()
 circos.par(
     start.degree = 270,
     canvas.xlim = c(-1.1, 1.1),
-    canvas.ylim = c(-1.1, 1.1)
+    canvas.ylim = c(-1, 1.1)
     
 )
 
@@ -94,13 +97,13 @@ chordDiagram(chord_matrix,
 
 # labs
 title("FBI Crime Data: Agency types in U.S. states.",
-      cex.main = 2,  
+      cex.main = 2.5,  
       font.main = 1,
-      line = -2)
+      line = -3)
 
 
 mtext("A chord diagram representing the distribution of Agency types across U.S. states",
-      side = 3, line = -4, cex = 1.2)
+      side = 3, line = -5.5, cex = 1.7)
 
 mtext("Source: FBI Crime Data API | Graphic: Natasa Anastasiadou",
       side = 3, line = -73, cex = 1, adj = 1)
@@ -111,7 +114,7 @@ mtext("Source: FBI Crime Data API | Graphic: Natasa Anastasiadou",
 circos.track(track.index = 1, panel.fun = function(x, y) {
     circos.text(CELL_META$xcenter, CELL_META$ylim[1], CELL_META$sector.index, 
                 facing = "clockwise", niceFacing = TRUE, adj = c(0, 0.5),
-                cex = 0.85)
+                cex = 1.1)
 }, bg.border = NA)
 
 
