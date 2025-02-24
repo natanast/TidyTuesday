@@ -1,5 +1,4 @@
 
-
 rm(list = ls())
 gc()
 
@@ -12,44 +11,35 @@ library(stringr)
 library(extrafont)
 library(colorspace)
 library(ggtext)
-
 library(giscoR)  
 library(sf)
 library(circlize)
+
 
 # load data --------
 
 agencies <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-18/agencies.csv')
 
-
 # data cleaning ------
 
 df <- agencies[!is.na(agencies$agency_type) & agency_type != "Unknown", ]
 
-
 # Aggregate by state and agency type
 df1 <- df[, .N, by = .(state, agency_type)]
-
 
 # Convert data to a matrix format for chordDiagram
 chord_matrix <- dcast(df1, agency_type ~ state, value.var = "N", fill = 0)
 
 # Store row names before converting to matrix
 agency_types <- chord_matrix$agency_type
-
-# Remove agency_type column
 chord_matrix$agency_type <- NULL
-
-# Convert to a matrix (this will lose row names)
 chord_matrix <- as.matrix(chord_matrix)
 
-# Reassign the row names after conversion
 rownames(chord_matrix) <- agency_types
-
-# Reorder the matrix rows alphabetically based on agency types
 chord_matrix <- chord_matrix[order(rownames(chord_matrix), decreasing = TRUE), ]
 
 # Create a named vector where each agency type is assigned a color
+
 color_map <-  c(
     "City"                  = "#d0645f", 
     "County"                = "#6F99AD", 
@@ -59,7 +49,6 @@ color_map <-  c(
     "Tribal"                = "#F39B7F", 
     "State Police"          = "#5E4FA2"
 )
-
 
 # plot ---------
 
