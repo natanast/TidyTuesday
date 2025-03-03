@@ -2,7 +2,6 @@
 rm(list = ls())
 gc()
 
-
 # load libraries -------
 
 library(data.table)
@@ -14,7 +13,6 @@ library(ggtext)
 library(giscoR)  
 library(sf)
 library(circlize)
-
 
 # load data --------
 
