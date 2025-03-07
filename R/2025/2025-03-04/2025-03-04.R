@@ -36,6 +36,7 @@ colors =  c('#00429d', '#73a2c6', 'grey96', '#f4777f', '#93003a')
 
 # Plot the heatmap
 ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
+    
     geom_tile(color = "grey20") +
     # scale_fill_gradientn(colors = colors, name = "Count") +  # Custom gradient
 
@@ -45,10 +46,11 @@ ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
         breaks = c(1, 10, 100, 1000, 3000),  # Log-spaced breaks
         transform = "log10",  # Apply log transformation
         labels = scales::comma,
+        name = "No. of Cases",
         guide = guide_colorsteps(
-            barheight = unit(16, "lines"), 
-            barwidth = unit(.5, "lines")
-        )
+            barheight = unit(12, "lines"), 
+            barwidth = unit(0.5, "lines")
+        )  # Centers the title
     ) +
 
 
@@ -60,6 +62,7 @@ ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
     #     guide = "none"
     # ) +
     # 
+    
     theme_minimal() +
     
     labs(title = "Outcome Types by Animal Type",
@@ -67,15 +70,16 @@ ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
          caption = "Source: <b> Parfumo Fragrance Dataset</b> | Graphic: <b>Natasa Anastasiadou</b>",
          x = "Outcome Type",
          y = "Animal Type"
-         # fill = "Outcome Type"
          ) +
 
 
     theme(
-        axis.text.x = element_text(angle = 45, hjust = 1), 
-        legend.position = "right",
+        axis.text.x = element_text(angle = 45, hjust = 1),
         
-        legend.title = element_text(size = 10, face = "bold", family = "Candara", color = "grey30"),
+        legend.position = "right",
+        legend.title.position = "left",
+        
+        legend.title = element_text(size = 10, angle = 90, hjust = .5, face = "bold", family = "Candara", color = "grey30"),
         legend.text = element_text(size = 8, family = "Candara", color = "grey30"),
         
         axis.title.x = element_text(size = 12, family = "Candara"),
@@ -94,7 +98,7 @@ ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
         plot.margin = margin(20, 20, 20, 20),
         
         plot.background = element_rect(fill = "grey93", color = NA)
-          )  # Rotate x-axis labels
+    )  
 
 
 
