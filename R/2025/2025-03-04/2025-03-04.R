@@ -76,7 +76,7 @@ gr = ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
     theme_minimal() +
     
     labs(title = "Fate of Shelter Animals at Long Beach Animal Shelter",
-         subtitle = "This heatmap illustrates the distribution of different outcomes for animals cared for by the Long Beach Animal Shelter.",
+         subtitle = "This heatmap illustrates the distribution of different outcomes for animals at the Long Beach Animal Shelter.",
          caption = "Source: <b>  Long Beach Animal Shelter Data</b> | Graphic: <b>Natasa Anastasiadou</b>",
          x = "Outcome Type",
          y = "Animal Type"
