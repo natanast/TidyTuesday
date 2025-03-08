@@ -31,6 +31,10 @@ df_heatmap <- longbeach[, .N, by = .(outcome_type, animal_type)]
 df_heatmap <- df_heatmap[!is.na(outcome_type), ]
 
 
+df_heatmap$outcome_type <- str_to_title(df_heatmap$outcome_type)
+df_heatmap$animal_type <- str_to_title(df_heatmap$animal_type)
+
+
 df_heatmap$animal_type <- factor(df_heatmap$animal_type, levels = rev(sort(unique(df_heatmap$animal_type))))
 
 
@@ -41,8 +45,6 @@ df_heatmap <- df_heatmap |>
 
 # plot --------
 
-# Define custom color scale
-colors =  c('#00429d', '#73a2c6', 'grey96', '#f4777f', '#93003a')
 
 
 gr = ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
@@ -59,11 +61,11 @@ gr = ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
     ) +
 
     scale_fill_stepsn(
-        colors =  c('#2c5769', '#6F99AD', 'grey96', '#ff9992', '#b24745'),
+        colors =  c('#2c5769', '#6F99AD', 'grey96', '#ffb5ac', '#a33a3a'),
         breaks = c(1, 10, 100, 1000, 3000),  # Log-spaced breaks
         transform = "log10",  # Apply log transformation
         labels = scales::comma,
-        name = "No. of Cases",
+        name = "No. of Animals",
         na.value = "grey96",
         guide = guide_colorsteps(
             barheight = unit(8, "lines"), 
@@ -73,13 +75,12 @@ gr = ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
 
     theme_minimal() +
     
-    labs(title = "Outcome Types by Animal Type",
-         # subtitle = "Average perfume ratings of popular brands with over 20 years of releases and significant reviews (>500 Rating Count).",
-         caption = "Source: <b> Parfumo Fragrance Dataset</b> | Graphic: <b>Natasa Anastasiadou</b>",
+    labs(title = "Fate of Shelter Animals at Long Beach Animal Shelter",
+         subtitle = "This heatmap illustrates the distribution of different outcomes for animals cared for by the Long Beach Animal Shelter.",
+         caption = "Source: <b>  Long Beach Animal Shelter Data</b> | Graphic: <b>Natasa Anastasiadou</b>",
          x = "Outcome Type",
          y = "Animal Type"
          ) +
-
 
     theme(
         
@@ -98,7 +99,7 @@ gr = ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         
-        plot.title = element_markdown(size = 12, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 35, t = 5)),
+        plot.title = element_markdown(size = 12, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 5, t = 5)),
         plot.subtitle = element_markdown(size = 10, hjust = 0.25, family = "Candara", color = "grey30", margin = margin(b = 15, t = 5)),
         plot.caption = element_markdown(margin = margin(t = 35), size = 8, family = "Candara", hjust = 1.3),
         
