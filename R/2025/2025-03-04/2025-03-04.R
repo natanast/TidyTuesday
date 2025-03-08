@@ -15,6 +15,7 @@ library(colorspace)
 library(ggtext)
 library(paletteer)
 library(shadowtext)
+library(tidyr)
 
 
 # load data --------
@@ -29,8 +30,13 @@ df_heatmap <- longbeach[, .N, by = .(outcome_type, animal_type)]
 
 df_heatmap <- df_heatmap[!is.na(outcome_type), ]
 
-# df_heatmap$animal_type <- factor(df_heatmap$animal_type, levels = unique(df_heatmap$animal_type))
+
 df_heatmap$animal_type <- factor(df_heatmap$animal_type, levels = rev(sort(unique(df_heatmap$animal_type))))
+
+
+# Ensure all combinations are included (fills missing ones with NA)
+df_heatmap <- df_heatmap |> 
+    complete(outcome_type, animal_type, fill = list(N = 0))  # Fill missing values with 0
 
 
 # plot --------
@@ -43,13 +49,13 @@ gr = ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
     
     geom_tile(color = "grey20", linewidth = .25) +
     
-    # geom_text(aes(label = N), size = 3, color = "black", fontface = "bold") +
-    
     geom_shadowtext(
-        aes(label = N),
+        aes(label = ifelse(N > 0, N, "")),
         color = "black",
         family = "Candara",
-        bg.color = "grey96", bg.r = .1, size = 3
+        bg.color = "grey95", 
+        bg.r = .1, 
+        size = 3
     ) +
 
     scale_fill_stepsn(
@@ -58,22 +64,13 @@ gr = ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
         transform = "log10",  # Apply log transformation
         labels = scales::comma,
         name = "No. of Cases",
+        na.value = "grey96",
         guide = guide_colorsteps(
             barheight = unit(8, "lines"), 
             barwidth = unit(0.25, "lines")
         )  # Centers the title
     ) +
 
-
-    # 
-    # scale_color_stepsn(
-    #     colors = c("#00429d","#73a2c6","#ffffe0","#f4777f","#93003a") |> darken(.75),
-    #     # breaks = c(1000, 2000, 3000, 5000),
-    #     # transform = "log10",
-    #     guide = "none"
-    # ) +
-    # 
-    
     theme_minimal() +
     
     labs(title = "Outcome Types by Animal Type",
@@ -98,8 +95,8 @@ gr = ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
         axis.text.x = element_text(size = 6, family = "Candara", angle = 45, hjust = 1),
         axis.text.y = element_text(size = 6, family = "Candara"),
         
-        panel.grid.major = element_line(linewidth = .4, color = "grey85"),
-        panel.grid.minor = element_line(linewidth = .3, linetype = "dashed", color = "grey85"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
         
         plot.title = element_markdown(size = 12, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 35, t = 5)),
         plot.subtitle = element_markdown(size = 10, hjust = 0.25, family = "Candara", color = "grey30", margin = margin(b = 15, t = 5)),
