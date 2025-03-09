@@ -25,27 +25,21 @@ longbeach <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesda
 
 # data cleaning ------
 
-# Count occurrences of each outcome type per animal type
 df_heatmap <- longbeach[, .N, by = .(outcome_type, animal_type)]
 
 df_heatmap <- df_heatmap[!is.na(outcome_type), ]
 
-
 df_heatmap$outcome_type <- str_to_title(df_heatmap$outcome_type)
 df_heatmap$animal_type <- str_to_title(df_heatmap$animal_type)
 
-
 df_heatmap$animal_type <- factor(df_heatmap$animal_type, levels = rev(sort(unique(df_heatmap$animal_type))))
 
-
-# Ensure all combinations are included (fills missing ones with NA)
+# fills missing ones with 0
 df_heatmap <- df_heatmap |> 
-    complete(outcome_type, animal_type, fill = list(N = 0))  # Fill missing values with 0
+    complete(outcome_type, animal_type, fill = list(N = 0))  
 
 
 # plot --------
-
-
 
 gr = ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
     
@@ -62,8 +56,8 @@ gr = ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
 
     scale_fill_stepsn(
         colors =  c('#2c5769', '#6F99AD', 'grey96', '#ffb5ac', '#a33a3a'),
-        breaks = c(1, 10, 100, 1000, 3000),  # Log-spaced breaks
-        transform = "log10",  # Apply log transformation
+        breaks = c(1, 10, 100, 1000, 3000), 
+        transform = "log10",  
         labels = scales::comma,
         name = "No. of Animals",
         na.value = "grey96",
@@ -107,9 +101,6 @@ gr = ggplot(df_heatmap, aes(x = outcome_type, y = animal_type, fill = N)) +
         
         plot.background = element_rect(fill = "grey93", color = NA)
     )  
-
-gr
-
 
 ggsave(
     plot = gr, filename = "Rplot.png",
