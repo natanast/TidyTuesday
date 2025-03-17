@@ -1,12 +1,14 @@
-# Long Beach Animal Shelter
+# Palm Trees
 
-This week we're exploring the [Long Beach Animal Shelter Data](https://data.longbeach.gov/explore/dataset/animal-shelter-intakes-and-outcomes/information/)! 
+This week we're exploring [Palm Trees](https://www.nature.com/articles/s41597-019-0189-0)! 
 
-The dataset comes from the [City of Long Beach Animal Care Services](https://www.longbeach.gov/acs/) via the [{animalshelter}](https://emilhvitfeldt.github.io/animalshelter/) R package.
+The dataset comes from the [the PalmTraits 1.0 database](https://www.nature.com/articles/s41597-019-0189-0) via the [`palmtrees`](https://github.com/EmilHvitfeldt/palmtrees) R package by [Emil Hvitfeldt](https://github.com/EmilHvitfeldt).
 
-> This dataset comprises of the intake and outcome record from Long Beach Animal Shelter.
+> Plant traits are critical to plant form and function —including growth, survival and reproduction— and therefore shape fundamental aspects of population and ecosystem dynamics as well as ecosystem services. Here, we present a global species-level compilation of key functional traits for palms (Arecaceae), a plant family with keystone importance in tropical and subtropical ecosystems.
 
-- How has the number of pet adoptions changed over the years?
-- Which type of pets are adopted most often?
+- How does the sizes of the different species of palms vary across sub families?
+
+- Which fruit colors occur most often?
+
 
 Thank you to [Lydia Gibson](https://github.com/lgibson7) for curating this week's dataset.
