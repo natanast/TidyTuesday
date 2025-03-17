@@ -9,14 +9,11 @@ gc()
 library(data.table)
 library(ggplot2)
 library(stringr)
-library(ggstream)
 library(extrafont)
 library(colorspace)
 library(ggtext)
 library(paletteer)
 library(shadowtext)
-library(tidyr)
-
 
 # load data --------
 
