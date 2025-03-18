@@ -64,7 +64,7 @@ ggplot(df_long, aes(x = Size, y = acc_species, fill = Measurement_Type)) +
     
     # Labels and theme
     labs(
-        title = "Mirrored Bar Plot of Fruit Length and Width in Basselinia Species",
+        # title = "Mirrored Bar Plot of Fruit Length and Width in Basselinia Species",
         x = "Size (cm)",
         y = "",
         fill = "Measurement Type"
