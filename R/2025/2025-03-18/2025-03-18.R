@@ -28,9 +28,9 @@ palmtrees <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesda
 
 # save ---------
 
-ggsave(
-    plot = gr, filename = "Rplot.png",
-    width = 9, height = 7, units = "in", dpi = 600
-)
+# ggsave(
+#    plot = gr, filename = "Rplot.png",
+#    width = 9, height = 7, units = "in", dpi = 600
+#)
 
 
