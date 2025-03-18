@@ -17,7 +17,7 @@ library(shadowtext)
 
 # load data --------
 
-longbeach <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-04/longbeach.csv')
+palmtrees <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-18/palmtrees.csv')
 
 
 # data cleaning ------
