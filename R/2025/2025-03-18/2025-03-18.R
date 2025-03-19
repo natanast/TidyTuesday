@@ -10,10 +10,8 @@ library(data.table)
 library(ggplot2)
 library(stringr)
 library(extrafont)
-# library(colorspace)
 library(ggtext)
-# library(paletteer)
-# library(shadowtext)
+
 
 # load data --------
 
@@ -32,45 +30,40 @@ df <- df[acc_genus == "Basselinia"]
 
 df$acc_species <- str_to_title(df$acc_species)
 
-# Convert to long format
+
 df_long <- melt(df, id.vars = "acc_species", 
                 measure.vars = c("blade_length", "rachis_length"),
                 variable.name = "Measurement_Type",
                 value.name = "Size")
 
-# Adjust values: Fruit width goes negative
+
 df_long[, Size := ifelse(Measurement_Type == "blade_length", -Size, Size)]
 
 
 # plot ------
 
-# Mirrored bar plot
-ggplot(df_long, aes(x = Size, y = acc_species, fill = Measurement_Type)) +
-    
-    # Bars
-    geom_col(width = 0.6, alpha = 0.8) +
+gr = ggplot(df_long, aes(x = Size, y = acc_species, fill = Measurement_Type)) +
+
+    geom_col(width = 0.5, alpha = 0.8) +
     
     geom_vline(xintercept = 0, color = "grey20", linetype = "dashed", size = 0.55) +
     
     scale_y_discrete(limits = rev(unique(df_long$acc_species))) +
     
     scale_x_continuous(limits = c(-4, 4), labels = abs) +
-    
+
     scale_fill_manual(
-        values = c(
-            "blade_length" = "#79AF97", 
-            "rachis_length" = "#7E6148"
-        )
+        values = c("blade_length" = "#79AF97", "rachis_length" = "#7E6148"),
+        labels = c("blade_length" = "Blade", "rachis_length" = "Rachis")
     ) +
-    
 
     labs(
-        title = "Fruit Length and Width in Basselinia Species",
-        subtitle = "",
-        caption = "Source: <b>  Long Beach Animal Shelter Data</b> | Graphic: <b>Natasa Anastasiadou</b>",
-        x = "Size (cm)",
+        title = "Comparison of Leaf Blade and Rachis Lengths in Basselinia Species",
+        subtitle = "Visualizing the structural diversity of *Basselinia* palms through their maximum <span style='color:#79AF97;'><b>Blade</b></span> and <span style='color:#7E6148;'><b>Rachis</b></span> lengths.",
+        caption = "Source: <b> {palmtrees} R package</b> | Graphic: <b>Natasa Anastasiadou</b>",
+        x = "Size (m)",
         y = "",
-        fill = "Measurement Type"
+        fill = "Length"
     ) +
     
     theme_minimal() +
@@ -81,9 +74,10 @@ ggplot(df_long, aes(x = Size, y = acc_species, fill = Measurement_Type)) +
         
         legend.position = "bottom",
         
+        axis.title.x = element_text(size = 14, family = "Candara"),
         
-        legend.title = element_text(size = 10, hjust = .5, face = "bold", family = "Candara", color = "grey30"),
-        legend.text = element_text(size = 8, family = "Candara", color = "grey30"),
+        legend.title = element_text(size = 12, hjust = .5, face = "bold", family = "Candara", color = "grey30"),
+        legend.text = element_text(size = 10, family = "Candara", color = "grey30"),
         
         
         panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
@@ -91,24 +85,21 @@ ggplot(df_long, aes(x = Size, y = acc_species, fill = Measurement_Type)) +
         
         plot.background = element_rect(fill = "grey93", color = NA),
 
-        plot.title = element_markdown(size = 12, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 5, t = 5)),
-        plot.subtitle = element_markdown(size = 10, hjust = 0.25, family = "Candara", color = "grey30", margin = margin(b = 15, t = 5)),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 8, family = "Candara", hjust = 1.3),
+        plot.title = element_markdown(size = 18, face = "bold", hjust = 0.5, family = "Candara", margin = margin(b = 10, t = 5)),
+        plot.subtitle = element_markdown(size = 14, hjust = 0.25, family = "Candara", color = "grey30", margin = margin(b = 20, t = 2)),
+        plot.caption = element_markdown(margin = margin(t = 22), size = 10, family = "Candara", hjust = 1.03),
         
         plot.margin = margin(20, 20, 20, 20)
     )
 
 
-
-
-
-
+gr
 
 # save ---------
 
-# ggsave(
-#    plot = gr, filename = "Rplot.png",
-#    width = 9, height = 7, units = "in", dpi = 600
-#)
+ggsave(
+   plot = gr, filename = "Rplot.png",
+   width = 10, height = 10, units = "in", dpi = 600
+)
 
 
