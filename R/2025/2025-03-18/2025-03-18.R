@@ -93,8 +93,6 @@ gr = ggplot(df_long, aes(x = Size, y = acc_species, fill = Measurement_Type)) +
     )
 
 
-gr
-
 # save ---------
 
 ggsave(
