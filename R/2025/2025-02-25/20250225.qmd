@@ -1,0 +1,105 @@
+---
+title: "Academic Literature on Racial and Ethnic Disparities in Reproductive Medicine in the US."
+subtitle: "TidyTuesday Python Challenge: A collaboration with Posit"
+---
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import textwrap
+
+# Load the data 
+df = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-25/article_dat.csv')
+
+```
+
+```{python}
+# Clean data
+pub_trends = df.groupby(['year', 'journal']).size().unstack(fill_value=0)
+df_flat = pub_trends.reset_index()
+
+# One row per year-journal pair
+df_melted = df_flat.melt(id_vars = 'year', var_name = 'journal', value_name = 'count')
+
+# Wrap the journal names
+df_melted['journal_wrapped'] = df_melted['journal'].apply(lambda x: "\n".join(textwrap.wrap(x, width = 25)))
+
+my_col = ['#3a5cbc', '#9291be', '#c15451', '#6F99AD', '#DF8F44', '#80796B']
+
+# Plot
+plt.figure(figsize=(7,7))
+
+sns.scatterplot(
+    data = df_melted, 
+    x = "year", 
+    y = "journal_wrapped", 
+    size = "count", 
+    sizes = (30, 300), 
+    alpha = 0.7,
+    hue = "journal", 
+    palette = my_col,
+    legend = False
+)
+
+# Add labels and title
+plt.xlabel("")
+plt.ylabel("")
+plt.title(
+    "Examining Racial and Ethnic Disparities in Reproductive Medicine", 
+    fontsize = 15,
+    pad = 35,
+    x = 0.5
+    )
+
+# Add the subtitle for clarification
+plt.text(x = 0.5, y = 1.045, 
+        s = "Analyzing publications from top Ob/Gyn journals, \nwith point size reflecting the number of studies on racial and ethnic disparities.", 
+        ha = 'center', 
+        va = 'center', 
+        fontsize = 10, 
+        style = 'italic', 
+        color = "#8C8380",
+        transform = plt.gca().transAxes)
+
+# Add a caption to the plot
+plt.text(
+    x = 0.85, y = -0.1,  # Adjust x, y to position the caption below the plot
+    s = "Source: Academic Literature Dataset | Graphic: Natasa Anastasiadou", 
+    ha = 'center', 
+    va = 'center', 
+    fontsize = 7, 
+    style = 'italic', 
+    color = "#8C8380", 
+    transform = plt.gca().transAxes
+)
+
+# Create dummy scatter plot points for the size legend
+legend_sizes = [1, 5, 10, 17]  # Example sizes for the legend
+
+# These dummy scatter points are used to create the legend for sizes
+for size in legend_sizes:
+    plt.scatter([], [], s = size, color = 'grey', alpha = 0.7, label = f'{size}')
+
+# Add custom legend for the size (publication count)
+plt.legend(
+    title = 'Count', 
+    loc = 'upper center', 
+    bbox_to_anchor = (1.1, 0.65), 
+    fontsize = 8, 
+    ncol = 1, 
+    frameon = False, 
+    markerscale = 2, 
+    labelspacing = 1.2
+    )
+
+# plt.xticks(rotation=45)
+plt.xticks(ticks=sorted(df['year'].unique()), rotation = 90, fontsize = 8)
+plt.yticks(fontsize = 8)
+
+
+plt.show()
+
+# plt.savefig("plot.png", dpi = 600, bbox_inches='tight')  # Save with high resolution
+
+```

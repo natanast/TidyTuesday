@@ -1,0 +1,108 @@
+---
+title: "Pixar Films."
+subtitle: "TidyTuesday Python Challenge: A collaboration with Posit"
+---
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+# Load the data 
+
+pixar_films = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-11/pixar_films.csv')
+public_response = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-03-11/public_response.csv')
+
+
+```
+
+```{python}
+# clean data
+
+# Fill NaN values in 'critics_choice' with 0 for plotting (you can choose another value if preferred)
+public_response['critics_choice'] = public_response['critics_choice'].fillna(0)
+
+# Drop the row where the film is 'Luca'
+public_response = public_response[public_response['film'] != 'Luca']
+
+
+# Sort the films alphabetically or by any other criteria (optional)
+sorted_films = public_response.sort_values('film')
+
+# Create spaced-out x positions (e.g., 0, 3, 6, 9...)
+x = np.arange(0, len(sorted_films) * 5, 5)
+
+# Set up the figure and axes
+fig, ax = plt.subplots(figsize = (8, 7))
+
+# Define the bar width
+bar_width = 1
+
+
+my_col = ['#3a5cbc', '#9291be', '#c15451', '#6F99AD', '#DF8F44','#80796B']
+
+# Plot bars for each score type
+ax.bar(x - bar_width, sorted_films['rotten_tomatoes'], width=bar_width, label='Rotten Tomatoes', color='#6F99AD')
+ax.bar(x, sorted_films['metacritic'], width=bar_width, label='Metacritic', color='#DF8F44')
+ax.bar(x + bar_width, sorted_films['critics_choice'], width=bar_width, label="Critics' Choice", color='#3a5cbc')
+
+# Labeling
+ax.set_xticks(x)
+ax.set_xticklabels(sorted_films['film'], 
+                    fontsize = 7,
+                    rotation = 45, 
+                    ha = 'right')
+
+# Adjust the legend
+ax.legend(fontsize=6, 
+          title_fontsize=7,
+          loc='upper left', 
+          bbox_to_anchor=(1, 0.6), 
+          title="Critic Score Platforms")
+
+
+# Add labels and title
+plt.xlabel("")
+plt.ylabel('Score (%)', fontsize=8)
+
+# Change the size of the y-axis tick labels
+ax.tick_params(axis='y', labelsize=7)
+
+plt.title(
+    "Comparison of Pixar Films Critic Scores Across Multiple Platforms", 
+    fontsize = 13,
+    pad = 35,
+    x = 0.5
+    )
+
+# Add the subtitle for clarification
+plt.text(x = 0.5, y = 1.04, 
+        s = "Exploring Rotten Tomatoes, Metacritic, and Critics' Choice ratings for popular films, \nwith insights on scoring differences.", 
+        ha = 'center', 
+        va = 'center', 
+        fontsize = 10, 
+        style = 'italic', 
+        color = "#8C8380",
+        transform = plt.gca().transAxes)
+
+# Add a caption to the plot
+plt.text(
+    x = 0.98, y = -0.3,  # Adjust x, y to position the caption below 
+    s = "Source: Pixar Films Dataset | Graphic: Natasa Anastasiadou", 
+    ha = 'center', 
+    va = 'center', 
+    fontsize = 7, 
+    style = 'italic', 
+    color = "#8C8380", 
+    transform = plt.gca().transAxes
+)
+
+# Show plot
+plt.tight_layout()
+plt.show()
+
+
+# plt.savefig("plot.png", dpi = 600, bbox_inches='tight')  # Save with high resolution
+
+```
