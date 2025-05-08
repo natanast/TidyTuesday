@@ -13,6 +13,7 @@ library(patchwork)
 library(ggtext)
 
 
+
 # Plot 1---------------
 # Data 1
 data_1 <- emissions |>
@@ -58,7 +59,7 @@ p1 <- ggplot(top_5_data, aes(x = reorder(parent_entity, total_CO2), y = total_CO
   )
 
 
-
+p1
 
 # Plot 2-----------------
 
