@@ -43,6 +43,10 @@ df |>
         
         axis.text.x = element_blank(),
         
+        
+        panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
+        panel.grid.minor = element_blank(),
+        
         plot.background = element_rect(fill = "grey93", color = NA),
         plot.margin = margin(20, 20, 20, 20)
     )
