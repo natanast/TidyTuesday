@@ -36,7 +36,9 @@ df |>
     
     facet_wrap(~directorate, nrow = 1, strip.position = "bottom") +
     
-    theme_minimal() +
+    
+    
+    theme_minimal(base_family = "Candara") +
     
     theme(
         legend.position = "none",
@@ -50,3 +52,7 @@ df |>
         plot.background = element_rect(fill = "grey93", color = NA),
         plot.margin = margin(20, 20, 20, 20)
     )
+
+
+
+
