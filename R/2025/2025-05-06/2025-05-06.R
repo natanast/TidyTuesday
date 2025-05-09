@@ -75,15 +75,18 @@ gr = df_expanded |>
         legend.position = "none",
         
         axis.title = element_blank(),
-        axis.text.x = element_blank(),
         
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 10),
+        
+        strip.text = element_text(size = 10),
         
         panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
         panel.grid.minor = element_blank(),
         
-        plot.title = element_markdown(size = 16, face = "bold", hjust = 0.5, family = "Candara"),
-        plot.subtitle = element_markdown(size = 12, hjust = 0.5, family = "Candara", color = "grey30"),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1),
+        plot.title = element_markdown(size = 16, face = "bold", hjust = 0.5, margin = margin(t = 15, b = 5)),
+        plot.subtitle = element_markdown(size = 12, hjust = 0.5, color = "grey30", margin = margin(t = 2.5, b = 25)),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 8, hjust = 1),
 
         plot.background = element_rect(fill = "grey93", color = NA),
         plot.margin = margin(20, 20, 20, 20)
