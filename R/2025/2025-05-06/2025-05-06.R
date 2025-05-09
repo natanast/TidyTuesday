@@ -64,11 +64,9 @@ gr = df_expanded |>
     scale_fill_manual(values = col) +
 
     labs(
-        title = "Number of Households Lacking Plumbing by State: 2022 vs 2023",
-        subtitle = "<b><span style='color: #79AF97; font-weight: bold;'>Positive</span></b>
-                    values represent states with an <b>increase</b> in the number of households lacking plumbing from 2022 to 2023,
-                    <br>while <b><span style='color: #B24745;'>negative</span></b> values indicate a <b>decrease</b>.</br>",
-        caption = "Source: <b>Water insecurity data</b> | Graphic: <b>Natasa Anastasiadou</b>"
+        title = "Grants Terminated Across Directorates",
+        subtitle = "<b>Each dot</b> represents a <b>terminated award</b> within a U.S. National Science Foundation (NSF) directorate.",
+        caption = "Source: <b>U.S. NSF Grant Terminations data </b> | Graphic: <b>Natasa Anastasiadou</b>"
     ) +
 
     theme_minimal(base_family = "Candara") +
@@ -83,9 +81,9 @@ gr = df_expanded |>
         panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
         panel.grid.minor = element_blank(),
         
-        # plot.title = element_markdown(size = 19, face = "bold", hjust = 0.5, family = "Candara"),
-        # plot.subtitle = element_markdown(size = 14, hjust = 0.5, family = "Candara", color = "grey30"),
-        # plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1),
+        plot.title = element_markdown(size = 16, face = "bold", hjust = 0.5, family = "Candara"),
+        plot.subtitle = element_markdown(size = 12, hjust = 0.5, family = "Candara", color = "grey30"),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 10, family = "Candara", hjust = 1),
 
         plot.background = element_rect(fill = "grey93", color = NA),
         plot.margin = margin(20, 20, 20, 20)
