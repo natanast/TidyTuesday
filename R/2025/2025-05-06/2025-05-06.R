@@ -26,7 +26,10 @@ df = nsf_terminations[, .(directorate)]
 
 df = df[!is.na(directorate), .N, by = directorate]
 
-df$directorate <- df$directorate |> str_remove_all('^"|"$') |> str_wrap(width = 15)
+df$directorate <- df$directorate |> str_remove_all('^"+|"+$') |> str_wrap(width = 15)
+
+df$directorate <- ifelse(df$directorate == "STEM Education", "*STEM Education", df$directorate)
+
 
 
 # Sort by number of terminations descending
@@ -66,9 +69,9 @@ gr = df_expanded |>
     labs(
         title = "Grants Terminated Across Directorates",
         subtitle = "<b>Each dot</b> represents a <b>terminated award</b> within a U.S. National Science Foundation (NSF) directorate.",
-        caption = "Source: <b>U.S. NSF Grant Terminations data </b> | Graphic: <b>Natasa Anastasiadou</b>"
+        caption = "*Science, Technology, Engineering, and Mathematics <br> <br>Source: <b>U.S. NSF Grant Terminations data </b> | Graphic: <b>Natasa Anastasiadou</b>"
     ) +
-
+    
     theme_minimal(base_family = "Candara") +
     
     theme(
@@ -77,9 +80,9 @@ gr = df_expanded |>
         axis.title = element_blank(),
         
         axis.text.x = element_blank(),
-        axis.text.y = element_text(size = 10),
+        axis.text.y = element_text(size = 9.5),
         
-        strip.text = element_text(size = 10),
+        strip.text = element_text(size = 9.5),
         
         panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
         panel.grid.minor = element_blank(),
