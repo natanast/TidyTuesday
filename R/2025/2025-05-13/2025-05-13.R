@@ -16,42 +16,15 @@ library(paletteer)
 
 # load data --------
 
-nsf_terminations <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-06/nsf_terminations.csv')
-
 
 # clean data ------
 
-df = nsf_terminations[, .(directorate)]
 
-
-df = df[!is.na(directorate), .N, by = directorate]
-
-df$directorate <- df$directorate |> str_remove_all('^"+|"+$') |> str_wrap(width = 15)
-
-df$directorate <- ifelse(df$directorate == "STEM Education", "*STEM Education", df$directorate)
-
-
-
-# Sort by number of terminations descending
-setorder(df, -N)
-df[, directorate := factor(directorate, levels = directorate)]
-
-
-# One point per termination
-df_expanded <- df[, .(directorate = rep(directorate, times = N))]
-
-# Create grid layout: each directorate starts at (0,0)
-df_expanded[, id := seq_len(.N), by = directorate]
-df_expanded[, `:=`(
-    x = (id - 1) %% 10,
-    y = (id - 1) %/% 10  # negative y to grow downward
-)]
 
 
 
 # plot ---------
 
-col = paletteer_c("ggthemes::Sunset-Sunrise Diverging", 9)
 
 
 gr = df_expanded |> 
