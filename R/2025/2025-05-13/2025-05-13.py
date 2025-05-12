@@ -15,60 +15,6 @@ daily_accidents = pd.read_csv('https://raw.githubusercontent.com/rfordatascience
 
 # Plot --------
 
-# Plot the log-transformed fatalities vs difference
-g = (
-    ggplot(df_july4_420_aggregated) +
-    aes(x='difference', y='log_fatalities', color='Group') +
-    geom_point(size=3) +
-    theme_minimal() +
-    labs(title="Volcano Plot of Fatalities Count (Log Scale)",
-         x="Difference Between Groups",
-         y="Log(Fatalities Count)")
-)
-g
-
-
-g = (
-    ggplot(df_july4_420_aggregated) +
-
-    aes(x = 'date', y = 'fatalities_count', fill = 'Group') + 
-
-    geom_point(size = 3) +
-
-    scale_y_log10() +  # Apply log scale to y-axis
-
-    expand_limits(y=[150]) +
-
-    theme_minimal() +
-
-    theme(
-        axis_text_x=element_text(rotation=45, hjust=1), 
-
-        axis_text = element_text(family = 'Candara', size = 8),
-        axis_title = element_text(family = 'Candara', size = 10),
-        
-        plot_title = element_text(size = 12, weight = 'bold', ha = 'center'),
-        plot_subtitle = element_text(size = 10, ha = 'center'),
-        plot_caption = element_text(size = 6, ha = 'right'),
-        
-        panel_grid_major = element_line(color = '#c9c9c9', alpha = 0.75, size = 0.65, linetype="dashed"),
-        plot_background = element_rect(fill = '#f8f8f8', color = '#f8f8f8'),
-        
-        legend_title=element_text(size = 8),
-        legend_text=element_text(size = 7),
-        
-        figure_size=(10, 6)
-
-    )
-
-)
-
-
-g
-
-
-
-
 g = (
     ggplot(df_filtered) +
 
