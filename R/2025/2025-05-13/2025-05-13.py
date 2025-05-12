@@ -7,30 +7,9 @@ from plotnine import *
 # Load data --------
 
 daily_accidents = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-04-22/daily_accidents.csv')
-daily_accidents_420 = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-04-22/daily_accidents_420.csv', parse_dates=['date'])
 
 
 # clean data ------
-
-
-# Mark True for both July 4 and 4/20
-daily_accidents_420['e420'] = ((daily_accidents_420['date'].dt.month == 4) & (daily_accidents_420['date'].dt.day == 20)) | ((daily_accidents_420['date'].dt.month == 7) & (daily_accidents_420['date'].dt.day == 4))
-
-# Keep only the rows where e420 is True
-df_july4_420 = daily_accidents_420[daily_accidents_420['e420']]
-
-
-df_july4_420['date'] = pd.to_datetime(df_july4_420['date']).dt.date
-
-
-
-
-# Group by date and sum fatalities_count
-df_july4_420_aggregated = df_july4_420.groupby('date').agg({'fatalities_count': 'sum'}).reset_index()
-
-df_july4_420_aggregated['Group'] = df_july4_420_aggregated['date'].apply(lambda x: '20_04' if x.month == 4 and x.day == 20 else '04_06')
-
-# Now df_july4_420_aggregated will have one row per date with the total fatalities count
 
 
 
