@@ -6,8 +6,6 @@ from plotnine import *
 
 # Load data --------
 
-daily_accidents = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-04-22/daily_accidents.csv')
-
 
 # clean data ------
 
