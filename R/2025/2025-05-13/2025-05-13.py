@@ -11,9 +11,44 @@ vesuvius = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytu
 
 # clean data ------
 
+# Parse the datetime column
+vesuvius['time'] = pd.to_datetime(vesuvius['time'])
+
+
+# Extract useful features for plotting
+vesuvius['year'] = vesuvius['time'].dt.year
+vesuvius['month'] = vesuvius['time'].dt.month
+vesuvius['hour'] = vesuvius['time'].dt.hour
 
 
 # Plot --------
+
+plot1 = (
+    ggplot(vesuvius, aes(x='year')) +
+    geom_bar(fill="#e63946") +
+    labs(title="Seismic Events per Year at Mount Vesuvius",
+         x="Year", y="Number of Events") +
+    theme_minimal()
+)
+
+
+plot2 = (
+    ggplot(vesuvius, aes(x='depth_km', y='duration_magnitude_md')) +
+    geom_point(alpha=0.4, color="#1d3557") +
+    geom_smooth(method='lm', color="red") +
+    labs(title="Depth vs Duration Magnitude",
+         x="Depth (km)", y="Duration Magnitude (Md)") +
+    theme_minimal()
+)
+
+
+plot3 = (
+    ggplot(vesuvius, aes(x='factor(month)')) +
+    geom_bar(fill="#457b9d") +
+    labs(title="Monthly Seismic Events at Mount Vesuvius",
+         x="Month", y="Number of Events") +
+    theme_minimal()
+
 
 g = (
     ggplot(df_filtered) +
