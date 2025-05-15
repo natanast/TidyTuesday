@@ -103,8 +103,6 @@ g = (
     )
 )
 
-# Show the plot
-g
 
 #  Save the plot with custom size and resolution
 ggsave(g, "20_day.png", width = 10, height = 6, dpi = 600)
