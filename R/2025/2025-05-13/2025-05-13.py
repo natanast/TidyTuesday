@@ -25,15 +25,6 @@ df = vesuvius[['event_id', 'duration_magnitude_md', 'depth_km', 'year']]
 
 # Plot --------
 
-plot1 = (
-    ggplot(df, aes(x='year')) +
-    geom_bar(fill="#e63946") +
-    labs(title="Seismic Events per Year at Mount Vesuvius",
-         x="Year", y="Number of Events") +
-    theme_minimal()
-)
-
-
 plot2 = (
     ggplot(df, aes(x='duration_magnitude_md', y='depth_km')) +
     geom_point(alpha=0.4, color="#1d3557") +
