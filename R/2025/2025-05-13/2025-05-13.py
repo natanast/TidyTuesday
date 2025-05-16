@@ -106,27 +106,33 @@ agg_df = (
 )
 
 
-
 plot_bin = (
     ggplot(agg_df, aes(x='factor(year)', y='md_bin', size='count')) +
-    geom_point(alpha=0.6, color="#1d3557") +
-    scale_size_continuous(range=(1, 8)) +
+
+    geom_point(alpha=0.8, color="#1d3557") +
+
+    scale_size_continuous(range=(1, 9)) +
+
     labs(
         title='Binned Seismic Duration Magnitude per Year',
         x='Year',
-        y='Duration Magnitude (Md, binned by 0.25)',
+        y='Duration Magnitude (Md)',
         size='Event Count'
     ) +
-    theme_minimal() +
+
+    theme_minimal(base_family = "Candara") +
+
     theme(
-        axis_text_x=element_text(rotation=45, hjust=1, family='Candara', size=8),
-        axis_text_y=element_text(family='Candara', size=8),
-        axis_title=element_text(family='Candara', size=10),
+        axis_text_x=element_text(rotation=45, hjust=1, size=8),
+        axis_text_y=element_text(size = 8),
+        axis_title=element_text(size = 10),
         plot_title=element_text(size=12, weight='bold', ha='center'),
         panel_grid_major=element_line(color='#c9c9c9', alpha=0.75, size=0.65, linetype="dashed"),
         plot_background=element_rect(fill='#f8f8f8', color='#f8f8f8'),
         legend_title=element_text(size=8),
         legend_text=element_text(size=7),
-        figure_size=(10, 5)
+        figure_size=(10, 6)
     )
 )
+
+plot_bin
