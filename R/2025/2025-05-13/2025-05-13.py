@@ -13,6 +13,8 @@ vesuvius = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytu
 
 df = vesuvius[['event_id', 'duration_magnitude_md', 'depth_km', 'year']]
 
+df['year'] = df['year'].astype(str)
+
 df['md_bin'] = (df['duration_magnitude_md'] / 0.25).round() * 0.25
 
 
@@ -25,16 +27,23 @@ agg_df = (
 # Plot --------
 
 plot_bin = (
-    ggplot(agg_df, aes(x='factor(year)', y='md_bin', size='count')) +
+    ggplot(
+        agg_df, 
+        aes(x = 'factor(year)', y = 'md_bin', size = 'count', fill = 'year')
+    ) +
 
-    geom_point(alpha=0.8, color="#1d3557") +
+    geom_point(alpha = .8, stroke = .15) +
 
-    scale_size_continuous(range=(1, 9)) +
+    scale_size_continuous(
+        range = (1, 9)
+    ) +
+
+    guides(fill = False) +
 
     labs(
         title = "Seismic Duration Magnitude per Year",
         subtitle = "Tracking the shift from rural to urban living in selected countries (1960–2023)",
-        caption = "30DayChartChallenge 2025: Day 20 | Source: Urbanization & Climate Metrics Insights (Kaggle) | Graphic: Natasa Anastasiadou",
+        caption = "Source:  | Graphic: Natasa Anastasiadou",
         x = 'Year',
         y = 'Duration Magnitude (Md)'
     ) +
