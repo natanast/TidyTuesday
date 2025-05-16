@@ -11,44 +11,53 @@ vesuvius = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytu
 
 # clean data ------
 
-# Parse the datetime column
-vesuvius['time'] = pd.to_datetime(vesuvius['time'])
-
-
-# Extract useful features for plotting
-vesuvius['year'] = vesuvius['time'].dt.year
-vesuvius['month'] = vesuvius['time'].dt.month
-vesuvius['hour'] = vesuvius['time'].dt.hour
-
-
 df = vesuvius[['event_id', 'duration_magnitude_md', 'depth_km', 'year']]
+
+df['md_bin'] = (df['duration_magnitude_md'] / 0.25).round() * 0.25
+
+
+agg_df = (
+    df.groupby(['year', 'md_bin'])
+    .size()
+    .reset_index(name='count')
+)
 
 # Plot --------
 
-plot2 = (
-    ggplot(df, aes(x='duration_magnitude_md', y='depth_km')) +
-    geom_point(alpha=0.4, color="#1d3557") +
-    # geom_smooth(method='lm', color="red") +
-    labs(title="Depth vs Duration Magnitude",
-         x="Depth (km)", y="Duration Magnitude (Md)") +
-    theme_minimal() +
-        theme(
-        axis_text = element_text(family = 'Candara', size = 8),
-        axis_title = element_text(family = 'Candara', size = 10),
-        
-        plot_title = element_text(size = 12, weight = 'bold', ha = 'center'),
-        plot_subtitle = element_text(size = 10, ha = 'center'),
-        plot_caption = element_text(size = 6, ha = 'right'),
-        
-        panel_grid_major = element_line(color = '#c9c9c9', alpha = 0.75, size = 0.65, linetype="dashed"),
-        plot_background = element_rect(fill = '#f8f8f8', color = '#f8f8f8'),
+plot_bin = (
+    ggplot(agg_df, aes(x='factor(year)', y='md_bin', size='count')) +
 
-        legend_title=element_text(size = 8),
-        legend_text=element_text(size = 7),
-        
+    geom_point(alpha=0.8, color="#1d3557") +
+
+    scale_size_continuous(range=(1, 9)) +
+
+    labs(
+        title='Binned Seismic Duration Magnitude per Year',
+        x='Year',
+        y='Duration Magnitude (Md)',
+        size='Event Count'
+    ) +
+
+    theme_minimal(base_family = "Candara") +
+
+    theme(
+        axis_text_x=element_text(rotation=45, hjust=1, size=8),
+        axis_text_y=element_text(size = 8),
+        axis_title=element_text(size = 10),
+        plot_title=element_text(size=12, weight='bold', ha='center'),
+        panel_grid_major=element_line(color='#c9c9c9', alpha=0.75, size=0.65, linetype="dashed"),
+        plot_background=element_rect(fill='#f8f8f8', color='#f8f8f8'),
+        legend_title=element_text(size=8),
+        legend_text=element_text(size=7),
         figure_size=(10, 6)
     )
 )
+
+
+#  Save the plot with custom size and resolution
+ggsave(plot_bin, "plot.png", width = 10, height = 6, dpi = 600)
+
+
 
 
 # g = (
@@ -92,47 +101,3 @@ plot2 = (
 # )
 
 
-#  Save the plot with custom size and resolution
-# ggsave(g, "20_day.png", width = 10, height = 6, dpi = 600)
-
-
-df['md_bin'] = (df['duration_magnitude_md'] / 0.25).round() * 0.25
-
-
-agg_df = (
-    df.groupby(['year', 'md_bin'])
-    .size()
-    .reset_index(name='count')
-)
-
-
-plot_bin = (
-    ggplot(agg_df, aes(x='factor(year)', y='md_bin', size='count')) +
-
-    geom_point(alpha=0.8, color="#1d3557") +
-
-    scale_size_continuous(range=(1, 9)) +
-
-    labs(
-        title='Binned Seismic Duration Magnitude per Year',
-        x='Year',
-        y='Duration Magnitude (Md)',
-        size='Event Count'
-    ) +
-
-    theme_minimal(base_family = "Candara") +
-
-    theme(
-        axis_text_x=element_text(rotation=45, hjust=1, size=8),
-        axis_text_y=element_text(size = 8),
-        axis_title=element_text(size = 10),
-        plot_title=element_text(size=12, weight='bold', ha='center'),
-        panel_grid_major=element_line(color='#c9c9c9', alpha=0.75, size=0.65, linetype="dashed"),
-        plot_background=element_rect(fill='#f8f8f8', color='#f8f8f8'),
-        legend_title=element_text(size=8),
-        legend_text=element_text(size=7),
-        figure_size=(10, 6)
-    )
-)
-
-plot_bin
