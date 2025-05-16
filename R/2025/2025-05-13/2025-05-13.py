@@ -43,7 +43,7 @@ plot_bin = (
     labs(
         title = "Seismic Duration Magnitude per Year",
         subtitle = "Tracking the shift from rural to urban living in selected countries (1960–2023)",
-        caption = "Source:  | Graphic: Natasa Anastasiadou",
+        caption = "Source: Seismic Events at Mount Vesuvius | Graphic: Natasa Anastasiadou",
         x = 'Year',
         y = 'Duration Magnitude (Md)'
     ) +
@@ -68,7 +68,7 @@ plot_bin = (
         legend_title = element_text(size = 8),
         legend_text = element_text(size = 7),
 
-        figure_size=(10, 6)
+        figure_size = (10, 6)
 
     )
 )
