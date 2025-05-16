@@ -51,9 +51,6 @@ plot2 = (
 )
 
 
-
-plot2
-
 # g = (
 #     ggplot(df_filtered) +
 
@@ -96,46 +93,40 @@ plot2
 
 
 #  Save the plot with custom size and resolution
-ggsave(g, "20_day.png", width = 10, height = 6, dpi = 600)
+# ggsave(g, "20_day.png", width = 10, height = 6, dpi = 600)
 
 
-def classify_event(row):
-    if row['depth_km'] < 1.5:
-        return 'low depth'
-    elif row['depth_km'] >= 1.5 and row['duration_magnitude_md'] < 0.5:
-        return 'deep & low magnitude'
-    elif row['depth_km'] >= 1.5 and row['duration_magnitude_md'] >= 0.5:
-        return 'deep & high magnitude'
-    else:
-        return 'other'
-
-df['group'] = df.apply(classify_event, axis=1)
-
-df = df[df['year'] > 2012]
+df['md_bin'] = (df['duration_magnitude_md'] / 0.25).round() * 0.25
 
 
-plot_colored = (
-    ggplot(df, aes(x='duration_magnitude_md', y='depth_km', color='group')) +
-    geom_point(alpha=0.6) +
-    scale_color_manual(
-        values={
-            'low depth': 'grey',
-            'deep & low magnitude': '#457b9d',
-            'deep & high magnitude': '#e63946'
-        }
+agg_df = (
+    df.groupby(['year', 'md_bin'])
+    .size()
+    .reset_index(name='count')
+)
+
+
+
+plot_bin = (
+    ggplot(agg_df, aes(x='factor(year)', y='md_bin', size='count')) +
+    geom_point(alpha=0.6, color="#1d3557") +
+    scale_size_continuous(range=(1, 8)) +
+    labs(
+        title='Binned Seismic Duration Magnitude per Year',
+        x='Year',
+        y='Duration Magnitude (Md, binned by 0.25)',
+        size='Event Count'
     ) +
-    labs(title="Depth vs Duration Magnitude by Seismic Event Type",
-         x="Duration Magnitude (Md)", y="Depth (km)", color="Event Group") +
     theme_minimal() +
-    facet_wrap('~year') +
     theme(
-        axis_text=element_text(family='Candara', size=8),
+        axis_text_x=element_text(rotation=45, hjust=1, family='Candara', size=8),
+        axis_text_y=element_text(family='Candara', size=8),
         axis_title=element_text(family='Candara', size=10),
         plot_title=element_text(size=12, weight='bold', ha='center'),
         panel_grid_major=element_line(color='#c9c9c9', alpha=0.75, size=0.65, linetype="dashed"),
         plot_background=element_rect(fill='#f8f8f8', color='#f8f8f8'),
         legend_title=element_text(size=8),
         legend_text=element_text(size=7),
-        figure_size=(10, 6)
+        figure_size=(10, 5)
     )
 )
