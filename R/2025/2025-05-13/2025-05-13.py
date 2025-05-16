@@ -38,21 +38,40 @@ plot_bin = (
         size='Event Count'
     ) +
 
+#     labs(
+#         title = "Urbanization Over Time Across the Globe",
+#         subtitle = "Tracking the shift from rural to urban living in selected countries (1960–2023)",
+#         caption = "30DayChartChallenge 2025: Day 20 | Source: Urbanization & Climate Metrics Insights (Kaggle) | Graphic: Natasa Anastasiadou",
+#         x = '',
+#         y = 'Population (%)',
+#         fill = 'Type'
+#     ) +
+
     theme_minimal(base_family = "Candara") +
 
     theme(
-        axis_text_x=element_text(rotation=45, hjust=1, size=8),
+
+        axis_text_x=element_text(hjust = 0.5, size = 8),
         axis_text_y=element_text(size = 8),
         axis_title=element_text(size = 10),
-        plot_title=element_text(size=12, weight='bold', ha='center'),
+
+        plot_title=element_text(size = 12, weight='bold', ha = 'center'),
+
         panel_grid_major=element_line(color='#c9c9c9', alpha=0.75, size=0.65, linetype="dashed"),
-        plot_background=element_rect(fill='#f8f8f8', color='#f8f8f8'),
-        legend_title=element_text(size=8),
-        legend_text=element_text(size=7),
+        panel_grid_minor = element_blank(),
+
+        plot_background=element_rect(fill='#e6e6e6', color='#e6e6e6'),
+        
+        legend_title = element_text(size = 8),
+        legend_text = element_text(size = 7),
+
         figure_size=(10, 6)
+
     )
 )
 
+
+plot_bin
 
 #  Save the plot with custom size and resolution
 ggsave(plot_bin, "plot.png", width = 10, height = 6, dpi = 600)
@@ -71,14 +90,7 @@ ggsave(plot_bin, "plot.png", width = 10, height = 6, dpi = 600)
 
 #     scale_fill_manual(values={"Urban": "#6F99AD", "Rural": "#BC3C29"}) + # Custom colors for each quadrant
 
-#     labs(
-#         title = "Urbanization Over Time Across the Globe",
-#         subtitle = "Tracking the shift from rural to urban living in selected countries (1960–2023)",
-#         caption = "30DayChartChallenge 2025: Day 20 | Source: Urbanization & Climate Metrics Insights (Kaggle) | Graphic: Natasa Anastasiadou",
-#         x = '',
-#         y = 'Population (%)',
-#         fill = 'Type'
-#     ) +
+
 
 #     theme_minimal() +
 
