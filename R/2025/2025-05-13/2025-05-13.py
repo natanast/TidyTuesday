@@ -24,6 +24,9 @@ agg_df = (
     .reset_index(name='count')
 )
 
+
+col = ['#2c5769', '#366072', '#3f697c', '#497285', '#527c8f', '#5c8599', '#658fa3', '#f2a39b', '#e69289', '#d98079', '#cb6f68', '#be5d58', '#b14c49', '#a33a3a']
+
 # Plot --------
 
 plot_bin = (
@@ -32,11 +35,13 @@ plot_bin = (
         aes(x = 'factor(year)', y = 'md_bin', size = 'count', fill = 'year')
     ) +
 
-    geom_point(alpha = .8, stroke = .15) +
+    geom_point(alpha = .8, shape = 'o', color = '#f1dfd5', stroke = .15) +
 
     scale_size_continuous(
-        range = (1, 9)
+        range = (1, 8)
     ) +
+
+    scale_fill_manual(values = col) +
 
     guides(fill = False) +
 
@@ -45,7 +50,8 @@ plot_bin = (
         subtitle = "Tracking the shift from rural to urban living in selected countries (1960–2023)",
         caption = "Source: Seismic Events at Mount Vesuvius | Graphic: Natasa Anastasiadou",
         x = 'Year',
-        y = 'Duration Magnitude (Md)'
+        y = 'Duration Magnitude (Md)',
+        size = "Event Count"
     ) +
 
     theme_minimal(base_family = "Candara") +
@@ -60,13 +66,14 @@ plot_bin = (
         plot_subtitle = element_text(size = 10, ha = 'center'),
         plot_caption = element_text(size = 6, ha = 'right'),
 
-        panel_grid_major=element_line(color='#c9c9c9', alpha=0.75, size=0.65, linetype="dashed"),
+        panel_grid_major=element_line(color = '#c9c9c9', alpha = 0.75, size = 0.65, linetype = "dashed"),
         panel_grid_minor = element_blank(),
 
-        plot_background=element_rect(fill='#e6e6e6', color='#e6e6e6'),
+        plot_background=element_rect(fill = '#e6e6e6', color = '#e6e6e6'),
         
-        legend_title = element_text(size = 8),
-        legend_text = element_text(size = 7),
+        legend_title = element_text(size = 9),
+        legend_text = element_text(size = 8),
+        legend_key_size = 2,
 
         figure_size = (10, 6)
 
