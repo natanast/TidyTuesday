@@ -17,6 +17,7 @@ df['year'] = df['year'].astype(str)
 
 df['md_bin'] = (df['duration_magnitude_md'] / 0.25).round() * 0.25
 
+
 agg_df = (
     df.groupby(['year', 'md_bin'])
     .size()
@@ -47,9 +48,9 @@ plot_bin = (
     labs(
         title = "Seismic Activity at Mount Vesuvius Over Time",
         subtitle = "Bubble size represents number of events by year and magnitude bin",
-        caption = "Source: Seismic Events at Mount Vesuvius | Graphic: Natasa Anastasiadou",
+        caption = "Source: Mount Vesuvius Dataset | Graphic: Natasa Anastasiadou",
         x = 'Year',
-        y = 'Duration Magnitude (Md)',
+        y = 'Duration Magnitude',
         size = "Event Count"
     ) +
 
