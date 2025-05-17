@@ -17,7 +17,6 @@ df['year'] = df['year'].astype(str)
 
 df['md_bin'] = (df['duration_magnitude_md'] / 0.25).round() * 0.25
 
-
 agg_df = (
     df.groupby(['year', 'md_bin'])
     .size()
@@ -35,7 +34,7 @@ plot_bin = (
         aes(x = 'factor(year)', y = 'md_bin', size = 'count', fill = 'year')
     ) +
 
-    geom_point(alpha = .8, shape = 'o', color = '#f1dfd5', stroke = .15) +
+    geom_point(alpha = .8, shape = 'o', color = '#768188', stroke = .15) +
 
     scale_size_continuous(
         range = (1, 8)
@@ -46,8 +45,8 @@ plot_bin = (
     guides(fill = False) +
 
     labs(
-        title = "Seismic Duration Magnitude per Year",
-        subtitle = "Tracking the shift from rural to urban living in selected countries (1960–2023)",
+        title = "Seismic Activity at Mount Vesuvius Over Time",
+        subtitle = "Bubble size represents number of events by year and magnitude bin",
         caption = "Source: Seismic Events at Mount Vesuvius | Graphic: Natasa Anastasiadou",
         x = 'Year',
         y = 'Duration Magnitude (Md)',
@@ -58,13 +57,13 @@ plot_bin = (
 
     theme(
 
-        axis_text_x=element_text(hjust = 0.5, size = 8),
-        axis_text_y=element_text(size = 8),
-        axis_title=element_text(size = 10),
+        axis_text_x = element_text(hjust = 0.5, size = 10),
+        axis_text_y = element_text(size = 10),
+        axis_title = element_text(size = 12),
 
-        plot_title = element_text(size = 12, weight = 'bold', ha = 'center'),
-        plot_subtitle = element_text(size = 10, ha = 'center'),
-        plot_caption = element_text(size = 6, ha = 'right'),
+        plot_title = element_text(size = 14, weight = 'bold', ha = 'center'),
+        plot_subtitle = element_text(size = 12, ha = 'center'),
+        plot_caption = element_text(size = 8, hjust = .5, ha = 'right'),
 
         panel_grid_major=element_line(color = '#c9c9c9', alpha = 0.75, size = 0.65, linetype = "dashed"),
         panel_grid_minor = element_blank(),
@@ -84,4 +83,4 @@ plot_bin = (
 plot_bin
 
 #  Save the plot with custom size and resolution
-ggsave(plot_bin, "plot.png", width = 10, height = 6, dpi = 600)
+ggsave(plot_bin, "plot.png", width = 11, height = 7, dpi = 600)
