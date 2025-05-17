@@ -47,7 +47,7 @@ plot_bin = (
 
     labs(
         title = "Seismic Activity at Mount Vesuvius Over Time",
-        subtitle = "Bubble size represents number of events by year and magnitude bin",
+        subtitle = "Each point marks a cluster of events by duration magnitude and year, with size indicating the number of occurrences.",
         caption = "Source: Mount Vesuvius Dataset | Graphic: Natasa Anastasiadou",
         x = 'Year',
         y = 'Duration Magnitude',
