@@ -11,21 +11,18 @@ library(stringr)
 library(ggplot2)
 library(extrafont)
 library(ggtext)
-library(paletteer)
 
 
 # load data --------
 
-nsf_terminations <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-06/nsf_terminations.csv')
-
+water_quality <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-20/water_quality.csv')
+weather <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-20/weather.csv')
 
 # clean data ------
 
 
 
 # plot ---------
-
-col = paletteer_c("ggthemes::Sunset-Sunrise Diverging", 9)
 
 
 gr = df_expanded |> 
