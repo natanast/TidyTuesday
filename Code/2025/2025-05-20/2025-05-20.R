@@ -19,11 +19,10 @@ water_quality <- fread('https://raw.githubusercontent.com/rfordatascience/tidytu
 # weather <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-20/weather.csv')
 
 
+
 # clean data ------
 
-
 water_quality[, year := year(date)]
-
 
 
 df <- water_quality[, 
@@ -31,9 +30,50 @@ df <- water_quality[,
     by = .(year, council)
 ]
 
+
 df$mean_bacteria <- df$mean_bacteria |> round(2)
 
 
+
+# Calculate average mean_bacteria per council
+top_councils <- df[, .(avg_bacteria = mean(mean_bacteria, na.rm = TRUE)), by = council]
+
+# Select top N councils, e.g., top 10
+top_councils <- top_councils[order(-avg_bacteria)][1:10, council]
+
+# Filter the original df for only those councils
+df_filtered <- df[council %in% top_councils]
+
+
+
+
+
+
+# Streamgraph plot
+ggplot(df, aes(x = year, y = mean_bacteria, fill = council)) +
+    
+    geom_stream( extra_span = 0.2 ) +
+    
+    geom_stream(
+        extra_span = 0.2, 
+        true_range = "none",
+        alpha = 0.3
+    ) +
+    
+    scale_fill_viridis_d(option = "turbo", direction = -1) + 
+    
+    theme_minimal() +
+    
+    labs(
+        title = "Streamgraph of Mean Enterococci Bacteria Levels by Council Over Years",
+        x = "Year",
+        y = "Mean Enterococci (CFU/100ml)",
+        fill = "Council"
+    ) +
+    
+    theme(
+        legend.position = "bottom"
+    )
 
 
 # gr = df_expanded |> 
