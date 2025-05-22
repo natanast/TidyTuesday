@@ -50,7 +50,7 @@ df_filtered <- df[council %in% top_councils]
 
 
 # Streamgraph plot
-ggplot(df, aes(x = year, y = mean_bacteria, fill = council)) +
+ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     
     geom_stream( extra_span = 0.2 ) +
     
