@@ -46,11 +46,15 @@ df_filtered <- df[council %in% top_councils]
 
 # plot -------
 
+col = c('#396375', '#5a8192', '#7f9faa', '#a7bec0', '#d2ded1', '#febaad', '#f49992', '#e37b78', '#cc5f5e', '#b24745')
+
 ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     
     geom_stream( 
         extra_span = 0.2, 
-        bw = .9
+        bw = .9,
+        lwd = 0.15,
+        color = "grey20"
     ) +
     
     geom_stream(
@@ -60,7 +64,8 @@ ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
         alpha = 0.3
     ) +
     
-    scale_fill_viridis_d(option = "turbo", direction = -1) + 
+    # scale_fill_viridis_d(option = "turbo", direction = -1) + 
+    scale_fill_manual(values = col) +
     
     theme_minimal(base_family = "Candara") +
     
