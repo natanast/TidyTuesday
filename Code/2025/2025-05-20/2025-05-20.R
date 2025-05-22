@@ -49,20 +49,20 @@ df_filtered <- df[council %in% top_councils]
 
 col = c('#396375', '#5a8192', '#7f9faa', '#a7bec0', '#d2ded1', '#febaad', '#f49992', '#e37b78', '#cc5f5e', '#b24745')
 
-ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
+gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     
-    geom_stream( 
-        extra_span = 0.2, 
+    geom_stream(
+        extra_span = 0.2,
         bw = .9,
         lwd = 0.15,
         color = "grey20"
     ) +
-    
+
     geom_stream(
         extra_span = 0.2, 
         true_range = "none",
         bw = .9,
-        alpha = 0.3
+        alpha = 0.2
     ) +
     
     # scale_fill_viridis_d(option = "turbo", direction = -1) + 
@@ -73,37 +73,29 @@ ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     labs(
         title = "Streamgraph of Mean Enterococci Bacteria Levels by Council Over Years",
         subtitle = "<b>Each dot</b> represents a <b>terminated award</b> within a U.S. National Science Foundation (NSF) directorate.",
-        caption = "*Science, Technology, Engineering, and Mathematics <br> <br>Source: <b>U.S. NSF Grant Terminations data </b> | Graphic: <b>Natasa Anastasiadou</b>", 
+        caption = "Source: <b>U.S. NSF Grant Terminations data </b> | Graphic: <b>Natasa Anastasiadou</b>", 
         x = "",
         y = "Mean Enterococci (CFU/100ml)",
         fill = "Council"
     ) +
     
     theme(
-        legend.position = "right"
+        
+        legend.position = "right",
+        
+        panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
+        panel.grid.minor = element_blank(),
+
+        plot.title = element_markdown(size = 14, face = "bold", hjust = 0.5, margin = margin(t = 15, b = 5)),
+        plot.subtitle = element_markdown(size = 10, hjust = 0.5, color = "grey30", margin = margin(t = 2.5, b = 25)),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 8, hjust = 1),
+
+        plot.background = element_rect(fill = "grey93", color = NA),
+        plot.margin = margin(20, 20, 20, 20)
+
     )
 
-
-# gr = df_expanded |> 
-#     
-#     ggplot(aes(x = x, y = y)) +
-#     
-#     geom_point(aes(fill = directorate), size = 3, shape = 21, color = "white", stroke = .15) +
-#     
-#     facet_wrap(~directorate, nrow = 1, strip.position = "bottom") +
-# 
-#     coord_equal() +
-#     
-#     scale_fill_manual(values = col) +
-# 
-#     labs(
-#         title = "Grants Terminated Across Directorates",
-#         subtitle = "<b>Each dot</b> represents a <b>terminated award</b> within a U.S. National Science Foundation (NSF) directorate.",
-#         caption = "*Science, Technology, Engineering, and Mathematics <br> <br>Source: <b>U.S. NSF Grant Terminations data </b> | Graphic: <b>Natasa Anastasiadou</b>"
-#     ) +
-#     
-#     theme_minimal(base_family = "Candara") +
-#     
+     
 #     theme(
 #         legend.position = "none",
 #         
@@ -126,7 +118,10 @@ ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
 #     )
 # 
 # 
-# gr
+
+
+gr
+
 
 ggsave(
     plot = gr, filename = "plot.png",
