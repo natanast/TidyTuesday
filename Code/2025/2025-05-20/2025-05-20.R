@@ -32,6 +32,8 @@ df <- water_quality[,
 df$mean_bacteria <- df$mean_bacteria |> round(2)
 
 
+df$council <- df$council |> str_remove_all("Council")
+
 
 
 top_councils <- df[, .(avg_bacteria = mean(mean_bacteria, na.rm = TRUE)), by = council]
