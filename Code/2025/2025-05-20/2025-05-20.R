@@ -32,8 +32,9 @@ df <- water_quality[,
 df$mean_bacteria <- df$mean_bacteria |> round(2)
 
 
-df$council <- df$council |> str_remove_all("Council")
+df$council <- df$council |> str_remove_all("Council") |> str_squish()
 
+df[council == "The of the Municipality of Hunters Hill", council := "Hunters Hill"]
 
 
 top_councils <- df[, .(avg_bacteria = mean(mean_bacteria, na.rm = TRUE)), by = council]
@@ -71,7 +72,9 @@ ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     
     labs(
         title = "Streamgraph of Mean Enterococci Bacteria Levels by Council Over Years",
-        x = "Year",
+        subtitle = "<b>Each dot</b> represents a <b>terminated award</b> within a U.S. National Science Foundation (NSF) directorate.",
+        caption = "*Science, Technology, Engineering, and Mathematics <br> <br>Source: <b>U.S. NSF Grant Terminations data </b> | Graphic: <b>Natasa Anastasiadou</b>", 
+        x = "",
         y = "Mean Enterococci (CFU/100ml)",
         fill = "Council"
     ) +
