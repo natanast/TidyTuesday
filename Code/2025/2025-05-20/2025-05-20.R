@@ -72,8 +72,8 @@ gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     theme_minimal(base_family = "Candara") +
     
     labs(
-        title = "Streamgraph of Mean Enterococci Bacteria Levels by Council Over Years",
-        subtitle = "<b>Each dot</b> represents a <b>terminated award</b> within a U.S. National Science Foundation (NSF) directorate.",
+        title = "Coastal Water Quality Across NSW Councils Over Years",
+        subtitle = "Trends in Mean enterococci bacteria levels by council, measured in CFU per 100mL",
         caption = "Source: <b>U.S. NSF Grant Terminations data </b> | Graphic: <b>Natasa Anastasiadou</b>", 
         x = "",
         y = "Mean Enterococci (CFU/100ml)",
