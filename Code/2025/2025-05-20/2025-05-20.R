@@ -11,6 +11,7 @@ library(stringr)
 library(ggplot2)
 library(extrafont)
 library(ggtext)
+library(ggstream)
 
 
 # load data --------
@@ -88,7 +89,7 @@ gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
 
         plot.title = element_markdown(size = 14, face = "bold", hjust = 0.5, margin = margin(t = 15, b = 5)),
         plot.subtitle = element_markdown(size = 10, hjust = 0.5, color = "grey30", margin = margin(t = 2.5, b = 25)),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 8, hjust = 1),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 8, hjust = .5),
 
         plot.background = element_rect(fill = "grey93", color = NA),
         plot.margin = margin(20, 20, 20, 20)
