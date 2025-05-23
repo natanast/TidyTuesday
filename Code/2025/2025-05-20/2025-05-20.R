@@ -83,13 +83,18 @@ gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     theme(
         
         legend.position = "right",
+        legend.key.size = unit(.75, "lines"),      # make the legend keys smaller
+        legend.text = element_text(size = 9),      # smaller legend labels
+        legend.title = element_text(size = 10),     # smaller legend title 
+        
+        axis.text = element_text(size = 11),
         
         panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
         panel.grid.minor = element_blank(),
 
-        plot.title = element_markdown(size = 14, face = "bold", hjust = 0.5, margin = margin(t = 15, b = 5)),
-        plot.subtitle = element_markdown(size = 10, hjust = 0.5, color = "grey30", margin = margin(t = 2.5, b = 25)),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 8, hjust = .5),
+        plot.title = element_markdown(size = 16, face = "bold", hjust = 0.5, margin = margin(t = 15, b = 5)),
+        plot.subtitle = element_markdown(size = 14, hjust = 0.5, color = "grey30", margin = margin(t = 2.5, b = 25)),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 9, hjust = .5),
 
         plot.background = element_rect(fill = "grey93", color = NA),
         plot.margin = margin(20, 20, 20, 20)
