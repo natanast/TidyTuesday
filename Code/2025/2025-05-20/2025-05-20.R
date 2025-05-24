@@ -75,7 +75,7 @@ gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     labs(
         title = "Coastal Water Quality Across NSW Councils Over Years",
         subtitle = "Top 10 councils by mean enterococci bacteria levels by council, measured in CFU per 100mL",
-        caption = "Source: <b>U.S. NSF Grant Terminations data </b> | Graphic: <b>Natasa Anastasiadou</b>", 
+        caption = "Source: <b>Water Quality at Sydney Beaches data </b> | Graphic: <b>Natasa Anastasiadou</b>", 
         x = "",
         y = "Mean Enterococci (CFU/100ml)",
         fill = "Council"
