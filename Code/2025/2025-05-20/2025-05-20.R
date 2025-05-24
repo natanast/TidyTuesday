@@ -40,7 +40,7 @@ df[council == "The of the Municipality of Hunters Hill", council := "Hunters Hil
 
 top_councils <- df[, .(avg_bacteria = mean(mean_bacteria, na.rm = TRUE)), by = council]
 
-top_councils <- top_councils[order(-avg_bacteria)][1:10, council]
+top_councils <- top_councils[order(-avg_bacteria)][1:16, council]
 
 df_filtered <- df[council %in% top_councils]
 
@@ -67,7 +67,7 @@ gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     ) +
     
     # scale_fill_viridis_d(option = "turbo", direction = -1) + 
-    scale_fill_manual(values = col) +
+    # scale_fill_manual(values = col) +
     
     theme_minimal(base_family = "Candara") +
     
@@ -100,30 +100,6 @@ gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
         plot.margin = margin(20, 20, 20, 20)
 
     )
-
-     
-#     theme(
-#         legend.position = "none",
-#         
-#         axis.title = element_blank(),
-#         
-#         axis.text.x = element_blank(),
-#         axis.text.y = element_text(size = 9.5),
-#         
-#         strip.text = element_text(size = 9.5),
-#         
-#         panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
-#         panel.grid.minor = element_blank(),
-#         
-#         plot.title = element_markdown(size = 16, face = "bold", hjust = 0.5, margin = margin(t = 15, b = 5)),
-#         plot.subtitle = element_markdown(size = 12, hjust = 0.5, color = "grey30", margin = margin(t = 2.5, b = 25)),
-#         plot.caption = element_markdown(margin = margin(t = 35), size = 8, hjust = 1),
-# 
-#         plot.background = element_rect(fill = "grey93", color = NA),
-#         plot.margin = margin(20, 20, 20, 20)
-#     )
-# 
-# 
 
 
 gr
