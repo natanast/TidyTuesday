@@ -19,6 +19,7 @@ library(ggstream)
 water_quality <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-20/water_quality.csv')
 
 
+
 # clean data ------
 
 water_quality[, year := year(date)]
@@ -50,6 +51,7 @@ df_filtered <- df[council %in% top_councils]
 
 col = c('#396375', '#5a8192', '#7f9faa', '#a7bec0', '#d2ded1', '#febaad', '#f49992', '#e37b78', '#cc5f5e', '#b24745')
 
+
 gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     
     geom_stream(
@@ -66,7 +68,6 @@ gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
         alpha = 0.2
     ) +
     
-    # scale_fill_viridis_d(option = "turbo", direction = -1) + 
     scale_fill_manual(values = col) +
     
     theme_minimal(base_family = "Candara") +
@@ -83,9 +84,9 @@ gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     theme(
         
         legend.position = "right",
-        legend.key.size = unit(.75, "lines"),      # make the legend keys smaller
-        legend.text = element_text(size = 9),      # smaller legend labels
-        legend.title = element_text(size = 10),     # smaller legend title 
+        legend.key.size = unit(.75, "lines"),      
+        legend.text = element_text(size = 9),      
+        legend.title = element_text(size = 10),
         
         axis.text = element_text(size = 11),
         
