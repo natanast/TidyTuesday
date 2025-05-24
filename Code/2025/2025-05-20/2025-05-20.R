@@ -40,7 +40,7 @@ df[council == "The of the Municipality of Hunters Hill", council := "Hunters Hil
 
 top_councils <- df[, .(avg_bacteria = mean(mean_bacteria, na.rm = TRUE)), by = council]
 
-top_councils <- top_councils[order(-avg_bacteria)][1:16, council]
+top_councils <- top_councils[order(-avg_bacteria)][1:10, council]
 
 df_filtered <- df[council %in% top_councils]
 
@@ -67,13 +67,13 @@ gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     ) +
     
     # scale_fill_viridis_d(option = "turbo", direction = -1) + 
-    # scale_fill_manual(values = col) +
+    scale_fill_manual(values = col) +
     
     theme_minimal(base_family = "Candara") +
     
     labs(
         title = "Coastal Water Quality Across NSW Councils Over Years",
-        subtitle = "Trends in Mean enterococci bacteria levels by council, measured in CFU per 100mL",
+        subtitle = "Top 10 councils by mean enterococci bacteria levels by council, measured in CFU per 100mL",
         caption = "Source: <b>U.S. NSF Grant Terminations data </b> | Graphic: <b>Natasa Anastasiadou</b>", 
         x = "",
         y = "Mean Enterococci (CFU/100ml)",
