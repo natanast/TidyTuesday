@@ -22,35 +22,9 @@ water_quality <- fread('https://raw.githubusercontent.com/rfordatascience/tidytu
 
 # clean data ------
 
-water_quality[, year := year(date)]
-
-
-df <- water_quality[, 
-    .(mean_bacteria = mean(enterococci_cfu_100ml, na.rm = TRUE)),
-    by = .(year, council)
-]
-
-
-df$mean_bacteria <- df$mean_bacteria |> round(2)
-
-
-df$council <- df$council |> str_remove_all("Council") |> str_squish()
-
-df[council == "The of the Municipality of Hunters Hill", council := "Hunters Hill"]
-
-
-top_councils <- df[, .(avg_bacteria = mean(mean_bacteria, na.rm = TRUE)), by = council]
-
-top_councils <- top_councils[order(-avg_bacteria)][1:10, council]
-
-df_filtered <- df[council %in% top_councils]
-
 
 
 # plot -------
-
-col = c('#396375', '#5a8192', '#7f9faa', '#a7bec0', '#d2ded1', '#febaad', '#f49992', '#e37b78', '#cc5f5e', '#b24745')
-
 
 gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     
