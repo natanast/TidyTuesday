@@ -14,15 +14,9 @@ library(ggtext)
 library(ggstream)
 
 
-# load data --------
-
-water_quality <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-20/water_quality.csv')
-
-
+# load data ------
 
 # clean data ------
-
-
 
 # plot -------
 
