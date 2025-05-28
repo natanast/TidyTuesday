@@ -20,6 +20,11 @@ monsters <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday
 
 # clean data ------
 
+df <- monsters[, .(name, hp_number, ac, initiative, str,dex,con, int, cha)]
+
+df <- df[complete.cases(df)]
+
+
 # plot -------
 
 gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
