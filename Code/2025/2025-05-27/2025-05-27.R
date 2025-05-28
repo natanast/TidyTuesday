@@ -16,6 +16,8 @@ library(ggstream)
 
 # load data ------
 
+monsters <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-27/monsters.csv')
+
 # clean data ------
 
 # plot -------
