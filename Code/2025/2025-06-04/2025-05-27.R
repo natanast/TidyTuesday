@@ -72,9 +72,6 @@ gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
     )
 
 
-gr
-
-
 ggsave(
     plot = gr, filename = "plot.png",
     width = 10, height = 8, units = "in", dpi = 600
