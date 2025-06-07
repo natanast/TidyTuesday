@@ -17,10 +17,10 @@ library(ggtext)
 
 # load data ------
 
-gutenberg_authors <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-03/gutenberg_authors.csv')
-gutenberg_languages <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-03/gutenberg_languages.csv')
+# gutenberg_authors <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-03/gutenberg_authors.csv')
+# gutenberg_languages <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-03/gutenberg_languages.csv')
 gutenberg_metadata <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-03/gutenberg_metadata.csv')
-gutenberg_subjects <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-03/gutenberg_subjects.csv')
+# gutenberg_subjects <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-03/gutenberg_subjects.csv')
 
 
 # clean data ------
@@ -31,30 +31,10 @@ df <- gutenberg_metadata[
 
 df <- df[, .N, by = bookshelf][order(-N)]
 
+df1 <- df[1:100]
 
-ggplot(df[1:20], aes(x = reorder(bookshelf, N), y = N)) +
-    geom_col(fill = "#1f78b4") +
-    # coord_polar() +
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-    labs(title = "Top 30 Gutenberg Bookshelves", caption = "#TidyTuesday")
+df1$bookshelf <- df1$bookshelf |> str_remove("^Browsing: ")
 
-
-
-
-
-library(ggplot2)
-library(ggwordcloud)
-
-ggplot(df[1:20], aes(label = bookshelf, size = N)) +
-    geom_text_wordcloud(area_corr = TRUE, family = "serif", color = "darkblue") +
-    scale_size_area(max_size = 12) +
-    theme_minimal() +
-    labs(
-        title = "Most Common Subjects in Project Gutenberg",
-        subtitle = "Based on Library of Congress Subject Headings",
-        caption = "#TidyTuesday | Data: Project Gutenberg"
-    )
 
 
 
@@ -114,4 +94,90 @@ ggsave(
     width = 10, height = 8, units = "in", dpi = 600
 )
 
+
+
+
+
+
+# Process the data 
+df_plot <- df1[, {
+    
+    dat.egg <- circleProgressiveLayout(N)
+    dat.egg <- circleLayoutVertices(dat.egg, npoints = 100)
+    
+    cbind(dat.egg, .SD[dat.egg$id])
+}]
+
+
+df_plot_l <- df_plot |>
+    group_by(bookshelf, N, id) |>
+    summarise(
+        x = (min(x) + max(x)) / 2,
+        y = (min(y) + max(y)) / 2
+    )
+
+
+df_plot_l$lbl = df_plot_l$bookshelf
+
+
+
+
+p <- df_plot |>
+    
+    ggplot(aes(x, y, group = id)) +
+    
+    geom_polygon(aes(fill = bookshelf), color = "grey30", linewidth = .25) +
+    
+    geom_shadowtext(
+        data = df_plot_l, 
+        aes(x, y, label = lbl, size = N),
+        inherit.aes = FALSE,
+        color = "grey1", 
+        bg.color = "#d9e3f1", 
+        bg.r = .05,
+        family = "Candara"
+    ) +
+    
+    
+    # scale_fill_manual(
+    #     values = col,
+    #     name = "Team"
+    #     
+    # ) +
+    
+    scale_size_continuous(guide = "none", range = c(5, 9)) +
+    
+
+    # labs(
+    #     title = "Expectations vs Performance: Top NCAA Men's March Madness Teams in 2024",
+    #     subtitle = "<b> Bubble size</b> represents each team's <b>championship likelihood</b> — bigger size indicated bigger likelihood. <br> <b>Label</b> shows their Performance Against Seed Expectations <b>(PASE)</b> — larger PASE indicates better performance.",
+    #     caption = "Source: <b> NCAA Men's March Madness</b> | Graphic: <b>Natasa Anastasiadou</b>"
+    # ) +
+    
+    theme_minimal(base_family = "Candara") +
+    
+    theme(
+        
+        axis.title = element_blank(),
+        axis.text = element_blank(),
+        
+        legend.position = "none",
+        legend.title = element_text(size = 8),
+        legend.text = element_text(size = 7),
+        
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        
+        # plot.title = element_markdown(size = 16, face = "bold", hjust = 0.5, margin = margin(t = 5, b = 5)),
+        # plot.subtitle = element_markdown(size = 12, hjust = 0.5,  color = "grey30"),
+        # plot.caption  = element_markdown(margin = margin(t = 25), size = 8, hjust = 1.25),
+        # 
+        
+        plot.margin = margin(20, 20, 20, 20),
+        
+        plot.background = element_rect(fill = "#e4e4e3", color = NA)
+        
+    )
+
+p
 
