@@ -11,8 +11,8 @@ library(stringr)
 library(ggplot2)
 library(extrafont)
 library(ggtext)
-library(ggstream)
-library(ggforce)
+# library(ggstream)
+# library(ggforce)
 
 
 # load data ------
@@ -24,6 +24,38 @@ gutenberg_subjects <- fread('https://raw.githubusercontent.com/rfordatascience/t
 
 
 # clean data ------
+df <- gutenberg_metadata[
+    , .(bookshelf = unlist(str_split(gutenberg_bookshelf, "/"))), 
+    by = gutenberg_id
+]
+
+df <- df[, .N, by = bookshelf][order(-N)]
+
+
+ggplot(df[1:20], aes(x = reorder(bookshelf, N), y = N)) +
+    geom_col(fill = "#1f78b4") +
+    # coord_polar() +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(title = "Top 30 Gutenberg Bookshelves", caption = "#TidyTuesday")
+
+
+
+
+
+library(ggplot2)
+library(ggwordcloud)
+
+ggplot(df[1:20], aes(label = bookshelf, size = N)) +
+    geom_text_wordcloud(area_corr = TRUE, family = "serif", color = "darkblue") +
+    scale_size_area(max_size = 12) +
+    theme_minimal() +
+    labs(
+        title = "Most Common Subjects in Project Gutenberg",
+        subtitle = "Based on Library of Congress Subject Headings",
+        caption = "#TidyTuesday | Data: Project Gutenberg"
+    )
+
 
 
 gr = ggplot(df_filtered, aes(x = year, y = mean_bacteria, fill = council)) +
@@ -81,4 +113,5 @@ ggsave(
     plot = gr, filename = "plot.png",
     width = 10, height = 8, units = "in", dpi = 600
 )
+
 
