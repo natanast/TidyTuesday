@@ -66,7 +66,12 @@ p <- df_plot |>
     
     ggplot(aes(x, y, group = id)) +
     
-    geom_polygon(aes(fill = bookshelf), fill = "#79a3b7", color = "grey30", linewidth = .25) +
+    geom_polygon(
+        aes(fill = bookshelf),
+        fill = "#79a3b7", 
+        color = "grey30", 
+        linewidth = .35
+    ) +
     
     geom_shadowtext(
         data = df_plot_l, 
@@ -78,7 +83,7 @@ p <- df_plot |>
         family = "Candara"
     ) +
 
-    scale_size_continuous(guide = "none", range = c(2, 9)) +
+    scale_size_continuous(guide = "none", range = c(2, 8)) +
     
     
     labs(
@@ -95,15 +100,13 @@ p <- df_plot |>
         axis.text = element_blank(),
         
         legend.position = "none",
-        legend.title = element_text(size = 8),
-        legend.text = element_text(size = 7),
-        
+
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         
-        plot.title = element_markdown(size = 16, face = "bold", hjust = 0.5, margin = margin(t = 5, b = 5)),
-        plot.subtitle = element_markdown(size = 12, hjust = 0.5,  color = "grey30"),
-        plot.caption  = element_markdown(margin = margin(t = 25), size = 8, hjust = 1.25),
+        plot.title = element_markdown(size = 17, face = "bold", hjust = 0.5, margin = margin(t = 5, b = 5)),
+        plot.subtitle = element_markdown(size = 14, hjust = 0.5,  color = "grey30"),
+        plot.caption  = element_markdown(margin = margin(t = 25), size = 8, hjust = 1),
 
         
         plot.margin = margin(20, 20, 20, 20),
@@ -118,7 +121,7 @@ p
 
 ggsave(
     plot = p, filename = "plot.png",
-    width = 10, height = 10, units = "in", dpi = 600
+    width = 8.5, height = 9, units = "in", dpi = 600
 )
 
 
