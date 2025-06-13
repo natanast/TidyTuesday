@@ -14,10 +14,81 @@ library(ggtext)
 
 # load data ------
  
-gutenberg_metadata <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-03/gutenberg_metadata.csv')
+judges_appointments <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-10/judges_appointments.csv')
+judges_people <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-10/judges_people.csv')
+
 
 # clean data ------
 
+df1 <- judges_appointments[, .(judge_id, commission_date, termination_date, termination_reason)]
+
+df2 <- judges_people[, .(judge_id, name_first, name_last, gender)]
+
+
+# Merge datasets 
+df <- df1 |>
+    merge(df2, by = "judge_id", all = TRUE)
+
+
+df <- df[!is.na(commission_date) & !is.na(termination_date)]
+
+df$full_name = paste0(df$name_first, " ", df$name_last)
+
+
+
+df[, commission_date := as.Date(commission_date, format = "%m/%d/%Y")]
+df[, termination_date := as.Date(termination_date, format = "%m/%d/%Y")]
+df[, duration := as.numeric(difftime(termination_date, commission_date, units = "days")) / 365.25]
+
+
+# top 10 Male
+df_M <- df[gender == "M", ]
+df_top10_M <- df_M[order(-duration)][1:10]
+
+
+# top 10 Female
+df_F <- df[gender == "F", ]
+df_top10_F <- df_F[order(-duration)][1:10]
+
+
+# Combine both
+df_plot <- rbind(df_top10_F, df_top10_M)
+
+
+
+
+# 3. Plot
+ggplot(df_plot) +
+    
+    geom_segment(aes(x = commission_date, xend = termination_date, y = full_name, yend = full_name), 
+                 color = "#619CFF", linewidth = 1) +
+    
+    geom_point(aes(x = commission_date, y = full_name), color = "#F8766D", size = 4) +
+    
+    geom_point(aes(x = termination_date, y = full_name), color = "#00BFC4", size = 4) +
+    
+    scale_x_date(date_breaks = "10 years", date_labels = "%Y") +
+    
+    labs(
+        title = "Top 20 Longest-Serving Female Judges in U.S. Federal Courts",
+        subtitle = "Commission to Termination Dates",
+        x = "Years",
+        y = NULL,
+        caption = "Source: #TidyTuesday | Data: Federal Judicial Center"
+    ) +
+    
+    facet_wrap(vars(gender)) +
+    
+    theme_minimal(base_family = "Candara") +
+    
+    theme(
+        # panel.grid.major.y = element_blank(),
+        axis.text.y = element_text(size = 9),
+        
+        plot.title = element_text(face = "bold", size = 16),
+        plot.subtitle = element_text(size = 13, margin = margin(b = 10)),
+        plot.caption = element_text(size = 10, margin = margin(t = 10))
+    )
 
 
 # plot --------
