@@ -11,49 +11,12 @@ library(stringr)
 library(ggplot2)
 library(extrafont)
 library(ggtext)
-# library(ggstream)
-# library(ggforce)
-
 
 # load data ------
  
 gutenberg_metadata <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-03/gutenberg_metadata.csv')
 
 # clean data ------
-
-df <- gutenberg_metadata[
-    , .(bookshelf = unlist(str_split(gutenberg_bookshelf, "/"))), 
-    by = gutenberg_id
-]
-
-df <- df[, .N, by = bookshelf][order(-N)]
-
-
-df$bookshelf <- df$bookshelf |> str_remove("^Browsing: ")
-
-
-# Process the data 
-df_plot <- df[, {
-    
-    dat.egg <- circleProgressiveLayout(N)
-    dat.egg <- circleLayoutVertices(dat.egg, npoints = 100)
-    
-    cbind(dat.egg, .SD[dat.egg$id])
-}]
-
-
-df_plot_l <- df_plot |>
-    group_by(bookshelf, N, id) |>
-    summarise(
-        x = (min(x) + max(x)) / 2,
-        y = (min(y) + max(y)) / 2
-    ) |>
-    setDT()
-
-
-df_plot_l <- df_plot_l[order(-N)][1:20]
-
-df_plot_l$lbl = df_plot_l$bookshelf |> str_wrap(width = 10)
 
 
 
