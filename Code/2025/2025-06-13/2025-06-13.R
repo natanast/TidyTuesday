@@ -12,6 +12,7 @@ library(ggplot2)
 library(extrafont)
 library(ggtext)
 
+
 # load data ------
  
 judges_appointments <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-10/judges_appointments.csv')
@@ -64,16 +65,17 @@ df_plot <- df_plot[order(name_last)]
 # Set factor levels in that alphabetical order (so y-axis follows that order)
 df_plot[, full_name := factor(full_name, levels = rev(full_name))]
 
-# 3. Plot
-ggplot(df_plot) +
+# Plot -------
+
+p = ggplot(df_plot) +
     
     geom_segment(aes(x = commission_date, xend = termination_date, y = full_name, 
                      yend = full_name), 
-                 color = "#619CFF", linewidth = .75) +
+                 color = "grey70", linewidth = .75) +
     
-    geom_point(aes(x = commission_date, y = full_name), color = "#F8766D", size = 3) +
+    geom_point(aes(x = commission_date, y = full_name), color = "#0072B5", size = 3) +
     
-    geom_point(aes(x = termination_date, y = full_name), color = "#00BFC4", size = 3) +
+    geom_point(aes(x = termination_date, y = full_name), color = "#b24745", size = 3) +
     
     scale_x_date(date_breaks = "10 years", date_labels = "%Y") +
     
@@ -98,8 +100,13 @@ ggplot(df_plot) +
     theme(
         # panel.grid.major.y = element_blank(),
         axis.text.y = element_text(size = 9),
+        axis.text.x = element_text(size = 9, angle = 90),
         axis.title = element_blank(),
         
+        
+        panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
+        panel.grid.minor = element_blank(),
+    
         panel.border = element_rect(fill = NA, linewidth = .4),
         
         plot.title = element_markdown(size = 17, face = "bold", hjust = 0.5, margin = margin(t = 5, b = 5)),
