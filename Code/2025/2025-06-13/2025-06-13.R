@@ -75,8 +75,6 @@ p <- df_plot |>
         
     )
 
-p
-
 
 
 ggsave(
