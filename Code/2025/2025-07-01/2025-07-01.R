@@ -9,8 +9,6 @@ gc()
 library(data.table)
 library(stringr)
 library(ggplot2)
-library(extrafont)
-library(ggtext)
 
 
 # load data ------
@@ -21,49 +19,7 @@ judges_people <- fread('https://raw.githubusercontent.com/rfordatascience/tidytu
 
 # clean data ------
 
-df1 <- judges_appointments[, .(judge_id, commission_date, termination_date, termination_reason)]
 
-df2 <- judges_people[, .(judge_id, name_first, name_last, gender)]
-
-
-# Merge datasets 
-df <- df1 |>
-    merge(df2, by = "judge_id", all = TRUE)
-
-
-df <- df[!is.na(commission_date) & !is.na(termination_date)]
-
-df$full_name = paste0(df$name_first, " ", df$name_last)
-
-
-
-df[, commission_date := as.Date(commission_date, format = "%m/%d/%Y")]
-df[, termination_date := as.Date(termination_date, format = "%m/%d/%Y")]
-df[, duration := as.numeric(difftime(termination_date, commission_date, units = "days")) / 365.25]
-
-
-# top 10 Male
-df_M <- df[gender == "M", ]
-df_top10_M <- df_M[order(-duration)][1:10]
-
-
-# top 10 Female
-df_F <- df[gender == "F", ]
-df_top10_F <- df_F[order(-duration)][1:10]
-
-
-# Combine both
-df_plot <- rbind(df_top10_F, df_top10_M)
-
-# Set factor levels for plotting
-df_plot[, full_name := factor(full_name, levels = rev(full_name))]
-
-
-# Order alphabetically by last name
-df_plot <- df_plot[order(name_last)]
-
-# Set factor levels in that alphabetical order (so y-axis follows that order)
-df_plot[, full_name := factor(full_name, levels = rev(full_name))]
 
 # Plot -------
 
