@@ -34,15 +34,7 @@ p = ggplot(df_plot) +
     geom_point(aes(x = termination_date, y = full_name), color = "#b24745", size = 3) +
     
     scale_x_date(date_breaks = "10 years", date_labels = "%Y") +
-    
-    # labs(
-    #     title = "Top 20 Longest-Serving Female Judges in U.S. Federal Courts",
-    #     subtitle = "Commission to Termination Dates",
-    #     x = "Years",
-    #     y = NULL,
-    #     caption = "Source: #TidyTuesday | Data: Federal Judicial Center"
-    # ) +
-    
+   
     labs(
         title = "Most Popular Bookshelves in the Gutenberg Project",
         subtitle = "Each bubble represents a bookshelf. <b>Larger </b> bubbles mean more books belong to that category.",
@@ -75,12 +67,7 @@ p = ggplot(df_plot) +
     )
 
 
-
 ggsave(
     plot = p, filename = "plot.png",
     width = 8.5, height = 9, units = "in", dpi = 600
 )
-
-
-
-
