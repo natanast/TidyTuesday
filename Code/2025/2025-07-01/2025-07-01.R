@@ -13,8 +13,6 @@ library(ggplot2)
 
 # load data ------
  
-judges_appointments <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-10/judges_appointments.csv')
-judges_people <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-10/judges_people.csv')
 
 
 # clean data ------
