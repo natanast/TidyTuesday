@@ -13,7 +13,7 @@ library(ggplot2)
 
 # load data ------
 
-gas_data <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-01/weekly_gas_prices.csv')
+df <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-01/weekly_gas_prices.csv')
 
 
 # clean data ------
@@ -30,16 +30,26 @@ monthly_gas <- gas_data[, .(price = mean(price, na.rm = TRUE)), by = .(year_mont
 # Add the decade column again
 monthly_gas[, decade := paste0(floor(as.integer(format(year_month, "%Y")) / 10) * 10, "s")]
 
+
+
+
+gas <- df[fuel == "gasoline" & grade != "all" & formulation != "all"]
+
+
+# plot --------
+
 ggplot(monthly_gas, aes(x = year_month, y = price, fill = grade)) +
   geom_area(position = "identity", alpha = 0.7) +
   facet_wrap(~ decade, scales = "free_x") +
-  labs(
-    title = "Monthly U.S. Gasoline Prices by Grade and Decade",
-    subtitle = "Averaged by month to smooth weekly fluctuations",
-    x = "Year",
-    y = "Price per Gallon (USD)",
-    fill = "Grade"
-  ) +
+    
+    
+  # labs(
+  #   title = "Monthly U.S. Gasoline Prices by Grade and Decade",
+  #   subtitle = "Averaged by month to smooth weekly fluctuations",
+  #   x = "Year",
+  #   y = "Price per Gallon (USD)",
+  #   fill = "Grade"
+  # ) +
   scale_fill_brewer(palette = "Set2") +
   scale_x_date(date_labels = "%Y", date_breaks = "2 years") +
   theme_minimal(base_size = 13)
@@ -95,3 +105,27 @@ ggplot(monthly_gas, aes(x = year_month, y = price, fill = grade)) +
 #     plot = p, filename = "plot.png",
 #     width = 8.5, height = 9, units = "in", dpi = 600
 # )
+
+
+
+
+gas_data[, year := as.integer(format(date, "%Y"))]
+
+yearly_gas <- gas_data[, .(price = mean(price, na.rm = TRUE)), by = .(year, grade)]
+
+
+
+ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
+    geom_col(position = "dodge", alpha = 0.8, width = .75) +
+    labs(
+        title = "Yearly Average Gasoline Prices by Grade",
+        x = "Year",
+        y = "Price per Gallon (USD)",
+        fill = "Grade"
+    ) +
+    theme_minimal(base_size = 13) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+
