@@ -118,12 +118,12 @@ yearly_gas <- gas_data[, .(price = mean(price, na.rm = TRUE)), by = .(year, grad
 ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
     geom_col(position = "dodge", alpha = 0.8, width = .75) +
     labs(
-        title = "Yearly Average Gasoline Prices by Grade",
+        title = "Yearly Average Gasoline Prices",
         x = "Year",
         y = "Price per Gallon (USD)",
         fill = "Grade"
     ) +
-    theme_minimal(base_size = 13) +
+    theme_minimal(base_family = "Candara") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
