@@ -13,16 +13,12 @@ library(ggplot2)
 
 # load data ------
 
-df <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-01/weekly_gas_prices.csv')
+gas_data <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-01/weekly_gas_prices.csv')
 
 
 # clean data ------
-library(data.table)
-library(ggplot2)
 
-df[, date := as.Date(date)]
-
-
+gas_data[, date := as.Date(date)]
 
 
 # Create a 'year-month' column
@@ -48,12 +44,6 @@ ggplot(monthly_gas, aes(x = year_month, y = price, fill = grade)) +
   scale_x_date(date_labels = "%Y", date_breaks = "2 years") +
   theme_minimal(base_size = 13)
 
-
-
-library(ggridges)
-ggplot(df[fuel == "gasoline" & grade == "regular"], aes(x = price, y = decade, fill = decade)) +
-    geom_density_ridges(scale = 3, alpha = 0.7) +
-    labs(title = "Distribution of Regular Gasoline Prices by Decade")
 
 # Plot -------
 # 
