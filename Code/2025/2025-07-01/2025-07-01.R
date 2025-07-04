@@ -13,7 +13,7 @@ library(ggplot2)
 
 # load data ------
 
-df <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-01/weekly_gas_prices.csv')
+gas_data <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-01/weekly_gas_prices.csv')
 
 
 # clean data ------
@@ -21,38 +21,39 @@ df <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/
 gas_data[, date := as.Date(date)]
 
 
-# Create a 'year-month' column
-gas_data[, year_month := as.Date(format(date, "%Y-%m-01"))]
+# # Create a 'year-month' column
+# gas_data[, year_month := as.Date(format(date, "%Y-%m-01"))]
+# 
+# # Calculate monthly average price per grade
+# monthly_gas <- gas_data[, .(price = mean(price, na.rm = TRUE)), by = .(year_month, grade)]
+# 
+# # Add the decade column again
+# monthly_gas[, decade := paste0(floor(as.integer(format(year_month, "%Y")) / 10) * 10, "s")]
 
-# Calculate monthly average price per grade
-monthly_gas <- gas_data[, .(price = mean(price, na.rm = TRUE)), by = .(year_month, grade)]
-
-# Add the decade column again
-monthly_gas[, decade := paste0(floor(as.integer(format(year_month, "%Y")) / 10) * 10, "s")]
-
-
-
-
-gas <- df[fuel == "gasoline" & grade != "all" & formulation != "all"]
+gas <- gas_data[fuel == "gasoline" & grade != "all" & formulation != "all"]
 
 
 # plot --------
 
-ggplot(monthly_gas, aes(x = year_month, y = price, fill = grade)) +
-  geom_area(position = "identity", alpha = 0.7) +
-  facet_wrap(~ decade, scales = "free_x") +
-    
-    
-  # labs(
-  #   title = "Monthly U.S. Gasoline Prices by Grade and Decade",
-  #   subtitle = "Averaged by month to smooth weekly fluctuations",
-  #   x = "Year",
-  #   y = "Price per Gallon (USD)",
-  #   fill = "Grade"
-  # ) +
-  scale_fill_brewer(palette = "Set2") +
-  scale_x_date(date_labels = "%Y", date_breaks = "2 years") +
-  theme_minimal(base_size = 13)
+
+gas[, year := as.integer(format(date, "%Y"))]
+
+yearly_gas <- gas[, .(price = mean(price, na.rm = TRUE)), by = .(year, grade)]
+
+yearly_gas[, decade := paste0(floor(year / 10) * 10, "s")]
+
+
+ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
+    geom_col(position = "dodge", alpha = 0.8, width = .75) +
+    facet_wrap(~ decade, scales = "free_x") +
+    labs(
+        title = "Yearly Average Gasoline Prices",
+        x = "Year",
+        y = "Price per Gallon (USD)",
+        fill = "Grade"
+    ) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 # Plot -------
@@ -106,25 +107,6 @@ ggplot(monthly_gas, aes(x = year_month, y = price, fill = grade)) +
 #     width = 8.5, height = 9, units = "in", dpi = 600
 # )
 
-
-
-
-gas_data[, year := as.integer(format(date, "%Y"))]
-
-yearly_gas <- gas_data[, .(price = mean(price, na.rm = TRUE)), by = .(year, grade)]
-
-
-
-ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
-    geom_col(position = "dodge", alpha = 0.8, width = .75) +
-    labs(
-        title = "Yearly Average Gasoline Prices",
-        x = "Year",
-        y = "Price per Gallon (USD)",
-        fill = "Grade"
-    ) +
-    theme_minimal(base_family = "Candara") +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 
