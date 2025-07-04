@@ -35,11 +35,11 @@ yearly_gas[, decade := paste0(floor(year / 10) * 10, "s")]
 
 # plot --------
 
-col = c('#3a5cbc','#b9b8e7', '#6F99AD', '#FFDC91', '#b24745')
+# col = c('#3a5cbc','#b9b8e7', '#6F99AD', '#FFDC91', '#b24745')
 
 col = c('#3a5cbc','#b9b8e7', '#b24745')
 
-ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
+gr = ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
     
     geom_bar(stat = "identity", position = "dodge", width = 0.7, alpha = 0.9) +
     
@@ -51,6 +51,7 @@ ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
         title = "Yearly Average Gasoline Prices",
         subtitle = "",
         caption = "Source: <b> {gutenbergr} R package</b> | Graphic: <b>Natasa Anastasiadou</b>",
+        x = "",
         y = "Price per Gallon (USD)",
         fill = "Grade"
     ) +
@@ -72,11 +73,11 @@ ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
     )
 
 
-
+gr
 
 ggsave(
-    plot = p, filename = "plot.png",
-    width = 8.5, height = 9, units = "in", dpi = 600
+    plot = gr, filename = "plot.png",
+    width = 10, height = 10, units = "in", dpi = 600
 )
 
 
