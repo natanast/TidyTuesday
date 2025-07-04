@@ -38,12 +38,9 @@ yearly_gas[, decade := paste0(floor(year / 10) * 10, "s")]
 ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
     
     geom_bar(stat = "identity", position = "dodge", width = 0.7, alpha = 0.9) +
-
-    # geom_col(position = "dodge", alpha = 0.8, width = .75) +
     
     facet_wrap(~ decade, scales = "free_x") +
 
-    
     labs(
         title = "Yearly Average Gasoline Prices",
         subtitle = "Each bubble represents a bookshelf. <b>Larger </b> bubbles mean more books belong to that category.",
