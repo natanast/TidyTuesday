@@ -31,6 +31,8 @@ yearly_gas <- gas[, .(price = mean(price, na.rm = TRUE)), by = .(year, grade)]
 
 yearly_gas[, decade := paste0(floor(year / 10) * 10, "s")]
 
+yearly_gas$grade <- yearly_gas$grade |> factor(levels = c("regular", "midgrade", "premium"))
+
 
 
 # plot --------
@@ -49,7 +51,7 @@ gr = ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
     labs(
         title = "Yearly Average Gasoline Prices",
         subtitle = "",
-        caption = "Source: <b> {gutenbergr} R package</b> | Graphic: <b>Natasa Anastasiadou</b>",
+        caption = "Source: <b> Weekly US Gas Prices</b> | Graphic: <b>Natasa Anastasiadou</b>",
         x = "",
         y = "Price per Gallon (USD)",
         fill = "Grade"
@@ -58,6 +60,8 @@ gr = ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
     theme_minimal(base_family = "Calibri") +
     
     theme(
+        
+        legend.position = "bottom",
         axis.text.x = element_text(angle = 45, hjust = 1),
         
         panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
