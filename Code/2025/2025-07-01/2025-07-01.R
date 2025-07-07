@@ -64,6 +64,8 @@ gr = ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
         legend.position = "bottom",
         axis.text.x = element_text(angle = 45, hjust = 1),
         
+        axis.title.y = element_text(size = 12, margin = margin(r = 15)),
+        
         panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
         panel.grid.minor = element_blank(),
         
