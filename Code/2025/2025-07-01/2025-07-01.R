@@ -35,7 +35,6 @@ yearly_gas[, decade := paste0(floor(year / 10) * 10, "s")]
 
 # plot --------
 
-# col = c('#3a5cbc','#b9b8e7', '#6F99AD', '#FFDC91', '#b24745')
 
 col = c('#3a5cbc','#b9b8e7', '#b24745')
 
