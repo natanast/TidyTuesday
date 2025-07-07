@@ -49,8 +49,8 @@ gr = ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
     scale_fill_manual(values = col) +
 
     labs(
-        title = "Yearly Average Gasoline Prices",
-        subtitle = "",
+        title = "Gasoline Prices Across Grades and Decades in the U.S.",
+        subtitle = "Annual average retail prices for regular, midgrade, and premium gasoline from 1990 to 2025",
         caption = "Source: <b> Weekly US Gas Prices</b> | Graphic: <b>Natasa Anastasiadou</b>",
         x = "",
         y = "Price per Gallon (USD)",
@@ -68,7 +68,7 @@ gr = ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
         panel.grid.minor = element_blank(),
         
         plot.title = element_markdown(size = 17, face = "bold", hjust = 0.5, margin = margin(t = 5, b = 5)),
-        plot.subtitle = element_markdown(size = 14, hjust = 0.5,  color = "grey30"),
+        plot.subtitle = element_markdown(size = 14, hjust = 0.5,  color = "grey30", margin = margin(b = 15)),
         plot.caption  = element_markdown(margin = margin(t = 25), size = 8, hjust = 1),
         
         plot.background = element_rect(fill = "grey90", color = NA),
