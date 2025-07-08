@@ -16,23 +16,8 @@ library(ggtext)
 
 # load data ------
 
-gas_data <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-01/weekly_gas_prices.csv')
-
 
 # clean data ------
-
-gas_data[, date := as.Date(date)]
-
-gas <- gas_data[fuel == "gasoline" & grade != "all" & formulation != "all"]
-
-gas[, year := as.integer(format(date, "%Y"))]
-
-yearly_gas <- gas[, .(price = mean(price, na.rm = TRUE)), by = .(year, grade)]
-
-yearly_gas[, decade := paste0(floor(year / 10) * 10, "s")]
-
-yearly_gas$grade <- yearly_gas$grade |> factor(levels = c("regular", "midgrade", "premium"))
-
 
 
 # plot --------
@@ -77,8 +62,6 @@ gr = ggplot(yearly_gas, aes(x = factor(year), y = price, fill = grade)) +
         plot.margin = margin(20, 20, 20, 20)
     )
 
-
-gr
 
 ggsave(
     plot = gr, filename = "plot.png",
