@@ -16,42 +16,38 @@ library(ggtext)
 
 # load data ------
 
-answers <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-08/answers.csv')
+# answers <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-08/answers.csv')
 color_ranks <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-08/color_ranks.csv')
-users <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-08/users.csv')
+# users <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-08/users.csv')
 
 
 # clean data ------
 
-answers_users <- merge(answers, users, by = "user_id")
-
-# answers_users <- answers_users[!is.na(colorblind) & !is.na(y_chromosome)]
-# answers_users <- answers_users[, sex := ifelse(y_chromosome == 1, "Male", "Female")]
- 
- 
-# answers_clean <- answers_users[spam_prob < 0.05 & colorblind == 0]
-
-# Clean hex codes
+# Clean
 color_ranks[, hex := tolower(hex)]
 
-# Select top 150 colors by rank (lowest rank = most popular)
-top150_colors <- color_ranks[order(rank)][1:150]
+# Take top 50 ranked colors (rank 1 = most popular)
+top50_colors <- color_ranks[order(rank)][1:50]
 
-# Add grid positions: 10 rows × 15 columns
-top150_colors[, row := rep(1:10, each = 15)]
-top150_colors[, col := rep(1:15, times = 10)]
+# Create grid positions
+top50_colors[, row := rep(1:5, each = 10)]
+top50_colors[, col := rep(1:10, times = 5)]
 
 # Plot
-ggplot(top150_colors, aes(x = col, y = -row)) +
-    geom_tile(aes(fill = hex), color = "white", width = 0.95, height = 0.95) +
-    # geom_text(aes(label = color), color = "black", size = 2.5, family = "sans") +
+ggplot(top50_colors, aes(x = col, y = -row)) +
+    geom_tile(aes(fill = hex), color = "grey20", width = 0.75, height = 0.75) +
+    # geom_text(aes(label = color), color = "black", size = 3.2, family = "sans") +
     scale_fill_identity() +
+    
     coord_fixed() +
+    
     theme_void() +
+    
     labs(
-        title = "Top 150 Most Popular XKCD Colors",
+        title = "Top 50 Most Popular XKCD Colors",
         subtitle = "According to the original XKCD color naming survey"
     ) +
+    
     theme(
         plot.background = element_rect(fill = "grey90", color = NA),
         plot.margin = margin(20, 20, 20, 20)
