@@ -16,19 +16,10 @@ library(ggtext)
 
 # load data ------
 
-# answers <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-08/answers.csv')
-color_ranks <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-08/color_ranks.csv')
-# users <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-08/users.csv')
 
 
 # clean data ------
 
-color_ranks[, hex := tolower(hex)]
-
-top50_colors <- color_ranks[order(rank)][1:50]
-
-top50_colors[, row := rep(1:5, each = 10)]
-top50_colors[, col := rep(1:10, times = 5)]
 
 
 # plot ------
