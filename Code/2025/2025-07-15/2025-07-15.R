@@ -16,6 +16,7 @@ library(ggtext)
 
 # load data ------
 
+bl_funding <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-15/bl_funding.csv')
 
 
 # clean data ------
