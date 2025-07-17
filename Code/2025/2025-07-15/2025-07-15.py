@@ -112,7 +112,7 @@ plot1 = (
         aes(y = "nominal_gbp_millions", color = '"Nominal (£M)"'),
         size = 3,
         shape = 'o',
-        stroke = 0.85,
+        stroke = 0.55,
         fill = "white"
     ) +
 
@@ -120,22 +120,30 @@ plot1 = (
         aes(y = "total_y2000_gbp_millions", color ='"Inflation-adjusted (£M, Y2000)"'),
         size = 3,
         shape = 'o',
-        stroke = 0.85,
+        stroke = 0.55,
         fill = "white"
     ) +
-    scale_color_manual(values={"Nominal (£M)": "#1f77b4", "Inflation-adjusted (£M, Y2000)": "#d62728"}) +
+    scale_color_manual(
+        values = {"Nominal (£M)": "#1f77b4", "Inflation-adjusted (£M, Y2000)": "#d62728"}
+    ) +
     
-    theme_minimal() +
+    theme_minimal(base_family = "Candara") +
 
     labs(
         title = "British Library Total Funding Over Time",
         subtitle = "Inflation-adjusted funding (year 2000 GBP) shows a declining trend",
-        caption = "Source: {pokemon} R package | Graphic: Natasa Anastasiadou"
+        caption = "Source: {pokemon} R package | Graphic: Natasa Anastasiadou",
+        y = "Funding (£ Millions)"
     ) +
 
     theme(
-                plot_background = element_rect(fill='white', color='white'),
-        panel_background = element_rect(fill='white', color='white')
+
+        plot_title = element_text(size = 12, color = 'black', weight = 'bold', hjust = 0.5),
+        plot_subtitle = element_text(size = 10, color = 'black', hjust = 0.5),
+        plot_caption =  element_text(size = 7, color = 'black', hjust = 1),
+
+        plot_background = element_rect(fill ='white', color='white'),
+        panel_background = element_rect(fill ='white', color='white')
     )
 )
 
