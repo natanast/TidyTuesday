@@ -87,8 +87,6 @@ g = (
 
 g
 
-# Save the plot with custom size and resolution
-gg.ggsave(g, "day_05.png", width=10, height=6, dpi=300)
 
 
 
@@ -155,3 +153,6 @@ plot1 = (
 )
 
 plot1
+
+# Save the plot with custom size and resolution
+ggsave(plot1, "plot.png", width=10, height=6, dpi=300)
