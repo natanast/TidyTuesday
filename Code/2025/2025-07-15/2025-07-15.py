@@ -1,9 +1,8 @@
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
-import plotnine as gg
+import plotnine as *
 
 
 # Load data --------
@@ -39,49 +38,49 @@ df_long['stat'] = df_long['stat'].str.capitalize()
 # plot --------
 
 g = (
-    gg.ggplot(df_long)
+    ggplot(df_long)
 
-    + gg.aes(x = "stat", y = "value", fill = "type_1")
+    + aes(x = "stat", y = "value", fill = "type_1")
 
-    + gg.geom_violin(size = 0.25, alpha = 0.4, show_legend = False, trim = False)
+    + geom_violin(size = 0.25, alpha = 0.4, show_legend = False, trim = False)
 
-    + gg.geom_jitter(size = 2.5, width = 0.1, height = 0, alpha = 0.9, color = 'white', show_legend = False, stroke=0.2)
+    + geom_jitter(size = 2.5, width = 0.1, height = 0, alpha = 0.9, color = 'white', show_legend = False, stroke=0.2)
 
-    + gg.facet_wrap('~type_1')
+    + facet_wrap('~type_1')
 
-    + gg.scale_fill_manual(values=col)
+    + scale_fill_manual(values=col)
 
-    + gg.theme_minimal()
+    + theme_minimal()
 
-    + gg.labs(
+    + labs(
         title = "Pokémon Stat Comparison Across Types",
         subtitle = "A closer look at key stats (Attack, Defense, and Speed) for various Pokémon types (Electric, Fire, Grass, Water).",
         caption = "Source: {pokemon} R package | Graphic: Natasa Anastasiadou"
     )
 
-    + gg.theme(
+    + theme(
 
         legend_position= "none", 
-        axis_title = gg.element_blank(),
+        axis_title = element_blank(),
 
-        axis_text_x = gg.element_text(margin={'t': 40, 'units': 'pt'}, family="Candara", size = 8),
-        axis_text_y = gg.element_text(margin={'r': 40, 'units': 'pt'}, family="Candara", size = 8),
+        axis_text_x = element_text(margin={'t': 40, 'units': 'pt'}, family="Candara", size = 8),
+        axis_text_y = element_text(margin={'r': 40, 'units': 'pt'}, family="Candara", size = 8),
 
-        plot_title = gg.element_text(size = 12, color = 'black', weight = 'bold', hjust = 0.5, family="Candara"),
-        plot_subtitle = gg.element_text(size= 10, color = 'black', hjust = 0.5, family="Candara"),
-        plot_caption =  gg.element_text(size= 7, color = 'black', hjust = 1, family="Candara"),
+        plot_title = element_text(size = 12, color = 'black', weight = 'bold', hjust = 0.5, family="Candara"),
+        plot_subtitle = element_text(size= 10, color = 'black', hjust = 0.5, family="Candara"),
+        plot_caption =  element_text(size= 7, color = 'black', hjust = 1, family="Candara"),
 
-        plot_background=gg.element_rect(fill='white', color='white'),
-        panel_background=gg.element_rect(fill='white', color='white'),
+        plot_background = element_rect(fill='white', color='white'),
+        panel_background = element_rect(fill='white', color='white'),
 
-        panel_grid_major_y = gg.element_line(color = '#e5e5e5', alpha = 0.9, size = 0.75),
-        panel_grid_major_x = gg.element_line(color = '#e5e5e5', alpha = 0.9, size = 0.75),
-        panel_border = gg.element_rect(color = '#e5e5e5', alpha = 0.7, size = 0.5),
+        panel_grid_major_y = element_line(color = '#e5e5e5', alpha = 0.9, size = 0.75),
+        panel_grid_major_x = element_line(color = '#e5e5e5', alpha = 0.9, size = 0.75),
+        panel_border = element_rect(color = '#e5e5e5', alpha = 0.7, size = 0.5),
 
-        strip_text_x = gg.element_text(size = 8, family="Candara"),
-        axis_ticks = gg.element_line(color='#e5e5e5', alpha = 0.7),
+        strip_text_x = element_text(size = 8, family="Candara"),
+        axis_ticks = element_line(color='#e5e5e5', alpha = 0.7),
 
-        figure_size=(8, 4.5)
+        figure_size = (8, 4.5)
 
     ) 
 )
