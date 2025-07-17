@@ -2,12 +2,12 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import plotnine as *
+from plotnine import *
 
 
 # Load data --------
 
-bl_funding = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-15/bl_funding.csv')
+df = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-15/bl_funding.csv')
 
 # clean data ------
 
@@ -90,3 +90,53 @@ g
 # Save the plot with custom size and resolution
 gg.ggsave(g, "day_05.png", width=10, height=6, dpi=300)
 
+
+
+# Plot: Real vs Nominal Funding
+plot1 = (
+    ggplot(df, aes(x="year")) +
+
+    geom_line(
+        aes(y = "nominal_gbp_millions", color = '"Nominal (£M)"'),
+        size = 1,
+        linejoin = "round"
+    ) +
+    
+    geom_line(
+        aes(y = "total_y2000_gbp_millions", color ='"Inflation-adjusted (£M, Y2000)"'), 
+        size = 1,
+        linejoin = "round"
+    ) +
+
+    geom_point(
+        aes(y = "nominal_gbp_millions", color = '"Nominal (£M)"'),
+        size = 3,
+        shape = 'o',
+        stroke = 0.85,
+        fill = "white"
+    ) +
+
+    geom_point(
+        aes(y = "total_y2000_gbp_millions", color ='"Inflation-adjusted (£M, Y2000)"'),
+        size = 3,
+        shape = 'o',
+        stroke = 0.85,
+        fill = "white"
+    ) +
+    scale_color_manual(values={"Nominal (£M)": "#1f77b4", "Inflation-adjusted (£M, Y2000)": "#d62728"}) +
+    
+    theme_minimal() +
+
+    labs(
+        title = "British Library Total Funding Over Time",
+        subtitle = "Inflation-adjusted funding (year 2000 GBP) shows a declining trend",
+        caption = "Source: {pokemon} R package | Graphic: Natasa Anastasiadou"
+    ) +
+
+    theme(
+                plot_background = element_rect(fill='white', color='white'),
+        panel_background = element_rect(fill='white', color='white')
+    )
+)
+
+plot1
