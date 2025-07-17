@@ -12,7 +12,7 @@ df = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/
 # clean data ------
 
 # font family
-plt.rcParams["font.family"] = "Candara"
+# plt.rcParams["font.family"] = "Candara"
 
 # Select relevant columns
 stats = ['attack', 'defense', 'speed']
@@ -23,16 +23,6 @@ col = ['#f4cd2c', '#C03028', '#78C850', '#6890F0']
 
 df = pokemon_df[['pokemon', 'type_1'] + stats]
 df = df[df['type_1'].isin(selected_types)].dropna()
-
-
-# Capitalize first letter of type_1 and stat columns
-df['type_1'] = df['type_1'].str.capitalize()  # Capitalize first letter of type_1
-
-
-# Reshape the data for a long-format dataframe to plot with ggplot
-df_long = df.melt(id_vars=['pokemon', 'type_1'], value_vars=stats, var_name='stat', value_name='value')
-
-df_long['stat'] = df_long['stat'].str.capitalize()
 
 
 # plot --------
@@ -87,7 +77,7 @@ g = (
 
 g
 
-
+col = ['#6890F0', '#C03028']
 
 
 # Plot: Real vs Nominal Funding
@@ -95,7 +85,7 @@ plot1 = (
     ggplot(df, aes(x="year")) +
 
     geom_line(
-        aes(y = "nominal_gbp_millions", color = '"Nominal (£M)"'),
+        aes(y = "nominal_gbp_millions", color = "nominal_gbp_millions"),
         size = 1,
         linejoin = "round"
     ) +
@@ -122,10 +112,7 @@ plot1 = (
         fill = "white"
     ) +
     scale_color_manual(
-        values = {
-            "Nominal (£M)": "#1f77b4", 
-            "Inflation-adjusted (£M, Y2000)": "#d62728"
-        },
+        values = col,
         labels={
         "Nominal (£M)": "Nominal",
         "Inflation-adjusted (£M, Y2000)": "Inflation-adjusted"
@@ -147,12 +134,72 @@ plot1 = (
         plot_subtitle = element_text(size = 10, color = 'black', hjust = 0.5),
         plot_caption =  element_text(size = 7, color = 'black', hjust = 1),
 
-        plot_background = element_rect(fill ='white', color='white'),
-        panel_background = element_rect(fill ='white', color='white')
+        plot_background = element_rect(fill = 'white', color = 'white'),
+        panel_background = element_rect(fill = 'white', color = 'white')
     )
 )
 
 plot1
 
 # Save the plot with custom size and resolution
-ggsave(plot1, "plot.png", width=10, height=6, dpi=300)
+ggsave(plot1, "plot.png", width = 10, height = 6, dpi = 300)
+
+
+
+import pandas as pd
+from plotnine import *
+
+# Reshape your data from wide to long
+df_long = pd.melt(
+    df,
+    id_vars = 'year',
+    value_vars = ['nominal_gbp_millions', 'total_y2000_gbp_millions'],
+    var_name = 'type',
+    value_name = 'funding'
+)
+
+# Create mapping for display labels and colors
+label_map = {
+    'nominal_gbp_millions': 'Nominal',
+    'total_y2000_gbp_millions': 'Inflation-adjusted'
+}
+
+color_map = {
+    'nominal_gbp_millions': '#6890F0',
+    'total_y2000_gbp_millions': '#C03028'
+}
+
+# Plot
+plot1 = (
+    ggplot(df_long, aes(x = 'year', y = 'funding', color = 'type')) +
+    
+    geom_line(size = 1, linejoin = 'round') +
+
+    geom_point(size = 3, shape = 'o', stroke = 0.55, fill = 'white') +
+    
+    scale_color_manual(values = color_map, labels = label_map) +
+
+    scale_fill_manual(values = color_map, labels = label_map) +
+
+    theme_minimal(base_family = 'Candara') +
+
+    labs(
+        title = "British Library Total Funding Over Time",
+        subtitle = "Inflation-adjusted funding (year 2000 GBP) shows a declining trend",
+        caption = "Source: {pokemon} R package | Graphic: Natasa Anastasiadou",
+        y = "Funding (£ Millions)",
+        color = "",  # Remove "type" legend title
+        fill = ""
+    ) +
+
+    theme(
+        plot_title = element_text(size = 12, weight = 'bold', hjust = 0.5),
+        plot_subtitle = element_text(size = 10, hjust = 0.5),
+        plot_caption = element_text(size = 7, hjust = 1),
+        plot_background = element_rect(fill = 'white', color = 'white'),
+        panel_background = element_rect(fill = 'white', color = 'white')
+    )
+)
+
+# Save
+plot1.save("plot.png", width = 10, height = 6, dpi = 300)
