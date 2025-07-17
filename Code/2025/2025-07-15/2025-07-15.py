@@ -124,7 +124,14 @@ plot1 = (
         fill = "white"
     ) +
     scale_color_manual(
-        values = {"Nominal (£M)": "#1f77b4", "Inflation-adjusted (£M, Y2000)": "#d62728"}
+        values = {
+            "Nominal (£M)": "#1f77b4", 
+            "Inflation-adjusted (£M, Y2000)": "#d62728"
+        },
+        labels={
+        "Nominal (£M)": "Nominal",
+        "Inflation-adjusted (£M, Y2000)": "Inflation-adjusted"
+    }
     ) +
     
     theme_minimal(base_family = "Candara") +
