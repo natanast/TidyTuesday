@@ -11,12 +11,6 @@ df = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/
 
 # clean data ------
 
-# font family
-# plt.rcParams["font.family"] = "Candara"
-
-
-# plot --------
-
 col = ['#6890F0', '#C03028']
 
 # Reshape your data from wide to long
@@ -39,7 +33,9 @@ color_map = {
     'total_y2000_gbp_millions': '#C03028'
 }
 
-# Plot
+
+# plot --------
+
 plot1 = (
     ggplot(df_long, aes(x = 'year', y = 'funding', color = 'type')) +
     
@@ -65,17 +61,18 @@ plot1 = (
 
     theme(
 
+        panel_grid_major=element_line(size=0.45, color="#e4e4e3"),  # major gridlines
+        panel_grid_minor=element_blank(),
+
         plot_title = element_text(size = 12, weight = 'bold', hjust = 0.5),
         plot_subtitle = element_text(size = 10, hjust = 0.5),
         plot_caption = element_text(size = 7, hjust = 1),
         plot_background = element_rect(fill = 'white', color = 'white'),
         panel_background = element_rect(fill = 'white', color = 'white'),
 
-        figure_size=(10, 6)
+        figure_size = (8, 6)
     )
 )
 
-plot1
-
 # Save
-plot1.save("plot.png", width = 10, height = 6, dpi = 300)
+plot1.save("plot.png", width = 8, height = 6, dpi = 300)
