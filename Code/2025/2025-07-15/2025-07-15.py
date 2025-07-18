@@ -61,6 +61,11 @@ plot1 = (
 
     theme(
 
+        legend_text=element_text(size=8),
+        legend_title=element_text(size=9),
+        legend_key_size=10,
+        legend_spacing=6,
+         
         panel_grid_major=element_line(size=0.45, color="#e4e4e3"),  # major gridlines
         panel_grid_minor=element_blank(),
 
