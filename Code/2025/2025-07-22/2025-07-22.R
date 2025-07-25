@@ -62,8 +62,8 @@ gr <- ggplot(df_heatmap, aes(x = agency, y = artist, fill = N)) +
     ) +
     
     scale_fill_stepsn(
-        colors = c('#295466', '#7ca6bb', 'grey96', '#ffb5ac', '#a33a3a'),
-        breaks = c(1, 1.5, 2, 3, 5),   
+        colors = c('#295466', '#7ca6bb', '#ffd1c9', '#ed7b76', '#942d2f'),
+        breaks = c(1, 1.5, 2, 3, 5),
         transform = "log10",
         labels = comma,
         name = "No. of Artworks",
@@ -73,7 +73,7 @@ gr <- ggplot(df_heatmap, aes(x = agency, y = artist, fill = N)) +
             barwidth = unit(0.25, "lines")
         )
     ) +
-
+    
     
     theme_minimal(base_family = "Candara") +
     
