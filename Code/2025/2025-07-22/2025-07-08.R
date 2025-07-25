@@ -20,12 +20,6 @@ library(ggtext)
 
 # clean data ------
 
-color_ranks[, hex := tolower(hex)]
-
-top50_colors <- color_ranks[order(rank)][1:50]
-
-top50_colors[, row := rep(1:5, each = 10)]
-top50_colors[, col := rep(1:10, times = 5)]
 
 
 # plot ------
