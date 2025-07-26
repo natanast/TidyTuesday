@@ -98,7 +98,7 @@ gr <- ggplot(df_heatmap, aes(x = agency, y = artist, fill = N)) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         
-        plot.title = element_markdown(size = 17, face = "bold", hjust = .4, margin = margin(b = 5, t = 5)),
+        plot.title = element_markdown(size = 17, face = "bold", hjust = .2, margin = margin(b = 5, t = 5)),
         plot.subtitle = element_markdown(size = 14, hjust = 0.65, color = "grey30", margin = margin(b = 25, t = 5)),
         plot.caption = element_markdown(margin = margin(t = 35), size = 9, hjust = 1.35),
         
