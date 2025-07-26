@@ -37,17 +37,12 @@ df_heatmap <- df_heatmap[artist %in% top_artists]
 df_heatmap <- df_heatmap |> 
     complete(artist, agency, fill = list(N = 0))
 
-# Sort artists by total works for display
+
 df_heatmap$artist <- df_heatmap$artist |> factor(levels = rev(unique(df_heatmap$artist)))
 
 
 # plot ------
 
-
-
-
-
-# Plot
 gr <- ggplot(df_heatmap, aes(x = agency, y = artist, fill = N)) +
     
     geom_tile(color = "grey20", linewidth = 0.25) +
@@ -97,15 +92,15 @@ gr <- ggplot(df_heatmap, aes(x = agency, y = artist, fill = N)) +
         # axis.title.y = element_text(size = 8),
         axis.title = element_blank(),
         
-        axis.text.x = element_text(size = 8, angle = 45, hjust = 1),
-        axis.text.y = element_text(size = 8),
+        axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 10),
         
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         
-        plot.title = element_markdown(size = 12, face = "bold", hjust = 0.5, margin = margin(b = 5, t = 5)),
-        plot.subtitle = element_markdown(size = 10, hjust = 0.25, color = "grey30", margin = margin(b = 15, t = 5)),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 8, hjust = 1.3),
+        plot.title = element_markdown(size = 16, face = "bold", hjust = 0.5, margin = margin(b = 5, t = 5)),
+        plot.subtitle = element_markdown(size = 14, hjust = 0.65, color = "grey30", margin = margin(b = 15, t = 5)),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 8, hjust = 1.35),
         
         plot.margin = margin(20, 20, 20, 20),
         
