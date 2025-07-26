@@ -53,7 +53,7 @@ gr <- ggplot(df_heatmap, aes(x = agency, y = artist, fill = N)) +
         family = "Candara",
         bg.color = "grey95",
         bg.r = 0.1,
-        size = 3
+        size = 4
     ) +
     
     scale_fill_stepsn(
@@ -73,8 +73,8 @@ gr <- ggplot(df_heatmap, aes(x = agency, y = artist, fill = N)) +
     theme_minimal(base_family = "Candara") +
     
     labs(
-        title = "Most Prolific Artists in the MTA Permanent Art Collection",
-        subtitle = "Heatmap showing the top 15 artists by number of artworks, across MTA agencies",
+        title = "Where the Art Lives Across the MTA",
+        subtitle = "Exploring who created the MTA’s permanent artworks and where they’re displayed",
         caption = "Source: <b>MTA Permanent Art Catalog</b> • Graphic: <b>Natasa Anastasiadou</b>",
         x = "Agency",
         y = "Artist"
@@ -85,8 +85,8 @@ gr <- ggplot(df_heatmap, aes(x = agency, y = artist, fill = N)) +
         legend.position = "right",
         legend.title.position = "left",
         
-        legend.title = element_text(size = 10, angle = 90, hjust = .5, face = "bold", color = "grey30"),
-        legend.text = element_text(size = 8, color = "grey30"),
+        legend.title = element_text(size = 10.5, angle = 90, hjust = .5, face = "bold", color = "grey30"),
+        legend.text = element_text(size = 8.5, color = "grey30"),
         
         # axis.title.x = element_text(size = 8),
         # axis.title.y = element_text(size = 8),
@@ -98,9 +98,9 @@ gr <- ggplot(df_heatmap, aes(x = agency, y = artist, fill = N)) +
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         
-        plot.title = element_markdown(size = 16, face = "bold", hjust = 0.5, margin = margin(b = 5, t = 5)),
-        plot.subtitle = element_markdown(size = 14, hjust = 0.65, color = "grey30", margin = margin(b = 15, t = 5)),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 8, hjust = 1.35),
+        plot.title = element_markdown(size = 17, face = "bold", hjust = .4, margin = margin(b = 5, t = 5)),
+        plot.subtitle = element_markdown(size = 14, hjust = 0.65, color = "grey30", margin = margin(b = 25, t = 5)),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 9, hjust = 1.35),
         
         plot.margin = margin(20, 20, 20, 20),
         
