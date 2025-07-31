@@ -99,3 +99,118 @@ ggsave(
 
 
 
+
+
+library(data.table)
+shows <- fread("shows.csv")
+
+# Total viewership across reports
+top_series <- shows[, .(total_hours = sum(hours_viewed, na.rm = TRUE)), by = title][
+    order(-total_hours)][1:10]  # top 10
+
+
+top_shows_data <- shows[title %in% top_series$title]
+
+library(ggplot2)
+
+ggplot(top_shows_data, aes(x = report, y = hours_viewed, group = title, color = title)) +
+    geom_line(size = 1) +
+    geom_point(size = 2) +
+    labs(
+        title = "Top Netflix Series: Viewership Over Time",
+        x = "Report Period",
+        y = "Hours Viewed",
+        color = "Show Title"
+    ) +
+    theme_minimal(base_family = "sans") +
+    theme(
+        plot.title = element_text(face = "bold"),
+        axis.text.x = element_text(angle = 45, hjust = 1)
+    )
+
+
+
+
+library(data.table)
+shows <- fread("shows.csv")
+
+# Clean up runtime (format: HH:MM:SS or MM:SS)
+library(lubridate)
+shows[, runtime_minutes := as.numeric(period_to_seconds(hms(runtime)) / 60)]
+
+# Avoid divide-by-zero
+shows <- shows[!is.na(runtime_minutes) & runtime_minutes > 0]
+
+# views is already hours_viewed / runtime
+top_engaging <- shows[, .(total_views = sum(views, na.rm = TRUE)), by = title][
+    order(-total_views)][1:10]
+
+# Filter to just top engaging shows
+top_data <- shows[title %in% top_engaging$title]
+
+
+
+library(ggplot2)
+
+ggplot(top_data, aes(x = report, y = views, group = title, color = title)) +
+    geom_line(size = 1.2) +
+    geom_point(size = 2) +
+    labs(
+        title = "Normalized Views Over Time for Top Netflix Shows",
+        subtitle = "Views = Hours Watched / Runtime (across all episodes)",
+        x = "Report Period",
+        y = "Views",
+        color = "Show Title"
+    ) +
+    theme_minimal(base_family = "sans") +
+    theme(
+        plot.title = element_text(face = "bold"),
+        axis.text.x = element_text(angle = 45, hjust = 1)
+    )
+
+library(ggalt)  # for geom_dumbbell
+
+# Prepare data for first and last report
+reports_order <- sort(unique(shows$report))
+first_report <- reports_order[1]
+last_report <- reports_order[length(reports_order)]
+
+views_first <- shows[report == first_report, .(title, views_first = views)]
+views_last <- shows[report == last_report, .(title, views_last = views)]
+
+views_compare <- merge(views_first, views_last, by = "title", all = FALSE)
+top_titles <- views_compare[order(-views_last)][1:10]
+
+ggplot(top_titles, aes(x = views_first, xend = views_last, y = reorder(title, views_last))) +
+    geom_dumbbell(color = "#dddddd",
+                  size = 3,
+                  colour_x = "#444444",
+                  colour_xend = "#e50914") +
+    labs(
+        title = "Change in Views from First to Last Report",
+        x = "Views",
+        y = "Show Title"
+    ) +
+    theme_minimal()
+
+
+
+
+
+
+
+library(ggExtra)
+
+p <- ggplot(shows, aes(x = days_since_release, y = views, color = available_globally)) +
+    geom_point(alpha = 0.5) +
+    scale_color_manual(values = c("Yes" = "#e50914", "No" = "#222222")) +
+    labs(
+        title = "Views vs Days Since Release",
+        x = "Days Since Release",
+        y = "Views",
+        color = "Available Globally"
+    ) +
+    theme_minimal()
+
+ggMarginal(p, type = "histogram", fill = "#e50914", alpha = 0.6)
+
