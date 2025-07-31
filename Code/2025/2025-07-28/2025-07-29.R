@@ -196,21 +196,3 @@ ggplot(top_titles, aes(x = views_first, xend = views_last, y = reorder(title, vi
 
 
 
-
-
-
-library(ggExtra)
-
-p <- ggplot(shows, aes(x = days_since_release, y = views, color = available_globally)) +
-    geom_point(alpha = 0.5) +
-    scale_color_manual(values = c("Yes" = "#e50914", "No" = "#222222")) +
-    labs(
-        title = "Views vs Days Since Release",
-        x = "Days Since Release",
-        y = "Views",
-        color = "Available Globally"
-    ) +
-    theme_minimal()
-
-ggMarginal(p, type = "histogram", fill = "#e50914", alpha = 0.6)
-
