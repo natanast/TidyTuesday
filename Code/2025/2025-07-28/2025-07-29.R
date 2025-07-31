@@ -12,8 +12,6 @@ library(stringr)
 library(tidyr)
 library(shadowtext)
 library(ggtext)
-library(scales)
-
 
 
 # load data ------
@@ -21,23 +19,8 @@ library(scales)
 movies <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-29/movies.csv')
 shows <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-29/shows.csv')
 
+
 # clean data ------
-
-df_heatmap <- mta_art[, .N, by = .(artist, agency)]
-
-
-top_artists <- mta_art[, .N , by = artist]
-top_artists = top_artists[order(-N)][1:20, artist]
-
-
-df_heatmap <- df_heatmap[artist %in% top_artists]
-
-# Fill missing combinations with 0
-df_heatmap <- df_heatmap |> 
-    complete(artist, agency, fill = list(N = 0))
-
-
-df_heatmap$artist <- df_heatmap$artist |> factor(levels = rev(unique(df_heatmap$artist)))
 
 
 # plot ------
