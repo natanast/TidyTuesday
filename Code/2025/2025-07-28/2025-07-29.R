@@ -38,31 +38,55 @@ top_titles <- views_compare[order(-views_last)][1:10]
 
 
 
+library(colorspace)
 
 
 ggplot(top_titles) +
 
-    # Draw the "dumbbell" line between views_first and views_last
-    geom_segment(aes(x = views_first, xend = views_last,
-                     y = reorder(title, views_last),
-                     yend = reorder(title, views_last)),
-                 color = "#dddddd", size = 1) +
+    geom_segment(
+        aes(x = views_first, xend = views_last, y = reorder(title, views_last),
+        yend = reorder(title, views_last)),
+        color = "grey25", 
+        size = .75
+    ) +
     
-    # Point for views_first
-    geom_point(aes(x = views_first, y = reorder(title, views_last)),
-               color = "#444444", size = 3) +
+    geom_point(
+        aes(x = views_first, y = reorder(title, views_last)),
+        color = "#7ca6bb" |> darken(.55),  
+        fill = "#7ca6bb" |> lighten(.25), 
+        shape = 21, 
+        stroke = .95,
+        size = 3.5
+    ) +
     
-    # Point for views_last
-    geom_point(aes(x = views_last, y = reorder(title, views_last)),
-               color = "#e50914", size = 3) +
+    geom_point(
+        aes(x = views_last, y = reorder(title, views_last)),
+        color = "#ed7b76" |> darken(.55),  
+        fill = "#ed7b76" |> lighten(.25), 
+        shape = 21, 
+        stroke = .95,
+        size = 3.5
+    ) +
     
     labs(
         title = "Change in Views from First to Last Report",
-        x = "Views",
-        y = "Show Title"
+        subtitle = "Exploring who created the MTA’s permanent artworks and where they’re displayed",
+        caption = "Source: <b>MTA Permanent Art Catalog</b> • Graphic: <b>Natasa Anastasiadou</b>",
+        x = "Views"
     ) +
     
-    theme_minimal()
+    theme_minimal() +
+    
+    theme(
+        
+        axis.title.y = element_blank(),
+        
+        plot.title = element_markdown(size = 17, face = "bold", hjust = .2, margin = margin(b = 5, t = 5)),
+        plot.subtitle = element_markdown(size = 14, hjust = 0.65, color = "grey30", margin = margin(b = 25, t = 5)),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 9, hjust = 1.35),
+        
+        plot.margin = margin(20, 20, 20, 20)
+    )
 
 
 
