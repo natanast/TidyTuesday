@@ -14,6 +14,10 @@ library(shadowtext)
 library(ggtext)
 
 
+library(ggalt)  # for geom_dumbbell
+
+
+
 # load data ------
 
 movies <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-29/movies.csv')
@@ -21,6 +25,47 @@ shows <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/ma
 
 
 # clean data ------
+
+reports_order <- sort(unique(shows$report))
+first_report <- reports_order[1]
+last_report <- reports_order[length(reports_order)]
+
+views_first <- shows[report == first_report, .(title, views_first = views)]
+views_last <- shows[report == last_report, .(title, views_last = views)]
+
+views_compare <- merge(views_first, views_last, by = "title", all = FALSE)
+top_titles <- views_compare[order(-views_last)][1:10]
+
+
+
+
+
+ggplot(top_titles) +
+
+    # Draw the "dumbbell" line between views_first and views_last
+    geom_segment(aes(x = views_first, xend = views_last,
+                     y = reorder(title, views_last),
+                     yend = reorder(title, views_last)),
+                 color = "#dddddd", size = 1) +
+    
+    # Point for views_first
+    geom_point(aes(x = views_first, y = reorder(title, views_last)),
+               color = "#444444", size = 3) +
+    
+    # Point for views_last
+    geom_point(aes(x = views_last, y = reorder(title, views_last)),
+               color = "#e50914", size = 3) +
+    
+    labs(
+        title = "Change in Views from First to Last Report",
+        x = "Views",
+        y = "Show Title"
+    ) +
+    
+    theme_minimal()
+
+
+
 
 
 # plot ------
@@ -96,34 +141,6 @@ ggsave(
     plot = gr, filename = "plot.png",
     width = 8, height = 8, units = "in", dpi = 600
 )
-
-
-
-library(ggalt)  # for geom_dumbbell
-
-# Prepare data for first and last report
-reports_order <- sort(unique(shows$report))
-first_report <- reports_order[1]
-last_report <- reports_order[length(reports_order)]
-
-views_first <- shows[report == first_report, .(title, views_first = views)]
-views_last <- shows[report == last_report, .(title, views_last = views)]
-
-views_compare <- merge(views_first, views_last, by = "title", all = FALSE)
-top_titles <- views_compare[order(-views_last)][1:10]
-
-ggplot(top_titles, aes(x = views_first, xend = views_last, y = reorder(title, views_last))) +
-    geom_dumbbell(color = "#dddddd",
-                  size = 3,
-                  colour_x = "#444444",
-                  colour_xend = "#e50914") +
-    labs(
-        title = "Change in Views from First to Last Report",
-        x = "Views",
-        y = "Show Title"
-    ) +
-    theme_minimal()
-
 
 
 
