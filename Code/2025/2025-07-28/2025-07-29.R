@@ -9,18 +9,14 @@ gc()
 library(data.table)
 library(ggplot2)
 library(stringr)
-library(tidyr)
-library(shadowtext)
 library(ggtext)
-
-
-library(ggalt)  # for geom_dumbbell
-
+library(extrafont)
+library(colorspace)
 
 
 # load data ------
 
-movies <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-29/movies.csv')
+# movies <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-29/movies.csv')
 shows <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-29/shows.csv')
 
 
@@ -38,8 +34,8 @@ top_titles <- views_compare[order(-views_last)][1:10]
 
 
 
-library(colorspace)
 
+# plot --------
 
 ggplot(top_titles) +
 
@@ -70,22 +66,26 @@ ggplot(top_titles) +
     
     labs(
         title = "Change in Views from First to Last Report",
-        subtitle = "Exploring who created the MTA’s permanent artworks and where they’re displayed",
-        caption = "Source: <b>MTA Permanent Art Catalog</b> • Graphic: <b>Natasa Anastasiadou</b>",
+        subtitle = "Exploring who created the Netflix series",
+        caption = "Source: <b>Netflix data</b> • Graphic: <b>Natasa Anastasiadou</b>",
         x = "Views"
     ) +
     
-    theme_minimal() +
+    theme_minimal(base_family = "Candara") +
     
     theme(
         
         axis.title.y = element_blank(),
         
-        plot.title = element_markdown(size = 17, face = "bold", hjust = .2, margin = margin(b = 5, t = 5)),
+        panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
+        panel.grid.minor = element_blank(),
+        
+        plot.title = element_markdown(size = 16, face = "bold", hjust = .2, margin = margin(b = 5, t = 5)),
         plot.subtitle = element_markdown(size = 14, hjust = 0.65, color = "grey30", margin = margin(b = 25, t = 5)),
         plot.caption = element_markdown(margin = margin(t = 35), size = 9, hjust = 1.35),
         
-        plot.margin = margin(20, 20, 20, 20)
+        plot.margin = margin(20, 20, 20, 20),
+        plot.background = element_rect(fill = "grey93", color = NA)
     )
 
 
