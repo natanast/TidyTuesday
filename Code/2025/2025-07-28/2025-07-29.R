@@ -48,8 +48,8 @@ top_increases <- views_compare[diff_views > 0][order(-diff_views)][1:5]
 top_decreases <- views_compare[diff_views < 0][order(diff_views)][1:5]
 
 # Add a change_type column
-top_increases[, change_type := "Increase"]
-top_decreases[, change_type := "Decrease"]
+top_increases[, change_type := "Increase (2025)"]
+top_decreases[, change_type := "Decrease (2025)"]
 
 # Combine both sets
 top_changes <- rbind(top_increases, top_decreases)
@@ -72,38 +72,121 @@ gr = ggplot(top_changes) +
     
     geom_point(
         aes(
-            x = views_first, y = reorder(title, diff_views), 
-            fill = "First Report", color = "First Report"
+            x = views_first, 
+            y = reorder(title, diff_views), 
+            fill = "First Report (2023)", 
+            color = "First Report (2023)"
+        ),
+        shape = 21,
+        stroke = .45,
+        size = 3.5
+    ) +
+    # geom_point(
+    #     aes(
+    #         x = views_first, y = reorder(title, diff_views)
+    #         # fill = change_type, color = change_type
+    #     ),
+    #     fill = "#7ca6bb" |> lighten(0.25),
+    #     color = "#7ca6bb" |> darken(0.35),
+    #     shape = 21, 
+    #     stroke = .45,
+    #     size = 3.5
+    # ) +
+    
+    geom_point(
+        aes(
+            x = views_last, y = reorder(title, diff_views), 
+            fill = change_type, color = change_type
         ),
         shape = 21, 
         stroke = .45,
         size = 3.5
     ) +
     
-    geom_point(
-        aes(
-            x = views_last, y = reorder(title, diff_views), 
-            fill = "Last Report", color = "Last Report"
-        ),
-        shape = 21,
-        stroke = .45,
-        size = 3.5
-    ) +
-
+    # scale_color_manual(
+    #     name = NULL,
+    #     values = c(
+    #         "First Report (2023)" = "#7ca6bb" |> darken(0.35),
+    #         "Increase" = "#5cb85c",
+    #         "Decrease" = "#d9534f"
+    #     )
+    # ) +
+    # scale_fill_manual(
+    #     name = NULL,
+    #     values = c(
+    #         "First Report (2023)" = "#7ca6bb" |> lighten(0.25),
+    #         "Increase" = "#5cb85c" |> lighten(0.25),
+    #         "Decrease" = "#d9534f" |> lighten(0.25)
+    #     )
+    # ) +
+    
     scale_color_manual(
         name = NULL,
         values = c(
-            "First Report" = "#7ca6bb" |> darken(0.35),
-            "Last Report"  = "#ed7b76" |> darken(0.35)
+            "First Report (2023)" = "#7ca6bb" |> darken(0.35),
+            "Increase (2025)" = "#5cb85c",
+            "Decrease (2025)" = "#d9534f"
         )
     ) +
     scale_fill_manual(
         name = NULL,
         values = c(
-            "First Report" = "#7ca6bb" |> lighten(0.25),
-            "Last Report"  = "#ed7b76" |> lighten(0.25)
+            "First Report (2023)" = "#7ca6bb" |> lighten(0.25),
+            "Increase (2025)" = "#5cb85c" |> lighten(0.25),
+            "Decrease (2025)" = "#d9534f" |> lighten(0.25)
         )
     ) +
+    
+    # scale_color_manual(
+    #     name = NULL,
+    #     values = c(
+    #         "Increase" = "#4CAF50",  # green
+    #         "Decrease" = "#F44336"   # red
+    #     )
+    # ) +
+    # scale_fill_manual(
+    #     name = NULL,
+    #     values = c(
+    #         "Increase" = "#A5D6A7",  # light green
+    #         "Decrease" = "#EF9A9A"   # light red
+    #     )
+    # ) +
+
+    # geom_point(
+    #     aes(
+    #         x = views_first, y = reorder(title, diff_views), 
+    #         fill = "First Report (2023)", color = "First Report (2023)"
+    #     ),
+    #     shape = 21, 
+    #     stroke = .45,
+    #     size = 3.5
+    # ) +
+    # 
+    # geom_point(
+    #     aes(
+    #         x = views_last, y = reorder(title, diff_views), 
+    #         fill = "Last Report (2025)", color = "Last Report (2025)"
+    #     ),
+    #     shape = 21,
+    #     stroke = .45,
+    #     size = 3.5
+    # ) +
+
+    # scale_color_manual(
+    #     name = NULL,
+    #     values = c(
+    #         "First Report (2023)" = "#7ca6bb" |> darken(0.35),
+    #         "Last Report (2025)"  = "#ed7b76" |> darken(0.35)
+    #     )
+    # ) +
+    # 
+    # scale_fill_manual(
+    #     name = NULL,
+    #     values = c(
+    #         "First Report (2023)" = "#7ca6bb" |> lighten(0.25),
+    #         "Last Report (2025)"  = "#ed7b76" |> lighten(0.25)
+    #     )
+    # ) +
     
     scale_x_continuous(labels = label_number(scale = 1e-6, suffix = "M")) +
     
