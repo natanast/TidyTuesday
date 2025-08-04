@@ -75,47 +75,42 @@ gr = ggplot(top_changes) +
     ) +
     
     geom_point(
-        aes(x = views_first, y = reorder(title, diff_views)),
-        color = "#7ca6bb" |> darken(.35),  
-        fill = "#7ca6bb" |> lighten(.25), 
+        aes(
+            x = views_first, y = reorder(title, diff_views), 
+            fill = "First Report", color = "First Report"
+        ),
         shape = 21, 
         stroke = .45,
         size = 3.5
     ) +
     
-    # geom_point(
-    #     aes(
-    #         x = views_last, y = reorder(title, diff_views), 
-    #         color = change_type, fill = change_type
-    #     ),
-    #     shape = 21, 
-    #     stroke = .45,
-    #     size = 3.5
-    # ) +
-    # 
-    # scale_color_manual(
-    #     values = c(
-    #         "Increase" = "forestgreen" |> darken(.35), 
-    #         "Decrease" = "#ed7b76" |> darken(.35) 
-    #     )
-    # ) +
-    
-    # scale_fill_manual(
-    #     values = c(
-    #         "Increase" = "forestgreen" |> lighten(.25), 
-    #         "Decrease" = "#ed7b76" |> lighten(.25)
-    #     )
-    # ) +
-    
     geom_point(
-        aes(x = views_last, y = reorder(title, diff_views)),
-        color = "#ed7b76" |> darken(.35),
-        fill = "#ed7b76" |> lighten(.25),
+        aes(
+            x = views_last, y = reorder(title, diff_views), 
+            fill = "Last Report", color = "Last Report"
+        ),
         shape = 21,
         stroke = .45,
         size = 3.5
     ) +
 
+    scale_color_manual(
+        name = NULL,
+        values = c(
+            "First Report" = "#7ca6bb" |> darken(0.35),
+            "Last Report"  = "#ed7b76" |> darken(0.35)
+        )
+    ) +
+    scale_fill_manual(
+        name = NULL,
+        values = c(
+            "First Report" = "#7ca6bb" |> lighten(0.25),
+            "Last Report"  = "#ed7b76" |> lighten(0.25)
+        )
+    ) +
+    
+    facet_wrap(~change_type, scales = "free_y", ncol = 1) +
+    
     labs(
         title = "Top 10 Netflix Shows by Increase and Decrease in Views",
         subtitle = "Change between first and last report periods",
@@ -127,13 +122,19 @@ gr = ggplot(top_changes) +
     
     theme(
         
+        # legend.position = "right",
+        # legend.title = element_text(size = 10),
+        # legend.text = element_text(size = 8),
+        
         axis.title.y = element_blank(),
+        
+        strip.text = element_text(size = 12),
         
         panel.grid.major = element_line(linewidth = 0.45, color = "grey85"),
         panel.grid.minor = element_blank(),
         
-        plot.title = element_markdown(size = 16, face = "bold", hjust = .2, margin = margin(b = 5, t = 5)),
-        plot.subtitle = element_markdown(size = 14, hjust = 0.2, color = "grey30", margin = margin(b = 25, t = 5)),
+        plot.title = element_markdown(size = 16, face = "bold", hjust = .15, margin = margin(b = 5, t = 5)),
+        plot.subtitle = element_markdown(size = 14, hjust = 0.35, color = "grey30", margin = margin(b = 25, t = 5)),
         plot.caption = element_markdown(margin = margin(t = 35), size = 9, hjust = 1),
         
         plot.margin = margin(20, 20, 20, 20),
