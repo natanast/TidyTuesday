@@ -9,49 +9,17 @@ gc()
 library(data.table)
 library(ggplot2)
 library(stringr)
-library(ggtext)
 library(extrafont)
 library(colorspace)
-library(scales)
 
 
 # load data ------
 
-# movies <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-29/movies.csv')
-shows <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-29/shows.csv')
 
 
 # clean data ------
 
-reports_order <- shows$report |> unique() |> sort()
-first_report <- reports_order[1]
-last_report <- reports_order[length(reports_order)]
 
-
-views_first <- shows[report == first_report, .(title, views_first = views)]
-views_last <- shows[report == last_report, .(title, views_last = views)]
-
-
-views_compare <- merge(views_first, views_last, by = "title", all = FALSE)
-
-
-# Calculate difference for all shows
-views_compare[, diff_views := views_last - views_first]
-
-views_compare[, title := str_extract(title, "^[^/]+") |> str_squish()]
-
-# top 5 increases
-top_increases <- views_compare[diff_views > 0][order(-diff_views)][1:5]
-
-# top 5 decreases
-top_decreases <- views_compare[diff_views < 0][order(diff_views)][1:5]
-
-
-top_increases[, change_type := "Increase (2025)"]
-top_decreases[, change_type := "Decrease (2025)"]
-
-
-top_changes <- rbind(top_increases, top_decreases)
 
 
 # plot --------
