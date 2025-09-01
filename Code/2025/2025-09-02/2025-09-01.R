@@ -16,6 +16,10 @@ library(colorspace)
 # load data ------
 
 
+frogID_data <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-02/frogID_data.csv')
+frog_names <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-02/frog_names.csv')
+
+
 
 # clean data ------
 
