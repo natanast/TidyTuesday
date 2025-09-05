@@ -15,16 +15,62 @@ library(colorspace)
 
 # load data ------
 
-
 frogID_data <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-02/frogID_data.csv')
 frog_names <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-02/frog_names.csv')
 
 
-
 # clean data ------
 
+frogs_merged <- merge(frogID_data, frog_names, by = "scientificName", all.x = TRUE)
+
+# Add month & season
+frogs_merged[, month := month(eventDate)]
+frogs_merged[, season := fcase(
+    month %in% c(12, 1, 2), "Summer",
+    month %in% c(3, 4, 5), "Autumn",
+    month %in% c(6, 7, 8), "Winter",
+    month %in% c(9, 10, 11), "Spring"
+)]
 
 
+library(maps)
+
+aus_map <- map_data("world", region = "Australia")
+
+gr = ggplot() +
+    
+    
+    geom_polygon(data = aus_map, aes(x = long, y = lat, group = group),
+                 fill = "grey90", color = "white") +
+    
+    geom_point(data = frogs_merged, 
+               aes(x = decimalLongitude, y = decimalLatitude),
+               alpha = 0.3, size = 0.5, color = "#6F99AD") +
+    
+    coord_fixed(1.3) +
+    
+    facet_wrap(~season) +
+    
+    theme_minimal(base_family = "Candara") +
+    
+    labs(
+        title = "FrogID observations across Australia",
+        subtitle = "Top 5 increases and decreases in view counts between the first and last reporting periods",
+        caption = "Source: <b>FrogID data</b> | Graphic: <b>Natasa Anastasiadou</b>",
+    ) +
+    
+    theme(
+        
+        panel.grid.major = element_line(linewidth = 0.45, color = "grey95", linetype = "dashed"),
+        panel.grid.minor = element_blank(),
+        
+        plot.margin = margin(20, 20, 20, 20),
+        
+        plot.background = element_rect(fill = "grey94", color = NA)
+    )
+
+
+gr
 
 # plot --------
 
