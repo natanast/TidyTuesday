@@ -11,32 +11,13 @@ library(ggplot2)
 library(stringr)
 library(extrafont)
 library(colorspace)
-library(ggtext)
-library(maps)
 
 
 # load data ------
 
-frogID_data <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-02/frogID_data.csv')
-frog_names <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-02/frog_names.csv')
 
 
 # clean data ------
-
-frogs_merged <- merge(frogID_data, frog_names, by = "scientificName", all.x = TRUE)
-
-# Add month & season
-frogs_merged[, month := month(eventDate)]
-
-frogs_merged[, season := fcase(
-    month %in% c(12, 1, 2), "Summer",
-    month %in% c(3, 4, 5), "Autumn",
-    month %in% c(6, 7, 8), "Winter",
-    month %in% c(9, 10, 11), "Spring"
-)]
-
-
-aus_map <- map_data("world", region = "Australia")
 
 
 # plot -------
@@ -73,8 +54,6 @@ gr = ggplot() +
     ) +
     
     theme(
-        
-        
         plot.title = element_markdown(size = 16, face = "bold", hjust = .5, margin = margin(b = 5, t = 5)),
         plot.subtitle = element_markdown(size = 14, hjust = 0.6, color = "grey30", margin = margin(b = 25, t = 5)),
         plot.caption = element_markdown(margin = margin(t = 35), size = 9, hjust = 1.5),
@@ -88,8 +67,6 @@ gr = ggplot() +
         
         plot.background = element_rect(fill = "#e8e8e7", color = NA)
     )
-
-gr
 
 
 ggsave(
