@@ -1,15 +1,16 @@
+# EuroLeague Basketball
 
-# Crane Observations at Lake Hornborgasjön, Sweden (1994–2024)
+This week we’re exploring **EuroLeague Basketball**, the premier men’s club basketball competition in Europe.  
 
-This week we are exploring [crane observations at Lake Hornborgasjön in Sweden](https://www.hornborga.com/naturen/transtatistik/).
-For more than 30 years, cranes stopping at the Lake Hornborgasjön ('Lake Hornborga') in Västergötland, Sweden have been counted from the 
-[Hornborgasjön field station](https://www.hornborga.com/naturen/tranor/) in the spring and the fall as they pass by during their yearly migration.  
+The dataset contains information on EuroLeague teams, including their country, home city, arena, seating capacity, and historical performance (Final Four appearances and titles won).  
 
-> Thanks to crane counters from the Hornborgasjön field station, we know approximately how many cranes there are at Hornborgasjön during the spring. 
-> When there are the most cranes depends on whether spring is early or late. It also depends on when the winds from the south are suitable for crane flight.
+The dataset is curated from publicly available sources such as Wikipedia and official EuroLeague records, and was packaged in the [EuroleagueBasketball R package](https://github.com/natanast/EuroleagueBasketball), with documentation available at [natanast.github.io/EuroleagueBasketball](https://natanast.github.io/EuroleagueBasketball/).
 
-- Has the crane population at Lake Hornborgasjön grown over the past 30 years?
-- If you wanted to see thousands of cranes, when is the best time of year to visit?
-- Is it possible to predict the arrival of the cranes from weather patterns?
+> "The EuroLeague is the top-tier European professional basketball club competition, widely regarded as the most prestigious competition in European basketball." — EuroLeague
 
-Thank you to [Carl Borstell](https://github.com/borstell) for curating this week's dataset.
+Some questions you might explore with this dataset:  
+- Which countries are most represented in the EuroLeague?  
+- How do arena capacities compare across teams and countries?  In R, the `readr::parse_number()` function might be helpful here.
+- Which clubs have been the most successful historically?
+
+Thank you to [Natasa Anastasiadou](https://github.com/natanast) for curating this week's dataset.
