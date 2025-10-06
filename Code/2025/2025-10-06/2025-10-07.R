@@ -15,7 +15,7 @@ library(colorspace)
 
 # load data ------
 
-cranes <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-30/cranes.csv')
+euroleague_basketball <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-10-07/euroleague_basketball.csv')
 
 # clean data ------
 
