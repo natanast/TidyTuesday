@@ -13,9 +13,11 @@ library(extrafont)
 library(colorspace)
 library(ggtext)
 
+
 # load data ------
 
 euroleague_basketball <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-10-07/euroleague_basketball.csv')
+
 
 # clean data ------
 
@@ -46,7 +48,6 @@ df_long <- df_long[Year != ""]
 df_long[, Year := as.integer(Year)]
 
 
-# make sure Team is a factor and ordered by number of Titles (optional)
 team_order <- df_long[Status == "Championship", .N, by = Team][order(-N)]$Team
 team_order <- unique(c(team_order, df_long$Team))
 df_long[, Team := factor(Team, levels = rev(team_order))]  
@@ -70,13 +71,12 @@ gr = ggplot() +
         
     ) +
     
-    scale_color_manual(values = col |> darken(.25) ) +
+    scale_color_manual(values = col |> darken(.5) ) +
     scale_fill_manual(values = col |> lighten(.25) ) +
     
-    # Make x-axis continuous
     scale_x_continuous(
-        limits = c(1988, 2025),          # set range
-        breaks = seq(1988, 2025, by = 2) # put a tick every 2 years
+        limits = c(1988, 2025),         
+        breaks = seq(1988, 2025, by = 2)
     ) +
     
     labs(
@@ -118,7 +118,4 @@ ggsave(
     plot = gr, filename = "plot.png",
     width = 10, height = 8, units = "in", dpi = 600
 )
-
-
-
 
