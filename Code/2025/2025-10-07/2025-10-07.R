@@ -19,6 +19,54 @@ euroleague_basketball <- fread('https://raw.githubusercontent.com/rfordatascienc
 
 # clean data ------
 
+df1 <- euroleague_basketball[, .(Team, FinalFour_Appearances, Titles_Won, Years_of_FinalFour_Appearances, Years_of_Titles_Won)]
+
+
+# Separate Final Four years
+finalfour_long <- df1[, .(
+    Year = unlist(str_split(Years_of_FinalFour_Appearances, ",\\s*")),
+    Status = "Final Four"
+), by = Team]
+
+# Separate Title years
+titles_long <- df1[, .(
+    Year = unlist(str_split(Years_of_Titles_Won, ",\\s*")),
+    Status = "Champion"
+), by = Team]
+
+
+
+df_long <- rbind(finalfour_long, titles_long, fill = TRUE)
+
+
+df_long$Year <- ifelse(df_long$Year == "None", "", df_long$Year)
+
+df_long <- df_long[Year != ""]
+
+df_long[, Year := as.integer(Year)]
+
+
+
+
+# make sure Team is a factor and ordered by number of Titles (optional)
+team_order <- df_long[Status == "Champion", .N, by = Team][order(-N)]$Team
+team_order <- unique(c(team_order, df_long$Team))
+df_long[, Team := factor(Team, levels = rev(team_order))]  
+
+
+# plot ------ 
+ggplot(df_long, aes(x = Year, y = Team, color = Status)) +
+    geom_point(size = 3) +
+    scale_color_manual(values = c("Final Four" = "grey70", "Champion" = "#D94E67")) +
+    labs(title = "Euroleague: Final Four appearances and Titles",
+         x = "Year", y = NULL, color = "") +
+    theme_minimal() +
+    theme(
+        axis.text.y = element_text(size = 9),
+        plot.title = element_text(hjust = 0.5, face = "bold"),
+        legend.position = "top"
+    )
+
 
 # plot -------
 
@@ -73,4 +121,7 @@ ggsave(
     plot = gr, filename = "plot.png",
     width = 10, height = 10, units = "in", dpi = 600
 )
+
+
+
 
