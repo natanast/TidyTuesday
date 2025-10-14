@@ -7,7 +7,7 @@ from plotnine import *
 
 # Load data --------
 
-df = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-07-15/bl_funding.csv')
+df = pd.read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-10-14/food_security.csv')
 
 # clean data ------
 
