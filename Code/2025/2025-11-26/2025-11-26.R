@@ -21,37 +21,6 @@ spi_indicators <- fread('https://raw.githubusercontent.com/rfordatascience/tidyt
 
 # clean data ------
 
-df1 <- euroleague_basketball[, .(Team, FinalFour_Appearances, Titles_Won, Years_of_FinalFour_Appearances, Years_of_Titles_Won)]
-
-
-# Separate Final Four years
-finalfour_long <- df1[, .(
-    Year = unlist(str_split(Years_of_FinalFour_Appearances, ",\\s*")),
-    Status = "Final Four"
-), by = Team]
-
-# Separate Title years
-titles_long <- df1[, .(
-    Year = unlist(str_split(Years_of_Titles_Won, ",\\s*")),
-    Status = "Championship"
-), by = Team]
-
-
-
-df_long <- rbind(finalfour_long, titles_long, fill = TRUE)
-
-
-df_long$Year <- ifelse(df_long$Year == "None", "", df_long$Year)
-
-df_long <- df_long[Year != ""]
-
-df_long[, Year := as.integer(Year)]
-
-
-team_order <- df_long[Status == "Championship", .N, by = Team][order(-N)]$Team
-team_order <- unique(c(team_order, df_long$Team))
-df_long[, Team := factor(Team, levels = rev(team_order))]  
-
 
 
 # plot ------ 
