@@ -43,8 +43,8 @@ gr = ggplot(df_clean, aes(x = year, y = country, fill = overall_score)) +
         color = "black",
         family = "Candara",
         bg.color = "grey95", 
-        bg.r = .1, 
-        size = 3
+        bg.r = .085, 
+        size = 3.25
     ) +
     
     scale_fill_stepsn(
@@ -62,26 +62,27 @@ gr = ggplot(df_clean, aes(x = year, y = country, fill = overall_score)) +
     
     
     labs(
-        title = "Statistical Performance Index (SPI) in Europe, 2016–2023",
-        subtitle = "Overall SPI scores across years for European countries (World Bank SPI dataset)",
-        caption = "Source: <b>Euroleague dataset</b> | Graphic: <b>Natasa Anastasiadou</b>",
+        title = "Tracking Statistical Performance in Europe & Central Asia (2016–2023)",
+        subtitle = "Overall SPI scores summarizing the strength of national statistical systems across time.",
+        caption = "Source: <b>Statistical Performance Indicators dataset</b> | Graphic: <b>Natasa Anastasiadou</b>",
     ) +
     
     
     theme(
         legend.position = "bottom",
         legend.title.position = "top",
-        legend.title = element_text(size = 8, angle = 0, hjust = .5, face = "bold", color = "grey30"),
-        legend.text = element_text(size = 8, color = "grey30"),
+        legend.title = element_text(size = 11, angle = 0, hjust = .5, face = "bold", color = "grey30"),
+        legend.text = element_text(size = 9, color = "grey30"),
         
         axis.title = element_blank(),
+        axis.text = element_text(size = 12),
         
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         
         
-        plot.title = element_markdown(size = 18, face = "bold", hjust = 0.5),
-        plot.subtitle = element_markdown(size = 16, hjust = 0.5, color = "grey30"),
+        plot.title = element_markdown(size = 18, face = "bold", hjust = .1, margin = margin(b = 10)),
+        plot.subtitle = element_markdown(size = 16, hjust = 1, color = "grey30", margin = margin(b = 10)),
         plot.caption = element_markdown(margin = margin(t = 35), size = 10, hjust = 1),
         
         plot.margin = margin(20, 20, 20, 20)
