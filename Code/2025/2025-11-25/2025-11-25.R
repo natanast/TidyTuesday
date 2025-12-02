@@ -27,70 +27,72 @@ df <- spi_indicators[year >= 2016 & region == "Europe & Central Asia", ]
 
 df_clean <- df[!is.na(overall_score)]
 
+# order 
+latest_order <- df_clean[year == 2023][order(overall_score)]$country
+df_clean$country <- factor(df_clean$country, levels = latest_order)
+
 
 # plot ------
 
-ggplot(df_clean, aes(x = year, y = country, fill = overall_score)) +
+gr = ggplot(df_clean, aes(x = year, y = country, fill = overall_score)) +
     
     geom_tile(color = "grey20", linewidth = .25) +
      
     geom_shadowtext(
-        # aes(label = ifelse(overall_score > 0, overall_score, "")),
         aes(label = round(overall_score, 1)),
         color = "black",
         family = "Candara",
         bg.color = "grey95", 
         bg.r = .1, 
-        size = 2
+        size = 3
     ) +
     
     scale_fill_stepsn(
         colors =  c('#2c5769', '#6F99AD', 'grey96', '#ffb5ac', '#a33a3a'),
-        breaks = c(35, 45, 75, 85, 100),
-        # transform = "log10",  
-        # labels = round(overall_score),
+        breaks = c(30, 60, 70, 80, 90),
         name = "SPI",
         na.value = "grey96",
         guide = guide_colorsteps(
-            barheight = unit(8, "lines"), 
-            barwidth = unit(0.25, "lines")
-        )  # Centers the title
+            barheight = unit(0.25, "lines"), 
+            barwidth = unit(8, "lines")
+        )  
     ) +
     
     theme_minimal(base_family = "Candara") +
     
+    
+    labs(
+        title = "Statistical Performance Index (SPI) in Europe, 2016–2023",
+        subtitle = "Overall SPI scores across years for European countries (World Bank SPI dataset)",
+        caption = "Source: <b>Euroleague dataset</b> | Graphic: <b>Natasa Anastasiadou</b>",
+    ) +
+    
+    
     theme(
-        legend.position = "right",
-        legend.title.position = "left",
-        legend.title = element_text(size = 8, angle = 90, hjust = .5, face = "bold", color = "grey30"),
+        legend.position = "bottom",
+        legend.title.position = "top",
+        legend.title = element_text(size = 8, angle = 0, hjust = .5, face = "bold", color = "grey30"),
         legend.text = element_text(size = 8, color = "grey30"),
+        
+        axis.title = element_blank(),
         
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
+        
+        
+        plot.title = element_markdown(size = 18, face = "bold", hjust = 0.5),
+        plot.subtitle = element_markdown(size = 16, hjust = 0.5, color = "grey30"),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 10, hjust = 1),
+        
         plot.margin = margin(20, 20, 20, 20)
     )
 
-
-
-# plot ------ 
-
-    
-    # labs(
-    #     title = "Road to Glory: EuroLeague Teams’ Final Four and Titles (1988–2025)",
-    #     subtitle = "<b><span style='color: #426b7b; font-weight: bold;'>Darker</span></b> dots indicate <b><span style='color: #426b7b; font-weight: bold;'>Championship victories</span></b>, 
-    #                 while <b><span style='color: #81a7ba; font-weight: bold;'>lighter</span></b> dots indicate  <b><span style='color: #81a7ba; font-weight: bold;'>Final Four appearances</span></b>.",
-    #     caption = "Source: <b>Euroleague dataset</b> | Graphic: <b>Natasa Anastasiadou</b>",
-    #     x = "Year",
-    #     y = "",
-    #     fill = ""
-    # ) +
-    
   
 
 gr
 
 ggsave(
     plot = gr, filename = "plot.png",
-    width = 10, height = 8, units = "in", dpi = 600
+    width = 10, height = 12, units = "in", dpi = 600
 )
 
