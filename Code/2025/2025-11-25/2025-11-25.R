@@ -44,7 +44,7 @@ gr = ggplot(df_clean, aes(x = year, y = country, fill = overall_score)) +
         family = "Candara",
         bg.color = "grey95", 
         bg.r = .085, 
-        size = 3.25
+        size = 2.8
     ) +
     
     scale_fill_stepsn(
@@ -71,21 +71,22 @@ gr = ggplot(df_clean, aes(x = year, y = country, fill = overall_score)) +
     theme(
         legend.position = "bottom",
         legend.title.position = "top",
-        legend.title = element_text(size = 11, angle = 0, hjust = .5, face = "bold", color = "grey30"),
-        legend.text = element_text(size = 9, color = "grey30"),
+        legend.title = element_text(size = 10, angle = 0, hjust = .5, face = "bold", color = "grey30"),
+        legend.text = element_text(size = 8, color = "grey30"),
         
         axis.title = element_blank(),
-        axis.text = element_text(size = 12),
+        axis.text = element_text(size = 10),
         
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         
         
-        plot.title = element_markdown(size = 18, face = "bold", hjust = .1, margin = margin(b = 10)),
-        plot.subtitle = element_markdown(size = 16, hjust = 1, color = "grey30", margin = margin(b = 10)),
-        plot.caption = element_markdown(margin = margin(t = 35), size = 10, hjust = 1),
+        plot.title = element_markdown(size = 16, face = "bold", hjust = .1, margin = margin(b = 10)),
+        plot.subtitle = element_markdown(size = 14, hjust = 1, color = "grey30", margin = margin(b = 10)),
+        plot.caption = element_markdown(margin = margin(t = 35), size = 8, hjust = 1),
         
-        plot.margin = margin(20, 20, 20, 20)
+        plot.margin = margin(20, 20, 20, 20),
+        plot.background = element_rect(fill = "#e8e8e7", color = NA)
     )
 
   
@@ -94,6 +95,6 @@ gr
 
 ggsave(
     plot = gr, filename = "plot.png",
-    width = 10, height = 12, units = "in", dpi = 600
+    width = 9, height = 10, units = "in", dpi = 600
 )
 
