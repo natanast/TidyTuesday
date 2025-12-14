@@ -1,16 +1,20 @@
+# Cars in Qatar
 
-# Statistical Performance Indicators
+This week we are exploring data about cars in Qatar!
 
-The World Bank has developed Statistical Performance Indicators (SPI) to monitor the statistical performance of countries. The SPI focuses on five key dimensions of a country’s statistical performance: (i) data use, (ii) data services, (iii) data products, (iv) data sources, and (v) data infrastructure. This set of countries covers 99 percent of the world population. The data extend from 2016-2023, with some indicators going back to 2004.
+One of the most common example datasets in R is `mtcars`, which contains data on a bunch of cars from 1974 (!). Some of the car companies in there don't even exist anymore, like Datsun. The `mpg` dataset that comes with {ggplot2} was designed to be an improvement on `mtcars` and includes vehicles from 1999 and 2008. However, both `mpg` and `mtcars` are highly US-centric---most people in the world don't think in gallons and miles and feet and inches---and neither dataset includes details about electric cars, which are increasingly common today.
 
-> The purpose of the SPI is to help countries assess and improve the performance of their statistical systems.
+Qatar Cars (also available as [the {qatarcars} R package](https://profmusgrave.github.io/qatarcars/)) provides a more internationally focused, modern-cars-based demonstration dataset. It mirrors many of the columns in `mtcars`, but uses (1) non-US-centric makes and models, (2) 2025 prices, and (3) metric measurements, making it more appropriate for use as an example dataset outside the United States.
 
-In relation to these indicators, it should be noted that:
+Paul Musgrave and students in his international politics course at Georgetown University in Qatar [collected this data in early 2025](https://musgrave.substack.com/p/introducing-the-qatar-cars-dataset) with the goal of creating a new toy dataset that does not suffer from ["U.S. defaultism"](https://doi.org/10.1080/15512169.2025.2572320):
 
-> Small differences between countries should not be highlighted since they can reflect imprecision arising from the currently available indicators rather than meaningful differences in performance.
+> "U.S. defaultism"---the assumption that American contexts, units, and perspectives are universal---manifests in many ways in political science. In this article, I describe how toy datasets commonly employed in quantitative methods courses exemplify this problem. Using customary units, for instance, is unsuitable for an internationalized higher education system. To address these limitations, I introduce the Qatar Cars dataset, a freely available alternative toy dataset that uses International System (SI) units, reflects current global automotive market trends (such as the rise of Chinese manufacturers and electric vehicles), and avoids ethnocentric classifications such as labeling the non-U.S. world "foreign." Created through collaborative data collection with students, the Qatar Cars dataset maintains the pedagogical advantages of earlier datasets, improves statistical instruction by removing barriers for international audiences, and provides opportunities to discuss data-generating processes and research ethics.[^musgrave2025]
 
-* How has the statistical performance of a country changed over time?
-* Is statistical performance related to a country's income level or population?
-* Which pillar do countries score lowest in?
+[^musgrave2025]: Paul Musgrave, "Defaulting to Inclusion: Producing Sample Datasets for the Global Data Science Classroom," *Journal of Political Science Education*, 2025, 1–11, <https://doi.org/10.1080/15512169.2025.2572320>.
 
-Thank you to [Nicola Rennie](https://github.com/nrennie) for curating this week's dataset.
+The `price` column is stored as Qatari Riyals (QAR). At the time of data collection in January 2025, the exchange rates between QAR and US Dollars and Euros were:
+
+- 1 USD = 3.64 QAR
+- 1 EUR = 4.15 QAR
+
+---
