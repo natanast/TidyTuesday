@@ -20,7 +20,91 @@ library(shadowtext)
 
 qatarcars <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-12-09/qatarcars.csv')
 
+
 # clean data ------
+
+
+colnames(qatarcars)
+
+
+# df <- qatarcars[, .(length, width, height,
+#                     mass, horsepower,
+#                     economy, performance,
+#                     trunk, seating)] 
+# 
+
+# df_pca <- qatarcars[
+#     ,
+#     .(horsepower, performance, economy)
+# ]
+
+df_pca <- qatarcars[
+    ,
+    .(mass, horsepower, economy, performance, height)
+]
+
+df_pca <- na.omit(df_pca)
+
+pca <- prcomp(df_pca, scale. = TRUE)
+summary(pca)
+
+# Remove rows with NA
+df_pca <- na.omit(df)
+
+# Run PCA (scaled!)
+pca <- prcomp(as.matrix(df_pca), scale. = TRUE)
+
+
+summary(pca)
+
+scores <- as.data.table(pca$x)
+
+complete_idx <- complete.cases(df)
+
+
+# Add grouping variable (choose what you want here)
+scores[, Group := qatarcars[complete_idx, enginetype]]
+
+
+
+prop_var <- summary(pca)$importance[2, ]  # Extract Proportion of Variance
+pc1_label <- paste0("PC1 (", round(prop_var[1] * 100, 2), "%)")
+pc2_label <- paste0("PC2 (", round(prop_var[2] * 100, 2), "%)")
+
+
+library(ggforce)
+gr = ggplot(scores, aes(PC1, PC2)) +
+    
+    geom_mark_ellipse(aes(fill = Group, label = Group), alpha = .1, expand = unit(1.5, "mm")) +
+    
+    geom_point(aes(fill = Group), shape = 21, size = 3, stroke = .25, color = "white") +  
+    
+    scale_fill_manual(
+        values = c(
+            "Hybrid" = "#990000",
+            "Petrol" = "#004d99"
+            
+        )
+    ) +
+    
+    # geom_text(aes(label = Sample)) +
+    
+    scale_x_continuous(limits = c(-40, 40)) +
+    scale_y_continuous(limits = c(-35, 30)) +
+    
+    
+    theme_minimal() +
+    
+    theme(
+        legend.position = "none",
+        plot.margin = margin(20, 20, 20, 20)
+    ) +
+    
+    labs(x = pc1_label, y = pc2_label)
+
+
+
+gr
 
 
 
