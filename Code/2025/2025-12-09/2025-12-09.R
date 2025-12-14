@@ -18,18 +18,10 @@ library(shadowtext)
 
 # load data ------
 
-spi_indicators <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-11-25/spi_indicators.csv')
-
+qatarcars <- fread('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-12-09/qatarcars.csv')
 
 # clean data ------
 
-df <- spi_indicators[year >= 2016 & region == "Europe & Central Asia", ]
-
-df_clean <- df[!is.na(overall_score)]
-
-# order 
-latest_order <- df_clean[year == 2023][order(overall_score)]$country
-df_clean$country <- factor(df_clean$country, levels = latest_order)
 
 
 # plot ------
