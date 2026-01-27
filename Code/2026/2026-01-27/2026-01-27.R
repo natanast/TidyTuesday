@@ -39,12 +39,13 @@ plot_data <- d[, .(
 ggplot(plot_data) +
     
     geom_point(
-        aes(x = median_capital, y = legal_nature, size = n_companies)
+        aes(x = median_capital, y = legal_nature, size = n_companies, fill = company_size),
+        shape = 21, stroke = .25
     ) +
     
     scale_x_log10(
         
-        labels = label_number(scale_cut = cut_short_scale(), prefix = "R$ ")
+        labels = label_number(scale_cut = cut_short_scale(), prefix = "")
     ) +
     
     scale_size_continuous(range = c(3, 7)) +
@@ -72,12 +73,14 @@ ggplot(plot_data) +
         plot.caption = element_markdown(margin = margin(t = 35), size = 9, hjust = 1.5),
         
         axis.title.y = element_blank(),
-        panel.grid.minor = element_blank(),
         
-        panel.grid.major = element_line(linewidth = .4),
+        panel.grid.major = element_line(linewidth = 0.25, color = "grey80", linetype = "dashed"),
+        panel.grid.minor = element_blank(),
         
         panel.border = element_rect(fill = NA, linewidth = .4),
         axis.ticks = element_line(linewidth = .4),
+        
+        plot.background = element_rect(fill = "#fffaf9", color = NA),
         
         plot.margin = margin(20, 20, 20, 20)
     )
