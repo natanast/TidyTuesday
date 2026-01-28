@@ -69,7 +69,7 @@ gr = ggplot(d1) +
     
     labs(
         title = "Median Capital Stock of Brazilian Companies",
-        subtitle = "Comparison of median capital stock across legal natures and company sizes.",
+        subtitle = "Exploring the relationship between legal natures and company sizes.",
         caption = "Source: <b>Brazilian Companies data</b> | Graphic: <b>Natasa Anastasiadou</b>",
         x = "Media Capital Stock",
         y = NULL
@@ -89,7 +89,7 @@ gr = ggplot(d1) +
         # legend.title = element_text(size = 9, face = "bold"),
         
         plot.title = element_markdown(size = 16, face = "bold", hjust = .45, margin = margin(b = 5, t = 5)),
-        plot.subtitle = element_markdown(size = 14, hjust = -0.25, color = "grey30", margin = margin(b = 25, t = 5)),
+        plot.subtitle = element_markdown(size = 14, hjust = .25, color = "grey30", margin = margin(b = 25, t = 5)),
         plot.caption = element_markdown(margin = margin(t = 35), size = 9, hjust = 1.1),
         
         panel.grid.major = element_line(linewidth = 0.25, color = "grey80", linetype = "dashed"),
