@@ -11,8 +11,8 @@ library(ggplot2)
 library(stringr)
 library(extrafont)
 # library(colorspace)
-library(ggtext)
-library(scales)
+# library(ggtext)
+# library(scales)
 
 
 # load data ------
@@ -22,6 +22,9 @@ cappuccino_index <- fread('https://raw.githubusercontent.com/rfordatascience/tid
 
 
 # clean data ------
+
+cappuccino_index[order(n), .(country, index_as_time, n)]
+
 
 d <- companies[, .(legal_nature, capital_stock, company_size)]
 
@@ -109,4 +112,8 @@ ggsave(
     plot = gr, filename = "plot.png",
     width = 10, height = 10, units = "in", dpi = 600
 )
+
+
+
+
 
